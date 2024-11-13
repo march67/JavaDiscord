@@ -13,6 +13,6 @@
     <artifactId>back</artifactId>
 
     <dependencies>
-        <!-- Ajoutez ici les dépendances spécifiques à 'back' -->
+
     </dependencies>
 </project>

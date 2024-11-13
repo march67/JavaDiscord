@@ -13,6 +13,6 @@
     <artifactId>client</artifactId>
 
     <dependencies>
-        <!-- Ajoutez ici les dépendances spécifiques à 'client' -->
+
     </dependencies>
 </project>
