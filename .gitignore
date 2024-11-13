@@ -26,3 +26,7 @@ target/
 
 ### VS Code ###
 .vscode/
+
+### Docker ###
+docker/.env
+docker/mysql/data/
