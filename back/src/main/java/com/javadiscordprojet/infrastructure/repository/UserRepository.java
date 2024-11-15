@@ -1,14 +1,14 @@
-package com.javadiscordprojet.repository;
+package com.javadiscordprojet.infrastructure.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TestRepository {
+public class UserRepository {
     
     private final JdbcTemplate jdbcTemplate;
     
-    public TestRepository(JdbcTemplate jdbcTemplate) {
+    public UserRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
     
