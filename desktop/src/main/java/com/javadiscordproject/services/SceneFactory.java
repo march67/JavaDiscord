@@ -2,59 +2,63 @@ package com.javadiscordproject.services;
 
 import com.javadiscordproject.controllers.AuthController;
 import com.javadiscordproject.controllers.BaseController;
-import com.javadiscordproject.controllers.MainViewController;
+import com.javadiscordproject.controllers.HomeController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Map;
 
 public class SceneFactory {
     private static final double DEFAULT_WIDTH = 800;
     private static final double DEFAULT_HEIGHT = 600;
+    private static final String CSS_PATH = "/styles/styles.css";
 
-    // Mapping des types de scènes aux ressources FXML
     private static final Map<SceneType, String> SCENE_RESOURCES = Map.of(
-            SceneType.LOGIN, "/fxml/auth-view.fxml",
-            SceneType.HOME, "/fxml/main-view.fxml"
+            SceneType.LOGIN, "/fxml/view/auth-view.fxml",
+            SceneType.HOME, "/fxml/view/home-view.fxml"
     );
 
-    // Mapping des types de scènes aux contrôleurs
     private static final Map<SceneType, Class<?>> SCENE_CONTROLLERS = Map.of(
             SceneType.LOGIN, AuthController.class,
-            SceneType.HOME, MainViewController.class
+            SceneType.HOME, HomeController.class
     );
 
-    public static Scene createScene(SceneType type, Stage primaryStage, SceneManager sceneManager) {
+    public static Scene createScene(SceneType type, SceneManager sceneManager) {
         try {
-            // Récupérer le chemin FXML et le type de contrôleur
             String fxmlPath = SCENE_RESOURCES.get(type);
             Class<?> controllerClass = SCENE_CONTROLLERS.get(type);
 
             if (fxmlPath == null || controllerClass == null) {
-                throw new IllegalArgumentException("Type de scène non supporté : " + type);
+                throw new IllegalArgumentException("Unsupported scene type: " + type);
             }
 
-            // Charger le FXML
-            FXMLLoader loader = new FXMLLoader(SceneFactory.class.getResource(fxmlPath));
+            URL fxmlUrl = SceneFactory.class.getResource(fxmlPath);
+            if (fxmlUrl == null) {
+                throw new RuntimeException("FXML resource not found: " + fxmlPath);
+            }
+
+            FXMLLoader loader = new FXMLLoader(fxmlUrl);
             Parent root = loader.load();
 
-            // Récupérer et configurer le contrôleur
             Object controller = loader.getController();
             if (controller instanceof BaseController) {
                 ((BaseController) controller).setSceneManager(sceneManager);
             }
 
-            // Créer la scène
             Scene scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
-            // Ajouter le CSS
-            scene.getStylesheets().add(SceneFactory.class.getResource("/styles/styles.css").toExternalForm());
+            URL cssUrl = SceneFactory.class.getResource(CSS_PATH);
+            if (cssUrl != null) {
+                scene.getStylesheets().add(cssUrl.toExternalForm());
+            } else {
+                System.err.println("Warning: CSS resource not found: " + CSS_PATH);
+            }
 
             return scene;
         } catch (IOException e) {
-            throw new RuntimeException("Erreur de chargement de la scène", e);
+            throw new RuntimeException("Failed to load scene: " + type, e);
         }
     }
 

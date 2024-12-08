@@ -14,7 +14,6 @@ public class SceneManager {
     public void showLoginScene() {
         Scene loginScene = SceneFactory.createScene(
                 SceneFactory.SceneType.LOGIN,
-                primaryStage,
                 this
         );
 
@@ -25,7 +24,6 @@ public class SceneManager {
     public void showHomeScene() {
         Scene homeScene = SceneFactory.createScene(
                 SceneFactory.SceneType.HOME,
-                primaryStage,
                 this
         );
 
