@@ -5,39 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0d0e107-d0c4-427e-935e-296e583e5dd3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/api/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/implementation/UserServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/dto/UserDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/ApiService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/ConfigManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/WebSocketService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/ui/WindowManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/ui/pages/LoginPage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/Constants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/Utils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/config/config.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/application.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/ConversationListController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/LeftNavbarController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/view/HomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/conversation-list-component.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/left-navbar-component.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/auth-component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/conversation-list-component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/left-navbar-component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/view/home-view.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordprojet/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordprojet/business/service/api/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordprojet/business/service/implementation/UserServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordprojet/domain/model/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordprojet/infrastructure/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordprojet/presentation/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordprojet/presentation/dto/UserDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/com/javadiscordprojet/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/view/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/BaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/BaseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/HomeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/SceneFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/SceneFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/fxml/componenent/login-component.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/login-component.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/fxml/componenent/register-component.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/register-component.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/fxml/view/auth-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/fxml/view/auth-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/fxml/view/home-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/fxml/view/home-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/auth-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/view/auth-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/main-view.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,8 +38,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
+        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -70,49 +62,42 @@
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.Desktop_Front.executor": "Run",
-    "Maven.back.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.Main.executor": "Run",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "corretto-21",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/donic/IdeaProjects/JavaDiscord/back",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "Errors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.Desktop_Front.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.back.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Main.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;refactor/desktop-folder&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/donic/IdeaProjects/JavaDiscord/desktop&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\desktop\src\main\resources\styles\view" />
+    </key>
+  </component>
   <component name="RunManager" selected="Maven.Desktop_Front">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="desktop" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="desktop" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Desktop_Front" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -137,7 +122,7 @@
               <list />
             </option>
             <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="~\IdeaProjects\JavaDiscord\desktop" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/desktop" />
           </MavenRunnerParameters>
         </option>
       </MavenSettings>
@@ -184,7 +169,12 @@
       <updated>1731698437577</updated>
       <workItem from="1731698441507" duration="1995000" />
       <workItem from="1731701579460" duration="59000" />
-      <workItem from="1731706885964" duration="4982000" />
+      <workItem from="1731706885964" duration="8436000" />
+      <workItem from="1733128465605" duration="4398000" />
+      <workItem from="1733324831565" duration="320000" />
+      <workItem from="1733325527673" duration="6646000" />
+      <workItem from="1733681809002" duration="25247000" />
+      <workItem from="1733757762876" duration="3217000" />
     </task>
     <servers />
   </component>

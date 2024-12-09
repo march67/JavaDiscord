@@ -1,4 +1,4 @@
-package com.javadiscordproject.controllers;
+package com.javadiscordproject.controllers.component;
 
 import com.javadiscordproject.services.SceneManager;
 

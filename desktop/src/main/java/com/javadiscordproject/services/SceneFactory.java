@@ -1,8 +1,8 @@
 package com.javadiscordproject.services;
 
-import com.javadiscordproject.controllers.AuthController;
-import com.javadiscordproject.controllers.BaseController;
-import com.javadiscordproject.controllers.HomeController;
+import com.javadiscordproject.controllers.view.AuthController;
+import com.javadiscordproject.controllers.component.BaseController;
+import com.javadiscordproject.controllers.view.HomeController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

@@ -1,12 +1,19 @@
-package com.javadiscordproject.controllers;
+package com.javadiscordproject.controllers.component;
 
+import com.javadiscordproject.controllers.view.AuthController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoginController {
+    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
+    @FXML private VBox formContainer;
     @FXML private TextField loginUsername;
     @FXML private PasswordField loginPassword;
     @FXML private Button loginButton;
@@ -16,6 +23,16 @@ public class LoginController {
 
     @FXML
     public void initialize() {
+        try {
+            URL cssUrl = getClass().getResource("/styles/component/auth-component.css");
+            if (cssUrl != null) {
+                formContainer.getStylesheets().add(cssUrl.toExternalForm());
+            } else {
+                logger.warning("CSS file not found: /styles/component/auth-component.css");
+            }
+        } catch (NullPointerException e) {
+            logger.log(Level.SEVERE, "Failed to load CSS", e);
+        }
         setupEventHandlers();
     }
 

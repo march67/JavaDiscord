@@ -1,0 +1,4 @@
+.navbar {
+    -fx-background-color: -primary-color;
+    -fx-pref-width: 70px;
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+
+<VBox fx:id="conversationListContainer"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.javadiscordproject.controllers.component.ConversationListController"
+      prefWidth="200"
+      styleClass="conversation-list">
+    <HBox styleClass="search-container">
+        <TextField fx:id="searchField"
+                   promptText="Rechercher..."
+                   styleClass="search-input"/>
+    </HBox>
+</VBox>

@@ -3,9 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
+<VBox fx:id="formContainer" xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.javadiscordproject.controllers.RegisterController"
+      fx:controller="com.javadiscordproject.controllers.component.RegisterController"
       styleClass="form-container">
 
     <Label text="Register" styleClass="title-label"/>
