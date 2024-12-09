@@ -5,7 +5,7 @@ import com.javadiscordproject.presentation.dto.UserDTO;
 
 public interface UserService {
 
-	UserModel createUser(UserDTO userDTO) {
+	public UserModel createUser(UserDTO userDTO) {
 		return userDTO;
 	}
 	

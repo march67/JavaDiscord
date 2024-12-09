@@ -1,7 +1,11 @@
 package com.javadiscordproject.presentation.controller;
 
 import com.javadiscordproject.business.service.api.UserService;
+import com.javadiscordproject.domain.model.UserModel;
+import com.javadiscordproject.presentation.dto.UserDTO;
+
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,13 +17,8 @@ public class UserController {
 		this.userService = userService;
 	}
 	
-    @GetMapping("/test")
-    public String test() {
-        try {
-        	userService.insertTest("usera54");
-            return "Insert has succeeded";
-        } catch (Exception e) {
-            return "Insertion error : " + e.getMessage();
-        }
+	@PostMapping("/users")
+    public UserModel register(UserDTO userDTO) {
+        return userService.createUser(userDTO);
     }
 }
