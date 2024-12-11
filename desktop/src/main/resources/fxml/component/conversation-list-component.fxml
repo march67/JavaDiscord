@@ -12,7 +12,7 @@
       styleClass="conversation-list">
     <HBox styleClass="search-container">
         <TextField fx:id="searchField"
-                   promptText="Rechercher..."
+                   promptText="Search..."
                    styleClass="search-input"/>
     </HBox>
 </VBox>

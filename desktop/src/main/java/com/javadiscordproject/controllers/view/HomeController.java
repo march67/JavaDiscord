@@ -3,6 +3,7 @@ package com.javadiscordproject.controllers.view;
 import com.javadiscordproject.controllers.component.BaseController;
 import com.javadiscordproject.controllers.component.LeftNavbarController;
 import com.javadiscordproject.controllers.component.ConversationListController;
+import com.javadiscordproject.controllers.component.ConversationController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -25,6 +26,8 @@ public class HomeController extends BaseController {
     private VBox navbarView;
     private ConversationListController conversationListController;
     private VBox conversationListView;
+    private ConversationController conversationController;
+    private VBox conversationView;
 
     @FXML
     public void initialize() {
@@ -43,15 +46,23 @@ public class HomeController extends BaseController {
 
     private void loadComponents() {
         try {
+
             FXMLLoader navbarLoader = new FXMLLoader(getClass().getResource("/fxml/component/left-navbar-component.fxml"));
             navbarView = navbarLoader.load();
             navbarController = navbarLoader.getController();
 
-            FXMLLoader conversationLoader = new FXMLLoader(getClass().getResource("/fxml/component/conversation-list-component.fxml"));
-            conversationListView = conversationLoader.load();
-            conversationListController = conversationLoader.getController();
+            FXMLLoader conversationListLoader = new FXMLLoader(getClass().getResource("/fxml/component/conversation-list-component.fxml"));
+            conversationListView = conversationListLoader.load();
+            conversationListController = conversationListLoader.getController();
 
-            container.getChildren().addAll(navbarView, conversationListView);
+            FXMLLoader conversationLoader = new FXMLLoader(getClass().getResource("/fxml/component/conversation-component.fxml"));
+            conversationView = conversationLoader.load();
+            conversationController = conversationLoader.getController();
+
+            container.getChildren().addAll(navbarView, conversationListView, conversationView);
+
+            HBox.setHgrow(conversationView, javafx.scene.layout.Priority.ALWAYS);
+
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to load FXML components", e);
         }
