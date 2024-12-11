@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="rootContainer"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.javadiscordproject.controllers.component.ConversationController"
+      styleClass="root-container"
+      maxWidth="Infinity">
+
+    <HBox styleClass="header-container">
+        <Label fx:id="recipientName"
+               text="User2"
+               styleClass="header-username"/>
+    </HBox>
+
+    <VBox styleClass="conversation-container"
+          VBox.vgrow="ALWAYS"
+          maxWidth="Infinity">
+        <ScrollPane fx:id="messageScrollPane"
+                    VBox.vgrow="ALWAYS"
+                    fitToWidth="true"
+                    styleClass="chat-scroll-pane"
+                    maxWidth="Infinity">
+            <VBox fx:id="messageList"
+                  spacing="5"
+                  styleClass="message-container"
+                  maxWidth="Infinity"/>
+        </ScrollPane>
+
+        <HBox styleClass="input-container"
+              spacing="10"
+              maxWidth="Infinity">
+            <TextField fx:id="inputField"
+                       HBox.hgrow="ALWAYS"
+                       promptText="Type your message..."
+                       styleClass="message-input"/>
+        </HBox>
+    </VBox>
+</VBox>

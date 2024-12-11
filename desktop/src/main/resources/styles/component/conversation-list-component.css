@@ -1,0 +1,20 @@
+
+.conversation-list {
+    -fx-background-color: -secondary-color;
+    -fx-padding: 10;
+}
+
+.search-container {
+    -fx-padding: 0 0 10 0;
+}
+
+.search-input {
+    -fx-background-color: -secondary-color;
+    -fx-border-color: -primary-color;
+    -fx-border-radius: 4;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #72767d;
+    -fx-background-radius: 4;
+    -fx-padding: 8;
+    -fx-pref-width: 180;
+}
