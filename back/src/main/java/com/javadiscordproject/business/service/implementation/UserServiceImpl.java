@@ -2,7 +2,7 @@ package com.javadiscordproject.business.service.implementation;
 
 import com.javadiscordproject.business.service.api.UserService;
 import com.javadiscordproject.domain.model.UserModel;
-import com.javadiscordproject.infrastructure.repository.UserRepository;
+import com.javadiscordproject.infrastructure.persistence.repository.UserRepository;
 
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,9 @@
-package com.javadiscordproject.infrastructure.dao.implementation;
+package com.javadiscordproject.infrastructure.persistence.dao.implementation;
 
 import java.util.List;
 
 import com.javadiscordproject.domain.model.UserModel;
-import com.javadiscordproject.infrastructure.dao.api.UserDao;
+import com.javadiscordproject.infrastructure.persistence.dao.api.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
