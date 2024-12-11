@@ -1,3 +1,5 @@
+package com.javadiscordproject.infrastructure.security.jwt;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;

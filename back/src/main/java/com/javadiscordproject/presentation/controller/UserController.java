@@ -1,9 +1,7 @@
 package com.javadiscordproject.presentation.controller;
 
-import com.javadiscordproject.business.service.api.UserService;
 import com.javadiscordproject.business.service.implementation.UserMapper;
 import com.javadiscordproject.business.service.implementation.UserServiceImpl;
-import com.javadiscordproject.domain.model.UserModel;
 import com.javadiscordproject.presentation.dto.UserDTO;
 
 import jakarta.validation.Valid;
@@ -31,6 +29,11 @@ public class UserController {
 	
 	@GetMapping("/test")
 	public void test() {
+		
+	}
+	
+	@GetMapping("/testTokenJwt")
+	public void testTokenJwt() {
 		
 	}
 }
