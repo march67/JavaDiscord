@@ -1,9 +1,9 @@
-package com.javadiscordproject.infrastructure.repository;
+package com.javadiscordproject.infrastructure.persistence.repository;
 
 import org.springframework.stereotype.Repository;
 
 import com.javadiscordproject.domain.model.UserModel;
-import com.javadiscordproject.infrastructure.dao.implementation.UserDaoImpl;
+import com.javadiscordproject.infrastructure.persistence.dao.implementation.UserDaoImpl;
 
 @Repository
 public class UserRepository {
