@@ -1,19 +1,19 @@
 package com.javadiscordproject.infrastructure.repository;
 
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.javadiscordproject.domain.model.UserModel;
+import com.javadiscordproject.infrastructure.dao.implementation.UserDaoImpl;
 
 @Repository
 public class UserRepository {
+    private UserDaoImpl userDaoImpl;
     
-    private final JdbcTemplate jdbcTemplate;
-    
-    public UserRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public UserRepository(UserDaoImpl userDaoImpl) {
+        this.userDaoImpl = userDaoImpl;
     }
     
-    public void insertTest(String testName) {
-        String sql = "INSERT INTO test (testName) VALUES (?)";
-        jdbcTemplate.update(sql, testName);
+    public void saveUser(UserModel userModel) {
+    	userDaoImpl.saveUser(userModel);
     }
 }

@@ -6,17 +6,18 @@ import com.javadiscordproject.domain.model.UserModel;
 import com.javadiscordproject.infrastructure.dao.api.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
-
+@Repository
 public class UserDaoImpl implements UserDao {
    @Autowired
    private JdbcTemplate jdbcTemplate;
 	   
 	@Override
 	public UserModel saveUser(UserModel userModel) {
-	       String sql = "INSERT INTO application_user (application_user_id, email, username, password) VALUES (?, ?, ?, ?)";
-	       jdbcTemplate.update(sql, userModel.getApplicationUserId(), userModel.getEmail(), userModel.getUserName(), userModel.getPassword());
+	       String sql = "INSERT INTO application_user (email, username, password) VALUES (?, ?, ?)";
+	       jdbcTemplate.update(sql, userModel.getEmail(), userModel.getUsername(), userModel.getPassword());
 	       return userModel;
 	}
 
