@@ -1,25 +1,36 @@
 package com.javadiscordproject.presentation.controller;
 
-import com.javadiscordproject.infrastructure.repository.UserRepository;
+import com.javadiscordproject.business.service.api.UserService;
+import com.javadiscordproject.business.service.implementation.UserMapper;
+import com.javadiscordproject.business.service.implementation.UserServiceImpl;
+import com.javadiscordproject.domain.model.UserModel;
+import com.javadiscordproject.presentation.dto.UserDTO;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
     
-	private final UserRepository userRepository;
+	private UserServiceImpl userServiceImpl;
+	private UserMapper userMapper;
 	
-	public UserController(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	public UserController(UserServiceImpl userServiceImpl, UserMapper userMapper) {
+		this.userServiceImpl = userServiceImpl;
+		this.userMapper = userMapper;
 	}
 	
-    @GetMapping("/test")
-    public String test() {
-        try {
-            userRepository.insertTest("usera54");
-            return "Insert has succeeded";
-        } catch (Exception e) {
-            return "Insertion error : " + e.getMessage();
-        }
+	@PostMapping("/users")
+    public void registerUser(@Valid @RequestBody UserDTO userDTO) {
+        userServiceImpl.registerUser(userMapper.toModel(userDTO));
     }
+	
+	@GetMapping("/test")
+	public void test() {
+		
+	}
 }

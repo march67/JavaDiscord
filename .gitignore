@@ -33,3 +33,4 @@ docker/mysql/data/
 
 ### env ###
 back/.env
+/.metadata/
