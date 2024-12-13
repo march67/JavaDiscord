@@ -1,5 +1,3 @@
-// src/main/java/com/javadiscordproject/controllers/component/ConversationListController.java
-
 package com.javadiscordproject.controllers.component;
 
 import com.javadiscordproject.managers.ControllerManager;
@@ -63,14 +61,14 @@ public class ConversationListController {
     private void displayResults(List<UserDTO> users) {
         clearResults();
         for (UserDTO user : users) {
-            Label label = new Label(user.username());
+            Label label = new Label(user.getUsername());  // Changed from user.username() to user.getUsername()
             label.setOnMouseClicked(event -> {
                 ConversationController conversationController =
                         (ConversationController) ControllerManager.getInstance()
                                 .getController("conversation");
 
                 if (conversationController != null) {
-                    conversationController.changeConversation(user.username());
+                    conversationController.changeConversation(user.getUsername());  // Changed here as well
                 }
             });
             conversationListContainer.getChildren().add(label);
