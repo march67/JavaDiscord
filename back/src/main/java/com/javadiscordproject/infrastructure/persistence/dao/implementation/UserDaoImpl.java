@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.javadiscordproject.domain.model.UserModel;
 import com.javadiscordproject.infrastructure.persistence.dao.api.UserDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,19 +44,20 @@ public class UserDaoImpl implements UserDao {
 
 	public UserModel findByUsername(String username) {
 		String sql = "SELECT username, password FROM application_user WHERE username = ?";
-	       
 	       try {
 	           return jdbcTemplate.queryForObject(sql, 
-	               (rs, rowNum) -> {
+	               (resultSet, rowNum) -> {
 	                   UserModel userModel = new UserModel();
-	                   userModel.setUsername(rs.getString("username"));
-	                   userModel.setPassword(rs.getString("password"));
+	                   userModel.setUsername(resultSet.getString("username"));
+	                   userModel.setPassword(resultSet.getString("password"));
 	                   return userModel;
 	               },
 	               username
 	           );
 	       } catch (EmptyResultDataAccessException e) {
 	           throw new UsernameNotFoundException("User not found");
+	       } catch (IncorrectResultSizeDataAccessException e) {
+	    	   throw new RuntimeException("Multiple users found with username: " + username);
 	       }
 		}
 	
