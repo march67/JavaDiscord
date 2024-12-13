@@ -1,4 +1,4 @@
-package com.javadiscordproject.infrastructure.dao.api;
+package com.javadiscordproject.infrastructure.persistence.dao.api;
 
 import java.util.List;
 import com.javadiscordproject.domain.model.UserModel;
