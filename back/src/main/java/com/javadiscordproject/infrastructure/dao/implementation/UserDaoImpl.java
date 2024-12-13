@@ -7,6 +7,7 @@ import com.javadiscordproject.infrastructure.dao.api.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 @Repository
@@ -24,6 +25,19 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public UserModel findUserById(String id) {
 		return null;
+	}
+	
+	public UserModel findUserByUsername(String username) {
+	    String sql = "SELECT * FROM application_user WHERE username = ?";
+	    try {
+	        return jdbcTemplate.queryForObject(
+	            sql,
+	            new BeanPropertyRowMapper<>(UserModel.class),
+	            username
+	        );
+	    } catch (Exception e) {
+	        return null;
+	    }
 	}
 
 	@Override

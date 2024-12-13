@@ -16,4 +16,8 @@ public class UserRepository {
     public void saveUser(UserModel userModel) {
     	userDaoImpl.saveUser(userModel);
     }
+    
+    public UserModel findUserByUsername(String username) {
+    	return userDaoImpl.findUserByUsername(username);
+    }
 }
