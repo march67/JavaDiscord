@@ -4,6 +4,7 @@ import com.javadiscordproject.controllers.component.BaseController;
 import com.javadiscordproject.controllers.component.LeftNavbarController;
 import com.javadiscordproject.controllers.component.ConversationListController;
 import com.javadiscordproject.controllers.component.ConversationController;
+import com.javadiscordproject.managers.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -31,6 +32,12 @@ public class HomeController extends BaseController {
 
     @FXML
     public void initialize() {
+        loadCss();
+        loadComponents();
+        setupLogoutHandler();
+    }
+
+    private void loadCss() {
         try {
             URL cssUrl = getClass().getResource("/styles/view/home-view.css");
             if (cssUrl != null) {
@@ -41,12 +48,10 @@ public class HomeController extends BaseController {
         } catch (NullPointerException e) {
             logger.log(Level.SEVERE, "Failed to load CSS", e);
         }
-        loadComponents();
     }
 
     private void loadComponents() {
         try {
-
             FXMLLoader navbarLoader = new FXMLLoader(getClass().getResource("/fxml/component/left-navbar-component.fxml"));
             navbarView = navbarLoader.load();
             navbarController = navbarLoader.getController();
@@ -60,7 +65,6 @@ public class HomeController extends BaseController {
             conversationController = conversationLoader.getController();
 
             container.getChildren().addAll(navbarView, conversationListView, conversationView);
-
             HBox.setHgrow(conversationView, javafx.scene.layout.Priority.ALWAYS);
 
         } catch (IOException e) {
@@ -68,7 +72,15 @@ public class HomeController extends BaseController {
         }
     }
 
-    private void handleLogout() {
-        sceneManager.showLoginScene();
+    private void setupLogoutHandler() {
+        if (conversationListController != null) {
+            conversationListController.setOnLogoutRequested(() -> {
+                SessionManager.getInstance().clearSession();
+
+                sceneManager.showLoginScene();
+            });
+        } else {
+            logger.severe("ConversationListController is null - Cannot setup logout handler");
+        }
     }
 }
