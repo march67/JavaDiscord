@@ -10,6 +10,7 @@
 
     <Label text="Register" styleClass="title-label"/>
     <TextField fx:id="registerUsername" styleClass="input-field" promptText="Username"/>
+    <TextField fx:id="registerEmail" styleClass="input-field" promptText="Email"/>
     <PasswordField fx:id="registerPassword" styleClass="input-field" promptText="Password"/>
     <PasswordField fx:id="registerConfirmPassword" styleClass="input-field" promptText="Confirm Password"/>
     <Label fx:id="registerError" styleClass="error-label"/>

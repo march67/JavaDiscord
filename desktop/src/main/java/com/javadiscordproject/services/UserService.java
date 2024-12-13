@@ -1,4 +1,3 @@
-// src/main/java/com/javadiscordproject/services/UserService.java
 package com.javadiscordproject.services;
 
 import com.javadiscordproject.models.UserDTO;
@@ -10,7 +9,7 @@ public class UserService {
     public List<UserDTO> getUsers(String filter) {
         String username = filter.toLowerCase();
         return getMockUsers().stream()
-                .filter(user -> containsAllChars(user.username().toLowerCase(), username))
+                .filter(user -> containsAllChars(user.getUsername().toLowerCase(), username))
                 .collect(Collectors.toList());
     }
 
@@ -29,11 +28,11 @@ public class UserService {
 
     private List<UserDTO> getMockUsers() {
         return Arrays.asList(
-                new UserDTO("User 1"),
-                new UserDTO("User 2"),
-                new UserDTO("User 3"),
-                new UserDTO("User 4"),
-                new UserDTO("User 5")
+                new UserDTO(null, "User 1", null),
+                new UserDTO(null, "User 2", null),
+                new UserDTO(null, "User 3", null),
+                new UserDTO(null, "User 4", null),
+                new UserDTO(null, "User 5", null)
         );
     }
 }
