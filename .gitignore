@@ -29,6 +29,7 @@ target/
 
 ### Docker ###
 docker/.env
+docker/mysql/data/
 
 ### env ###
 back/.env

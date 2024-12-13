@@ -26,3 +26,4 @@ CREATE TABLE Message (
  message_content VARCHAR(500) NOT NULL,
  created_at TIMESTAMP NOT NULL
 );
+
