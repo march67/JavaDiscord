@@ -1,6 +1,5 @@
 package com.javadiscordproject.presentation.controller;
 
-import com.javadiscordproject.business.service.api.UserService;
 import com.javadiscordproject.business.service.implementation.UserMapper;
 import com.javadiscordproject.business.service.implementation.UserServiceImpl;
 import com.javadiscordproject.domain.model.UserModel;
@@ -33,7 +32,7 @@ public class UserController {
 	
 	@GetMapping("/getUser")
 	public ResponseEntity<UserModel> findUserByUsername(@RequestParam String username) {
-	    UserModel user = userServiceImpl.findUserByUsername(username);
+	    UserModel user = userServiceImpl.findByUsername(username);
 	    if (user != null) {
 	        return ResponseEntity.ok(user);
 	    }
@@ -42,6 +41,11 @@ public class UserController {
 		
 	@GetMapping("/test")
 	public void test() {
+		
+	}
+	
+	@GetMapping("/testTokenJwt")
+	public void testTokenJwt() {
 		
 	}
 }

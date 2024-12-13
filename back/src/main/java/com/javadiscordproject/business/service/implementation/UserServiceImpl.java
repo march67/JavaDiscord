@@ -2,7 +2,7 @@ package com.javadiscordproject.business.service.implementation;
 
 import com.javadiscordproject.business.service.api.UserService;
 import com.javadiscordproject.domain.model.UserModel;
-import com.javadiscordproject.infrastructure.repository.UserRepository;
+import com.javadiscordproject.infrastructure.persistence.repository.UserRepository;
 
 import org.springframework.stereotype.Service;
 
@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService {
 	public void registerUser(UserModel userModel) {
 		userRepository.saveUser(userModel);
 	}
-	
-	public UserModel findUserByUsername(String username) {
-		return userRepository.findUserByUsername(username);
+
+	public UserModel findByUsername(String username) {
+		return userRepository.findByUsername(username);
 	}
 }
