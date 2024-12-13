@@ -1,6 +1,7 @@
 package com.javadiscordproject.infrastructure.persistence.dao.implementation;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.javadiscordproject.domain.model.UserModel;
 import com.javadiscordproject.infrastructure.persistence.dao.api.UserDao;
@@ -44,21 +45,17 @@ public class UserDaoImpl implements UserDao {
 
 	public UserModel findByUsername(String username) {
 		String sql = "SELECT username, password FROM application_user WHERE username = ?";
-	       try {
-	           return jdbcTemplate.queryForObject(sql, 
+	       try (Stream<UserModel> stream = jdbcTemplate.queryForStream(sql, 
 	               (resultSet, rowNum) -> {
 	                   UserModel userModel = new UserModel();
 	                   userModel.setUsername(resultSet.getString("username"));
 	                   userModel.setPassword(resultSet.getString("password"));
 	                   return userModel;
 	               },
-	               username
-	           );
-	       } catch (EmptyResultDataAccessException e) {
-	           throw new UsernameNotFoundException("User not found");
-	       } catch (IncorrectResultSizeDataAccessException e) {
-	    	   throw new RuntimeException("Multiple users found with username: " + username);
+	               username)) {
+	       	return stream.findFirst()
+	       			.orElseThrow( () -> new UsernameNotFoundException("User not found"));
 	       }
-		}
+	}
 	
 }
