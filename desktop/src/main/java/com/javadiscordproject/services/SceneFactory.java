@@ -16,12 +16,12 @@ public class SceneFactory {
     private static final String CSS_PATH = "/styles/styles.css";
 
     private static final Map<SceneType, String> SCENE_RESOURCES = Map.of(
-            SceneType.LOGIN, "/fxml/view/auth-view.fxml",
+            SceneType.AUTH, "/fxml/view/auth-view.fxml",
             SceneType.HOME, "/fxml/view/home-view.fxml"
     );
 
     private static final Map<SceneType, Class<?>> SCENE_CONTROLLERS = Map.of(
-            SceneType.LOGIN, AuthController.class,
+            SceneType.AUTH, AuthController.class,
             SceneType.HOME, HomeController.class
     );
 
@@ -63,7 +63,7 @@ public class SceneFactory {
     }
 
     public enum SceneType {
-        LOGIN,
+        AUTH,
         HOME
     }
 }

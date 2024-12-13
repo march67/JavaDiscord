@@ -13,7 +13,7 @@ public class SceneManager {
 
     public void showLoginScene() {
         Scene loginScene = SceneFactory.createScene(
-                SceneFactory.SceneType.LOGIN,
+                SceneFactory.SceneType.AUTH,
                 this
         );
 

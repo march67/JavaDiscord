@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
 
 <VBox fx:id="conversationListContainer"
       xmlns="http://javafx.com/javafx"
@@ -10,9 +13,30 @@
       fx:controller="com.javadiscordproject.controllers.component.ConversationListController"
       prefWidth="200"
       styleClass="conversation-list">
+
+
+
     <HBox styleClass="search-container">
         <TextField fx:id="searchField"
                    promptText="Search..."
                    styleClass="search-input"/>
     </HBox>
+
+    <VBox VBox.vgrow="ALWAYS" />
+
+        <VBox styleClass="user-info-section">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label fx:id="currentUserLabel" styleClass="current-user-label"/>
+        </VBox>
+    <VBox styleClass="logout-section">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+        <Button fx:id="logoutButton"
+                text="Déconnexion"
+                styleClass="logout-button"
+                maxWidth="Infinity"/>
+    </VBox>
 </VBox>

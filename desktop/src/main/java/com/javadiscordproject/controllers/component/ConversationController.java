@@ -1,6 +1,7 @@
 package com.javadiscordproject.controllers.component;
 
 import com.javadiscordproject.managers.ControllerManager;
+import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.Message;
 import com.javadiscordproject.services.AutoResponseService;
 import com.javadiscordproject.services.MessageDisplayService;
@@ -30,11 +31,13 @@ public class ConversationController {
     private final MessageDisplayService messageDisplayService;
     private final AutoResponseService autoResponseService;
     private String currentUser;
+    private String loggedInUsername;
 
     public ConversationController() {
         this.messageDisplayService = new MessageDisplayService();
         this.autoResponseService = new AutoResponseService();
         this.currentUser = DEFAULT_USER;
+        this.loggedInUsername = SessionManager.getInstance().getUsername();
     }
 
     @FXML
@@ -66,7 +69,8 @@ public class ConversationController {
 
     private void sendMessage() {
         String messageText = inputField.getText().trim();
-        Message userMessage = new Message(messageText, CURRENT_USER_DISPLAY, true);
+        String displayName = loggedInUsername != null ? loggedInUsername : CURRENT_USER_DISPLAY;
+        Message userMessage = new Message(messageText, displayName, true);
         messageDisplayService.displayMessage(userMessage, messageList, messageScrollPane);
         inputField.clear();
         autoResponseService.simulateResponse(currentUser, this::displayMessage);
@@ -82,7 +86,12 @@ public class ConversationController {
         currentUser = username;
         recipientName.setText(username);
         messageList.getChildren().clear();
-        Message systemMessage = new Message("Début de la conversation avec " + username, "Système", false);
+        String loggedUser = loggedInUsername != null ? loggedInUsername : CURRENT_USER_DISPLAY;
+        Message systemMessage = new Message(
+                String.format("Début de la conversation entre %s et %s", loggedUser, username),
+                "Système",
+                false
+        );
         messageDisplayService.displayMessage(systemMessage, messageList, messageScrollPane);
     }
 
@@ -90,5 +99,9 @@ public class ConversationController {
         Platform.runLater(() ->
                 messageDisplayService.displayMessage(message, messageList, messageScrollPane)
         );
+    }
+
+    public void updateLoggedInUsername() {
+        this.loggedInUsername = SessionManager.getInstance().getUsername();
     }
 }

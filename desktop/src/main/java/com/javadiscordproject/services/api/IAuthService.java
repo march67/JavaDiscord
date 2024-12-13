@@ -1,10 +1,11 @@
+// IAuthService.java
 package com.javadiscordproject.services.api;
 
-import com.javadiscordproject.models.UserDTO;
-
 import java.util.concurrent.CompletableFuture;
+import com.javadiscordproject.models.RegisterDTO;
+import com.javadiscordproject.models.LoginDTO;
 
 public interface IAuthService {
-    CompletableFuture<Boolean> register(UserDTO userDto);
-    CompletableFuture<Boolean> login(String username, String password);
+    CompletableFuture<Boolean> register(RegisterDTO registerDto);
+    CompletableFuture<Boolean> login(LoginDTO loginDto);
 }

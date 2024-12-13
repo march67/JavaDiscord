@@ -1,7 +1,13 @@
 package com.javadiscordproject.controllers.component;
 
 import com.javadiscordproject.controllers.view.AuthController;
+import com.javadiscordproject.managers.SessionManager;
+import com.javadiscordproject.models.LoginDTO;
+import com.javadiscordproject.services.api.AuthService;
+import com.javadiscordproject.services.api.IAuthService;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -20,9 +26,19 @@ public class LoginController {
     @FXML private Button showRegister;
 
     private AuthController authController;
+    private final IAuthService authService;
+
+    public LoginController() {
+        this.authService = new AuthService();
+    }
 
     @FXML
     public void initialize() {
+        loadCSS();
+        setupEventHandlers();
+    }
+
+    private void loadCSS() {
         try {
             URL cssUrl = getClass().getResource("/styles/component/auth-component.css");
             if (cssUrl != null) {
@@ -33,7 +49,6 @@ public class LoginController {
         } catch (NullPointerException e) {
             logger.log(Level.SEVERE, "Failed to load CSS", e);
         }
-        setupEventHandlers();
     }
 
     public void setAuthController(AuthController controller) {
@@ -46,17 +61,79 @@ public class LoginController {
     }
 
     private void handleLogin() {
+        if (isLoading()) {
+            return;
+        }
+
         String username = loginUsername.getText().trim();
         String password = loginPassword.getText();
 
         if (validateInput(username, password)) {
-            authController.onSuccessfulAuth();
+            setLoading(true);
+
+            LoginDTO loginDto = new LoginDTO(username, password);
+
+            authService.login(loginDto)
+                    .thenAccept(success -> {
+                        Platform.runLater(() -> {
+                            setLoading(false);
+                            if (success) {
+                                handleSuccessfulLogin(username);
+                            } else {
+                                showError("Login Failed",
+                                        "Invalid username or password.");
+                            }
+                        });
+                    })
+                    .exceptionally(error -> {
+                        Platform.runLater(() -> {
+                            setLoading(false);
+                            showError("Error",
+                                    "An error occurred during login: " +
+                                            error.getMessage());
+                        });
+                        return null;
+                    });
         }
     }
 
     private boolean validateInput(String username, String password) {
-        // TODO: Implement real validation logic when backend is ready
+        if (username == null || username.trim().isEmpty()) {
+            showError("Validation Error", "Username is required");
+            return false;
+        }
+
+        if (password == null || password.isEmpty()) {
+            showError("Validation Error", "Password is required");
+            return false;
+        }
+
         return true;
+    }
+
+    private void handleSuccessfulLogin(String username) {
+        SessionManager.getInstance().createSession(username, "email@example.com"); // L'email devrait venir de votre API
+        clearForm();
+        authController.onSuccessfulAuth();
+    }
+
+    private void showError(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void setLoading(boolean loading) {
+        loginButton.setDisable(loading);
+        showRegister.setDisable(loading);
+        loginUsername.setDisable(loading);
+        loginPassword.setDisable(loading);
+    }
+
+    private boolean isLoading() {
+        return loginButton.isDisabled();
     }
 
     public void clearForm() {

@@ -1,6 +1,8 @@
+// AuthService.java
 package com.javadiscordproject.services.api;
 
-import com.javadiscordproject.models.UserDTO;
+import com.javadiscordproject.models.RegisterDTO;
+import com.javadiscordproject.models.LoginDTO;
 import com.javadiscordproject.utils.ApiConstants;
 
 import java.net.http.HttpClient;
@@ -20,9 +22,9 @@ public class AuthService implements IAuthService {
     }
 
     @Override
-    public CompletableFuture<Boolean> register(UserDTO userDto) {
+    public CompletableFuture<Boolean> register(RegisterDTO registerDto) {
         try {
-            String jsonBody = objectMapper.writeValueAsString(userDto);
+            String jsonBody = objectMapper.writeValueAsString(registerDto);
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(ApiConstants.USERS_ENDPOINT))
                     .header("Content-Type", "application/json")
@@ -40,7 +42,22 @@ public class AuthService implements IAuthService {
     }
 
     @Override
-    public CompletableFuture<Boolean> login(String username, String password) {
-        return CompletableFuture.completedFuture(false);
+    public CompletableFuture<Boolean> login(LoginDTO loginDto) {
+        try {
+            String jsonBody = objectMapper.writeValueAsString(loginDto);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(ApiConstants.AUTHENTICATE_ENDPOINT))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                    .build();
+
+            return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                    .thenApply(response -> {
+                        int status = response.statusCode();
+                        return status == 200;
+                    });
+        } catch (Exception e) {
+            return CompletableFuture.completedFuture(false);
+        }
     }
 }

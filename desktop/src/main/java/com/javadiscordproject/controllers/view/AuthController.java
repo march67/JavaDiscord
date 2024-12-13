@@ -1,3 +1,4 @@
+// AuthController.java
 package com.javadiscordproject.controllers.view;
 
 import com.javadiscordproject.controllers.component.BaseController;
@@ -64,6 +65,10 @@ public class AuthController extends BaseController {
         stackContainer.getChildren().clear();
         stackContainer.getChildren().add(loginView);
         loginController.clearForm();
+    }
+
+    public void showLoginAfterRegistration() {
+        showLoginForm();
     }
 
     public void showRegisterForm() {

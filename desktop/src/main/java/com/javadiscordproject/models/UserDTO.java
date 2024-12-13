@@ -5,14 +5,12 @@ public class UserDTO {
     private String username;
     private String password;
 
-    // Constructeur complet
     public UserDTO(String email, String username, String password) {
         this.email = email;
         this.username = username;
         this.password = password;
     }
 
-    // Constructeur avec uniquement username (pour la rétrocompatibilité)
     public UserDTO(String username) {
         this.username = username;
     }

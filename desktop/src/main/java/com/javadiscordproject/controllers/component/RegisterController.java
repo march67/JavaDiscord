@@ -1,7 +1,7 @@
 package com.javadiscordproject.controllers.component;
 
 import com.javadiscordproject.controllers.view.AuthController;
-import com.javadiscordproject.models.UserDTO;
+import com.javadiscordproject.models.RegisterDTO;
 import com.javadiscordproject.services.api.AuthService;
 import com.javadiscordproject.services.api.IAuthService;
 import javafx.application.Platform;
@@ -71,14 +71,14 @@ public class RegisterController {
         if (validateInput(username, email, password, confirmPassword)) {
             setLoading(true);
 
-            UserDTO user = new UserDTO(email, username, password);
+            RegisterDTO registerDto = new RegisterDTO(username, password, email);
 
-            authService.register(user)
+            authService.register(registerDto)
                     .thenAccept(success -> {
                         Platform.runLater(() -> {
                             setLoading(false);
                             if (success) {
-                                handleSuccessfulRegistration();
+                                handleSuccessfulRegistration(username);
                             } else {
                                 showError("Registration Failed",
                                         "Please verify your information and try again.");
@@ -122,10 +122,11 @@ public class RegisterController {
         return true;
     }
 
-    private void handleSuccessfulRegistration() {
-        showSuccess("Registration Successful", "Your account has been created successfully!");
+    private void handleSuccessfulRegistration(String username) {
+        showSuccess("Registration Successful",
+                "Your account has been created successfully! Please login with your credentials.");
         clearForm();
-        authController.onSuccessfulAuth();
+        authController.showLoginAfterRegistration();
     }
 
     private void showError(String title, String content) {
