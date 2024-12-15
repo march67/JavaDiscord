@@ -9,15 +9,15 @@ import com.javadiscordproject.domain.model.UserModel;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserServiceImpl userService;
+    private final UserServiceImpl userServiceImpl;
 
-    public CustomUserDetailsService(UserServiceImpl userService) {
-        this.userService = userService;
+    public CustomUserDetailsService(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserModel user = userService.findByUsername(username);
+        UserModel user = userServiceImpl.findByUsername(username);
         
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
