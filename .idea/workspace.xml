@@ -5,7 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0d0e107-d0c4-427e-935e-296e583e5dd3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/InputMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/OutputMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/WebsocketConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/MessageController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/main/converters/ClientMessageConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/main/converters/MessageDeserializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/main/converters/MessageSerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/main/handlers/MyStompSessionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/main/runners/Runner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/InputMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/OutputMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/back/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/Message.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,11 +66,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.Main.executor": "Run",
-    "git-widget-placeholder": "development",
+    "git-widget-placeholder": "feature/SCRUM-71-mise-en-place-du-web-socket",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "corretto-21",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/donic/IdeaProjects/JavaDiscord/back",
+    "last_opened_file_path": "C:/Users/Thomas/Downloads/test-websocket",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -72,6 +86,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Thomas\IdeaProjects\moreless-bitbucket\back" />
+      <recent name="C:\Users\Thomas\IdeaProjects\moreless-bitbucket\docker" />
       <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\back" />
       <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\docker" />
     </key>
@@ -168,7 +184,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-corretto-21.0.2-f644763e9732-54352fe9" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -188,6 +205,9 @@
       <workItem from="1733325527673" duration="6646000" />
       <workItem from="1733681809002" duration="25247000" />
       <workItem from="1733757762876" duration="47178000" />
+      <workItem from="1744379107206" duration="769000" />
+      <workItem from="1744380455494" duration="849000" />
+      <workItem from="1746429211817" duration="4898000" />
     </task>
     <servers />
   </component>

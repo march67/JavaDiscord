@@ -3,11 +3,13 @@ package com.javadiscordproject.models;
 public class Message {
     private final String content;
     private final String sender;
+    private final String time;
     private final boolean isUser;
 
     public Message(String content, String sender, boolean isUser) {
         this.content = content;
         this.sender = sender;
+        this.time = String.valueOf(System.currentTimeMillis());
         this.isUser = isUser;
     }
 
