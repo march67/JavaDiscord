@@ -9,8 +9,7 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 
-import com.javadiscordproject.models.InputMessage;
-import com.javadiscordproject.models.OutputMessage;
+import com.javadiscordproject.models.ChatMessage;
 
 public class MyStompSessionHandler implements StompSessionHandler {
 
@@ -18,13 +17,13 @@ public class MyStompSessionHandler implements StompSessionHandler {
 
     @Override
     public Type getPayloadType(StompHeaders headers) {
-        return OutputMessage.class;
+        return ChatMessage.class;
     }
 
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
-        OutputMessage msg = (OutputMessage) payload;
-        logger.info("Received : " + msg.getText() + " from : " + msg.getFrom());
+        ChatMessage msg = (ChatMessage) payload;
+        logger.info("Received : " + msg.getContent() + " from : " + msg.getSender());
     }
 
     @Override
@@ -36,8 +35,8 @@ public class MyStompSessionHandler implements StompSessionHandler {
         logger.info("Message sent to websocket server");
     }
 
-    private InputMessage getSampleMessage() {
-        return new InputMessage("client", "hello");
+    private ChatMessage getSampleMessage() {
+        return new ChatMessage("client", "hello");
     }
 
     @Override
