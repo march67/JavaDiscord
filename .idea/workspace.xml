@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0d0e107-d0c4-427e-935e-296e583e5dd3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/ChatMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/ChatController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/ChatMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/WebSocketService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/InputMessage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/OutputMessage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/MessageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/main/handlers/MyStompSessionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/main/handlers/MyStompSessionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/main/runners/Runner.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/main/runners/Runner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/InputMessage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/OutputMessage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/SecurityConfiguration.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

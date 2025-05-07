@@ -28,6 +28,7 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/authenticate", "/users").permitAll()
+                    .requestMatchers("/chat/**").permitAll()
                 .anyRequest().authenticated())
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
