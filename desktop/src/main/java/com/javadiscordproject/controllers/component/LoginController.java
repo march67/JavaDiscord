@@ -2,7 +2,9 @@ package com.javadiscordproject.controllers.component;
 
 import com.javadiscordproject.controllers.view.AuthController;
 import com.javadiscordproject.managers.SessionManager;
+import com.javadiscordproject.managers.WebSocketManager;
 import com.javadiscordproject.models.LoginDTO;
+import com.javadiscordproject.models.UserDTO;
 import com.javadiscordproject.services.api.AuthService;
 import com.javadiscordproject.services.api.IAuthService;
 import javafx.application.Platform;
@@ -113,8 +115,15 @@ public class LoginController {
 
     private void handleSuccessfulLogin(String username) {
         SessionManager.getInstance().createSession(username, "email@example.com"); // L'email devrait venir de votre API
+        bootWebSocket(username);
         clearForm();
         authController.onSuccessfulAuth();
+    }
+
+    private void bootWebSocket(String username){
+
+        WebSocketManager instance = WebSocketManager.getInstance();
+        instance.initWebSocketConnectionAsync();
     }
 
     private void showError(String title, String content) {
@@ -140,4 +149,6 @@ public class LoginController {
         loginUsername.clear();
         loginPassword.clear();
     }
+
+
 }

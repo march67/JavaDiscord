@@ -27,9 +27,7 @@ public class WebSocketService {
     private static final int CONNECTION_TIMEOUT_SECONDS = 3; // Timeout after 3 seconds
 
     // Constructor
-    public WebSocketService() {
-        // Initialize if needed
-    }
+    public WebSocketService() {}
 
     // Connect to WebSocket server with timeout
     public boolean connectToWebSocket() {
@@ -116,7 +114,7 @@ public class WebSocketService {
 
     // Send the predefined static message
     public boolean sendStaticMessage() {
-        return sendMessage("JavaFX Client", STATIC_MESSAGE);
+        return sendMessage("JavaFX Client", "Hello World!");
     }
 
     // Check if connected
