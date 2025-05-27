@@ -1,6 +1,14 @@
 package com.javadiscordproject.domain.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "chat_message")
 public class ChatMessage {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long applicationMessageId;
     private String sender;
     private String content;
     private String timestamp;
@@ -16,6 +24,14 @@ public class ChatMessage {
     }
 
     // Getters et setters
+
+    public Long getApplicationMessageId() {
+        return this.applicationMessageId;
+    }
+
+    public void setApplicationMessageId(Long applicationMessageId) {
+        this.applicationMessageId = applicationMessageId;
+    }
 
     public String getTimestamp() {
         return timestamp;

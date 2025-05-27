@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0d0e107-d0c4-427e-935e-296e583e5dd3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/persistence/repository/MessageRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/ChatMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/ChatMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +30,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -69,6 +77,11 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
   }
 }</component>
   <component name="RecentsManager">
@@ -82,7 +95,7 @@
       <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\desktop\src\main\resources\styles\view" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.Desktop_Front">
+  <component name="RunManager" selected="Maven.back">
     <configuration name="Desktop_Front" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -195,6 +208,7 @@
       <workItem from="1744379107206" duration="769000" />
       <workItem from="1744380455494" duration="849000" />
       <workItem from="1746429211817" duration="4898000" />
+      <workItem from="1748331162553" duration="2826000" />
     </task>
     <servers />
   </component>
@@ -211,5 +225,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/moreless_bitbucket$Main.ic" NAME="Main Coverage Results" MODIFIED="1748269948235" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.javadiscordproject.*</FILTER>
+    </SUITE>
   </component>
 </project>
