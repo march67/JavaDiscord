@@ -112,6 +112,7 @@ public class WebSocketService {
         }
     }
 
+    // TODO: remove this
     // Send the predefined static message
     public boolean sendStaticMessage() {
         return sendMessage("JavaFX Client", "Hello World!");
