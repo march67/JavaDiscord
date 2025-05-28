@@ -24,5 +24,7 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 //	public UserModel findByUsername(String username) {
 //		return userDaoImpl.findByUsername(username);
 //	}
+	
+	UserModel findByUsername(String username);
 
 }
