@@ -14,11 +14,11 @@ public class UserServiceImpl implements UserService {
 		this.userRepository = userRepository;
 	}
 	
-	public void registerUser(UserModel userModel) {
-		userRepository.saveUser(userModel);
-	}
-
-	public UserModel findByUsername(String username) {
-		return userRepository.findByUsername(username);
-	}
+//	public void registerUser(UserModel userModel) {
+//		userRepository.saveUser(userModel);
+//	}
+//
+//	public UserModel findByUsername(String username) {
+//		return userRepository.findByUsername(username);
+//	}
 }
