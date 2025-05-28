@@ -60,7 +60,6 @@ public class WebSocketManager {
                 boolean success = webSocketInitializer.retryConnection();
                 if (success) {
                     System.out.println("Successfully reconnected to WebSocket server");
-                    webSocketInitializer.sendStaticMessage();
                 } else {
                     System.out.println("Reconnection attempt failed");
                 }

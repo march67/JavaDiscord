@@ -1,14 +1,22 @@
 package com.javadiscordproject.domain.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+
+import java.util.UUID;
 
 @Entity
-@Table(name = "chat_message")
+@Table(name = "Message")
 public class ChatMessage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long applicationMessageId;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "message_id", updatable = false, nullable = false)
+    private UUID applicationMessageId;
     private String sender;
     private String content;
     private String timestamp;
@@ -25,11 +33,11 @@ public class ChatMessage {
 
     // Getters et setters
 
-    public Long getApplicationMessageId() {
+    public UUID getApplicationMessageId() {
         return this.applicationMessageId;
     }
 
-    public void setApplicationMessageId(Long applicationMessageId) {
+    public void setApplicationMessageId(UUID applicationMessageId) {
         this.applicationMessageId = applicationMessageId;
     }
 

@@ -3,9 +3,9 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.52">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>781</IntrospectionStateNumber>
+      <IntrospectionStateNumber>793</IntrospectionStateNumber>
       <ServerVersion>17.4</ServerVersion>
-      <StartupTime>1748331231</StartupTime>
+      <StartupTime>1748439305</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -1406,7 +1406,7 @@ true posixrules
 13219||10|C|G
 13219||-9223372036854775808|U|G
 13219||10|U|G</Grants>
-      <IntrospectionStateNumber>781</IntrospectionStateNumber>
+      <IntrospectionStateNumber>793</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>test</OwnerName>
     </database>
@@ -4828,45 +4828,37 @@ true posixrules
     <schema id="265" parent="3" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>781</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2025-05-27.08:13:56</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>793</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2025-05-28.14:11:15</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>532</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
     </schema>
-    <sequence id="266" parent="265" name="chat_message_application_message_id_seq">
-      <DasType>bigint|0s</DasType>
-      <ObjectId>16481</ObjectId>
-      <SequenceIdentity>1</SequenceIdentity>
-      <StartValue>1</StartValue>
-      <StateNumber>776</StateNumber>
-      <OwnerName>test</OwnerName>
-    </sequence>
-    <table id="267" parent="265" name="application_user">
+    <table id="266" parent="265" name="application_user">
       <ObjectId>16385</ObjectId>
       <StateNumber>768</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>test</OwnerName>
     </table>
-    <table id="268" parent="265" name="chat_message">
-      <ObjectId>16482</ObjectId>
-      <StateNumber>776</StateNumber>
-      <AccessMethodId>2</AccessMethodId>
-      <OwnerName>test</OwnerName>
-    </table>
-    <table id="269" parent="265" name="conversation">
+    <table id="267" parent="265" name="conversation">
       <ObjectId>16397</ObjectId>
       <StateNumber>741</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>test</OwnerName>
     </table>
-    <table id="270" parent="265" name="conversationparticipant">
+    <table id="268" parent="265" name="conversationparticipant">
       <ObjectId>16408</ObjectId>
       <StateNumber>742</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>test</OwnerName>
     </table>
-    <column id="271" parent="267" name="application_user_id">
+    <table id="269" parent="265" name="message">
+      <ObjectId>16520</ObjectId>
+      <StateNumber>789</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>test</OwnerName>
+    </table>
+    <column id="270" parent="266" name="application_user_id">
       <DasType>uuid|0s</DasType>
       <DefaultExpression>gen_random_uuid()</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4874,28 +4866,28 @@ true posixrules
       <StateNumber>740</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="272" parent="267" name="email">
+    <column id="271" parent="266" name="email">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>767</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="273" parent="267" name="username">
+    <column id="272" parent="266" name="username">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>769</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="274" parent="267" name="password">
+    <column id="273" parent="266" name="password">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>768</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="275" parent="267" name="application_user_pkey">
+    <index id="274" parent="266" name="application_user_pkey">
       <ColNames>application_user_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16391</ObjectId>
@@ -4904,7 +4896,7 @@ true posixrules
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="276" parent="267" name="application_user_email_key">
+    <index id="275" parent="266" name="application_user_email_key">
       <ColNames>email</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16448</ObjectId>
@@ -4915,7 +4907,7 @@ true posixrules
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <index id="277" parent="267" name="application_user_username_key">
+    <index id="276" parent="266" name="application_user_username_key">
       <ColNames>username</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16458</ObjectId>
@@ -4926,69 +4918,26 @@ true posixrules
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="278" parent="267" name="application_user_pkey">
+    <key id="277" parent="266" name="application_user_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16392</ObjectId>
       <Primary>1</Primary>
       <StateNumber>740</StateNumber>
       <UnderlyingIndexId>16391</UnderlyingIndexId>
     </key>
-    <key id="279" parent="267" name="application_user_email_key">
+    <key id="278" parent="266" name="application_user_email_key">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16449</ObjectId>
       <StateNumber>767</StateNumber>
       <UnderlyingIndexId>16448</UnderlyingIndexId>
     </key>
-    <key id="280" parent="267" name="application_user_username_key">
+    <key id="279" parent="266" name="application_user_username_key">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16459</ObjectId>
       <StateNumber>769</StateNumber>
       <UnderlyingIndexId>16458</UnderlyingIndexId>
     </key>
-    <column id="281" parent="268" name="application_message_id">
-      <DasType>bigint|0s</DasType>
-      <IdentityKind>by-default</IdentityKind>
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <StateNumber>776</StateNumber>
-      <SequenceId>16481</SequenceId>
-      <TypeId>20</TypeId>
-    </column>
-    <column id="282" parent="268" name="content">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>2</Position>
-      <StateNumber>776</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="283" parent="268" name="sender">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>3</Position>
-      <StateNumber>776</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="284" parent="268" name="timestamp">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>4</Position>
-      <StateNumber>776</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <index id="285" parent="268" name="chat_message_pkey">
-      <ColNames>application_message_id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16487</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>776</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <key id="286" parent="268" name="chat_message_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16488</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>776</StateNumber>
-      <UnderlyingIndexId>16487</UnderlyingIndexId>
-    </key>
-    <column id="287" parent="269" name="conversation_id">
+    <column id="280" parent="267" name="conversation_id">
       <DasType>uuid|0s</DasType>
       <DefaultExpression>gen_random_uuid()</DefaultExpression>
       <NotNull>1</NotNull>
@@ -4996,14 +4945,14 @@ true posixrules
       <StateNumber>741</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="288" parent="269" name="application_user_id">
+    <column id="281" parent="267" name="application_user_id">
       <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>741</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="289" parent="269" name="conversation_application_user_id_fkey">
+    <foreign-key id="282" parent="267" name="conversation_application_user_id_fkey">
       <ColNames>application_user_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16403</ObjectId>
@@ -5011,7 +4960,7 @@ true posixrules
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16385</RefTableId>
     </foreign-key>
-    <index id="290" parent="269" name="conversation_pkey">
+    <index id="283" parent="267" name="conversation_pkey">
       <ColNames>conversation_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16401</ObjectId>
@@ -5020,28 +4969,28 @@ true posixrules
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="291" parent="269" name="conversation_pkey">
+    <key id="284" parent="267" name="conversation_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16402</ObjectId>
       <Primary>1</Primary>
       <StateNumber>741</StateNumber>
       <UnderlyingIndexId>16401</UnderlyingIndexId>
     </key>
-    <column id="292" parent="270" name="application_user_id">
+    <column id="285" parent="268" name="application_user_id">
       <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>742</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <column id="293" parent="270" name="conversation_id">
+    <column id="286" parent="268" name="conversation_id">
       <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>742</StateNumber>
       <TypeId>2950</TypeId>
     </column>
-    <foreign-key id="294" parent="270" name="conversationparticipant_application_user_id_fkey">
+    <foreign-key id="287" parent="268" name="conversationparticipant_application_user_id_fkey">
       <ColNames>application_user_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16413</ObjectId>
@@ -5049,7 +4998,7 @@ true posixrules
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16385</RefTableId>
     </foreign-key>
-    <foreign-key id="295" parent="270" name="conversationparticipant_conversation_id_fkey">
+    <foreign-key id="288" parent="268" name="conversationparticipant_conversation_id_fkey">
       <ColNames>conversation_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16418</ObjectId>
@@ -5057,7 +5006,7 @@ true posixrules
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16397</RefTableId>
     </foreign-key>
-    <index id="296" parent="270" name="conversationparticipant_pkey">
+    <index id="289" parent="268" name="conversationparticipant_pkey">
       <ColNames>application_user_id
 conversation_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -5067,12 +5016,79 @@ conversation_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="297" parent="270" name="conversationparticipant_pkey">
+    <key id="290" parent="268" name="conversationparticipant_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16412</ObjectId>
       <Primary>1</Primary>
       <StateNumber>742</StateNumber>
       <UnderlyingIndexId>16411</UnderlyingIndexId>
+    </key>
+    <column id="291" parent="269" name="message_id">
+      <DasType>uuid|0s</DasType>
+      <DefaultExpression>gen_random_uuid()</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>789</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="292" parent="269" name="application_user_id">
+      <DasType>uuid|0s</DasType>
+      <Position>2</Position>
+      <StateNumber>789</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="293" parent="269" name="conversation_id">
+      <DasType>uuid|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>789</StateNumber>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="294" parent="269" name="message_content">
+      <DasType>varchar(500)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>789</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="295" parent="269" name="created_at">
+      <DasType>timestamp|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>789</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <foreign-key id="296" parent="269" name="message_application_user_id_fkey">
+      <ColNames>application_user_id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16528</ObjectId>
+      <StateNumber>789</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>16385</RefTableId>
+    </foreign-key>
+    <foreign-key id="297" parent="269" name="message_conversation_id_fkey">
+      <ColNames>conversation_id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16533</ObjectId>
+      <StateNumber>789</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>16397</RefTableId>
+    </foreign-key>
+    <index id="298" parent="269" name="message_pkey">
+      <ColNames>message_id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16526</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>789</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="299" parent="269" name="message_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16527</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>789</StateNumber>
+      <UnderlyingIndexId>16526</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>
