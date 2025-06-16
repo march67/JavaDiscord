@@ -1,5 +1,5 @@
 // IAuthService.java
-package com.javadiscordproject.services.api;
+package com.javadiscordproject.services.api.auth;
 
 import java.util.concurrent.CompletableFuture;
 import com.javadiscordproject.models.RegisterDTO;

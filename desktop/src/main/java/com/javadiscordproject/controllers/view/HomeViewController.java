@@ -1,6 +1,6 @@
 package com.javadiscordproject.controllers.view;
 
-import com.javadiscordproject.controllers.component.BaseController;
+import com.javadiscordproject.controllers.base.BaseViewController;
 import com.javadiscordproject.controllers.component.LeftNavbarController;
 import com.javadiscordproject.controllers.component.ConversationListController;
 import com.javadiscordproject.controllers.component.ConversationController;
@@ -15,8 +15,8 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HomeController extends BaseController {
-    private static final Logger logger = Logger.getLogger(HomeController.class.getName());
+public class HomeViewController extends BaseViewController {
+    private static final Logger logger = Logger.getLogger(HomeViewController.class.getName());
 
     @FXML
     private AnchorPane rootPane;

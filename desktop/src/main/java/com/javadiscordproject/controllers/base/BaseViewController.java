@@ -1,8 +1,8 @@
-package com.javadiscordproject.controllers.component;
+package com.javadiscordproject.controllers.base;
 
 import com.javadiscordproject.services.SceneManager;
 
-abstract public class BaseController {
+abstract public class BaseViewController {
     protected SceneManager sceneManager;
 
     public void setSceneManager(SceneManager sceneManager) {

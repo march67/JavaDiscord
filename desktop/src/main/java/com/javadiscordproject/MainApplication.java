@@ -1,4 +1,4 @@
-package com.javadiscordproject.main;
+package com.javadiscordproject;
 
 import com.javadiscordproject.services.SceneManager;
 import javafx.application.Application;
