@@ -16,7 +16,4 @@ public class ConversationModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @ManyToMany
-    private List<UserModel> users = new ArrayList<UserModel>();
 }

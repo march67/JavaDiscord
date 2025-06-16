@@ -23,6 +23,10 @@ public class MessageModel {
     @JoinColumn(name = "idUser")
 	private UserModel user;
     
+    @ManyToOne
+    @JoinColumn(name = "idConversation")
+    private ConversationModel conversation;
+    
     private String messageContent;
     
     @CreationTimestamp
