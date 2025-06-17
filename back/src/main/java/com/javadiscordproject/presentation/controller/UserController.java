@@ -11,10 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
     
 	private UserServiceImpl userServiceImpl;
@@ -25,12 +27,12 @@ public class UserController {
 		this.userMapper = userMapper;
 	}
 	
-	@PostMapping("/user")
+	@PostMapping("/register")
     public void registerUser(@Valid @RequestBody UserDTO userDTO) {
         userServiceImpl.registerUser(userMapper.toModel(userDTO));
     }
 	
-	@GetMapping("/getUser")
+	@GetMapping("/findUserByUsername")
 	public ResponseEntity<UserModel> findUserByUsername(@RequestParam String username) {
 		UserModel user = userServiceImpl.findByUsername(username);
 	    if (user != null) {
@@ -41,11 +43,6 @@ public class UserController {
 		
 	@GetMapping("/test")
 	public void test() {
-		
-	}
-	
-	@GetMapping("/testTokenJwt")
-	public void testTokenJwt() {
 		
 	}
 }
