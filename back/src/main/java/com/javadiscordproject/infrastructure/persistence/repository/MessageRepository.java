@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface MessageRepository extends JpaRepository<ChatMessage, UUID> {
+public interface MessageRepository extends JpaRepository<ChatMessage, Long> {
 }

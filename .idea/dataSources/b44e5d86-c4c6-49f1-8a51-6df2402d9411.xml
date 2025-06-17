@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.52">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>793</IntrospectionStateNumber>
+      <IntrospectionStateNumber>798</IntrospectionStateNumber>
       <ServerVersion>17.4</ServerVersion>
       <StartupTime>1748439305</StartupTime>
       <TimeZones>true ACDT
@@ -1406,7 +1406,7 @@ true posixrules
 13219||10|C|G
 13219||-9223372036854775808|U|G
 13219||10|U|G</Grants>
-      <IntrospectionStateNumber>793</IntrospectionStateNumber>
+      <IntrospectionStateNumber>798</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>test</OwnerName>
     </database>
@@ -4828,8 +4828,8 @@ true posixrules
     <schema id="265" parent="3" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>793</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2025-05-28.14:11:15</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>798</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2025-05-28.14:11:59</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>532</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
@@ -4854,7 +4854,7 @@ true posixrules
     </table>
     <table id="269" parent="265" name="message">
       <ObjectId>16520</ObjectId>
-      <StateNumber>789</StateNumber>
+      <StateNumber>797</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>test</OwnerName>
     </table>
@@ -5058,7 +5058,25 @@ conversation_id</ColNames>
       <StateNumber>789</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <foreign-key id="296" parent="269" name="message_application_user_id_fkey">
+    <column id="296" parent="269" name="content">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+      <StateNumber>795</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="297" parent="269" name="sender">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>7</Position>
+      <StateNumber>796</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="298" parent="269" name="timestamp">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>8</Position>
+      <StateNumber>797</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <foreign-key id="299" parent="269" name="message_application_user_id_fkey">
       <ColNames>application_user_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16528</ObjectId>
@@ -5066,7 +5084,7 @@ conversation_id</ColNames>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16385</RefTableId>
     </foreign-key>
-    <foreign-key id="297" parent="269" name="message_conversation_id_fkey">
+    <foreign-key id="300" parent="269" name="message_conversation_id_fkey">
       <ColNames>conversation_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16533</ObjectId>
@@ -5074,7 +5092,7 @@ conversation_id</ColNames>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16397</RefTableId>
     </foreign-key>
-    <index id="298" parent="269" name="message_pkey">
+    <index id="301" parent="269" name="message_pkey">
       <ColNames>message_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16526</ObjectId>
@@ -5083,7 +5101,7 @@ conversation_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="299" parent="269" name="message_pkey">
+    <key id="302" parent="269" name="message_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16527</ObjectId>
       <Primary>1</Primary>

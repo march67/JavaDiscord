@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0d0e107-d0c4-427e-935e-296e583e5dd3" name="Changes" comment="ws ok no security">
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/ws/JwtAuthenticationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/b44e5d86-c4c6-49f1-8a51-6df2402d9411.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b44e5d86-c4c6-49f1-8a51-6df2402d9411.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b44e5d86-c4c6-49f1-8a51-6df2402d9411/storage_v2/_src_/database/test.kkQ2AA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b44e5d86-c4c6-49f1-8a51-6df2402d9411/storage_v2/_src_/database/test.kkQ2AA/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/ChatMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/ChatMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/WebsocketConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/WebsocketConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/persistence/repository/MessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/persistence/repository/MessageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/security/jwt/JwtTokenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/security/jwt/JwtTokenUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/ChatController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/managers/WebSocketManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/managers/WebSocketManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,41 +52,41 @@
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.Desktop_Front.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.back.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Main.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/SCRUM-71-mise-en-place-du-web-socket&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-21&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Thomas/IdeaProjects/moreless-bitbucket&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.Desktop_Front.executor": "Run",
+    "Maven.back.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.Main.executor": "Run",
+    "git-widget-placeholder": "feature/SCRUM-71-mise-en-place-du-web-socket",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "corretto-21",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Thomas/IdeaProjects/moreless-bitbucket",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "Errors",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Thomas\IdeaProjects\moreless-bitbucket\back" />
@@ -96,7 +98,7 @@
       <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\desktop\src\main\resources\styles\view" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.back">
+  <component name="RunManager" selected="Maven.Desktop_Front">
     <configuration name="Desktop_Front" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -211,7 +213,11 @@
       <workItem from="1746429211817" duration="4898000" />
       <workItem from="1748331162553" duration="3782000" />
       <workItem from="1748415577030" duration="269000" />
-      <workItem from="1748439329698" duration="1980000" />
+      <workItem from="1748439329698" duration="4667000" />
+      <workItem from="1750058164371" duration="192000" />
+      <workItem from="1750077883671" duration="2595000" />
+      <workItem from="1750080493156" duration="3761000" />
+      <workItem from="1750084812539" duration="929000" />
     </task>
     <task id="LOCAL-00001" summary="ws ok no security">
       <option name="closed" value="true" />
