@@ -21,7 +21,7 @@ public class FriendlistModel {
 	@Column(name = "user_id_2", insertable = false, updatable = false)
 	private Long userId2;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY) // avoid all loading
 	@JoinColumn(name = "user_id_1")
 	@MapsId("userId_1")
 	private UserModel user_1;
@@ -53,19 +53,20 @@ public class FriendlistModel {
 		this.friendRequest_status = friendRequest_status;
 	}
 
+	// Handle composite key
 	public void setUsers(UserModel user1, UserModel user2) {
 		this.user_1 = user1;
 		this.user_2 = user2;
 		
-	    // Mettre à jour les IDs dans l'objet composite
+	    // Synchronize IDs between the composite ID and the foreign keys IDs
 	    if (user1 != null) {
-	        this.userId1 = user1.getId();
-	        this.id.setUserId_1(user1.getId());
+	        this.userId1 = user1.getId(); // foreign key 1
+	        this.id.setUserId_1(user1.getId()); // composite ID
 	    }
 	    
 	    if (user2 != null) {
-	        this.userId2 = user2.getId();
-	        this.id.setUserId_2(user2.getId());
+	        this.userId2 = user2.getId(); // foreign key 2
+	        this.id.setUserId_2(user2.getId()); // composite ID
 	    }
 	}
 }

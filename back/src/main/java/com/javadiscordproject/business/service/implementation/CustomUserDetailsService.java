@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.javadiscordproject.domain.model.UserModel;
+import com.javadiscordproject.infrastructure.security.jwt.CustomUserDetails;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -19,10 +20,19 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserModel user = userServiceImpl.findByUsername(username);
         
-        return org.springframework.security.core.userdetails.User
-                .withUsername(user.getUsername())
-                .password(user.getPassword())
-                .roles("USER")
-                .build();
+        // old without the CustomUserDetails
+//        return org.springframework.security.core.userdetails.User
+//                .withUsername(user.getUsername())
+//                .password(user.getPassword())
+//                .roles("USER")
+//                .build();
+        
+        // new with CustomUserDetails ( to put in the user ID in the claims )
+        return new CustomUserDetails(
+        		user.getId(),
+        		user.getUsername(),
+        		user.getPassword(),
+        		"USER"
+        		);
     }
 }

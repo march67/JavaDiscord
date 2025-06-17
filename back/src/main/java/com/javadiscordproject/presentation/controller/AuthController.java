@@ -20,7 +20,7 @@ import com.javadiscordproject.presentation.dto.Auth.AuthResponseDTO;
 public class AuthController {
     
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager; // is responsible for the credentials check ( and not the JWT itself )
     
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -38,6 +38,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
+        // Authentification succedeed, process to generate JWT
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequestDTO.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
 

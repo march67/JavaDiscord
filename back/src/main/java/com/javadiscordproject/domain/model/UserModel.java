@@ -17,7 +17,6 @@ public class UserModel {
     private String username;
     private String password;
     
-
     public Long getId() {
     	return this.id;
     }
@@ -52,5 +51,4 @@ public class UserModel {
     public void setPassword(String password) {
     	this.password = password;
     }
-      
 }

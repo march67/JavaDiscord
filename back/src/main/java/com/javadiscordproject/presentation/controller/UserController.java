@@ -3,9 +3,11 @@ package com.javadiscordproject.presentation.controller;
 import com.javadiscordproject.business.service.api.UserService;
 import com.javadiscordproject.business.service.implementation.UserServiceImpl;
 import com.javadiscordproject.domain.model.UserModel;
+import com.javadiscordproject.infrastructure.security.jwt.JwtTokenUtil;
 import com.javadiscordproject.mapper.UserMapper;
 import com.javadiscordproject.presentation.dto.User.UserDTO;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    
 	private UserService userService;
 	private UserMapper userMapper;
 	
@@ -44,6 +45,5 @@ public class UserController {
 		
 	@GetMapping("/test")
 	public void test() {
-		
 	}
 }
