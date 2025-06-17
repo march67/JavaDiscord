@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javadiscordproject.infrastructure.security.jwt.JwtTokenUtil;
-import com.javadiscordproject.presentation.dto.AuthRequestDTO;
-import com.javadiscordproject.presentation.dto.AuthResponseDTO;
+import com.javadiscordproject.presentation.dto.Auth.AuthRequestDTO;
+import com.javadiscordproject.presentation.dto.Auth.AuthResponseDTO;
 
 @RestController
 public class AuthController {

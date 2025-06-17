@@ -18,7 +18,7 @@ public class UserModel {
     private String password;
     
 
-    public Long getApplicationUserId() {
+    public Long getId() {
     	return this.id;
     }
     

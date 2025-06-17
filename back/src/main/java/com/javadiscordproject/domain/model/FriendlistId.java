@@ -17,6 +17,22 @@ public class FriendlistId implements Serializable{
 	
 	public FriendlistId(long userId_1, long userId_2) {
 		this.userId_1 = userId_1;
-		this.userId_1 = userId_2;
+		this.userId_2 = userId_2;
+	}
+
+	public Long getUserId_1() {
+		return userId_1;
+	}
+
+	public void setUserId_1(Long userId_1) {
+		this.userId_1 = userId_1;
+	}
+
+	public Long getUserId_2() {
+		return userId_2;
+	}
+
+	public void setUserId_2(Long userId_2) {
+		this.userId_2 = userId_2;
 	}
 }

@@ -1,22 +1,20 @@
-package com.javadiscordproject.presentation.dto;
+package com.javadiscordproject.presentation.dto.Friendlist;
+
+import com.javadiscordproject.domain.model.UserModel;
 
 import jakarta.persistence.Column;
 
-public class FriendlistDTO {
+public class FriendRequestDTO {
 	private Long userId_1;
-	
-	private Long userId_2;
-	
-	private String friendRequest_status;
+	private Long userId_2;	
 	
     // Empty constructor for JSON deserialization
-    public FriendlistDTO() {
+    public FriendRequestDTO() {
     }
     
-	public FriendlistDTO(Long userId_1, Long userId_2, String friendRequest_status) {
+	public FriendRequestDTO(Long userId_1, Long userId_2) {
 		this.userId_1 = userId_1;
 		this.userId_2 = userId_2;
-		this.friendRequest_status = friendRequest_status;
 	}
 
 	public Long getUserId_1() {
@@ -34,5 +32,4 @@ public class FriendlistDTO {
 	public void setUserId_2(Long userId_2) {
 		this.userId_2 = userId_2;
 	}
-
 }
