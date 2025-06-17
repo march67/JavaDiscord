@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
 
 @Embeddable
 public class UserConversationId implements Serializable{

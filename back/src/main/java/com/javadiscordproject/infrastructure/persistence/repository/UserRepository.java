@@ -9,22 +9,5 @@ import com.javadiscordproject.infrastructure.persistence.dao.implementation.User
 
 @Repository
 public interface UserRepository extends JpaRepository<UserModel, Long> {
-//    private UserDaoImpl userDaoImpl;
-    
-//    @Autowired
-//    public UserRepository(UserDaoImpl userDaoImpl) {
-//        this.userDaoImpl = userDaoImpl;
-//    }
-//    
-//    public void saveUser(UserModel userModel) {
-//    	userDaoImpl.saveUser(userModel);
-//    }
-//
-//
-//	public UserModel findByUsername(String username) {
-//		return userDaoImpl.findByUsername(username);
-//	}
-	
 	UserModel findByUsername(String username);
-
 }

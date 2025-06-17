@@ -25,19 +25,18 @@ public class UserController {
 		this.userMapper = userMapper;
 	}
 	
-	@PostMapping("/users")
+	@PostMapping("/user")
     public void registerUser(@Valid @RequestBody UserDTO userDTO) {
-        //userServiceImpl.registerUser(userMapper.toModel(userDTO));
+        userServiceImpl.registerUser(userMapper.toModel(userDTO));
     }
 	
 	@GetMapping("/getUser")
 	public ResponseEntity<UserModel> findUserByUsername(@RequestParam String username) {
-//	    UserModel user = userServiceImpl.findByUsername(username);
-//	    if (user != null) {
-//	        return ResponseEntity.ok(user);
-//	    }
-//	    return ResponseEntity.notFound().build();
-		return null;
+		UserModel user = userServiceImpl.findByUsername(username);
+	    if (user != null) {
+	        return ResponseEntity.ok(user);
+	    }
+	    return ResponseEntity.notFound().build();
 	}
 		
 	@GetMapping("/test")
