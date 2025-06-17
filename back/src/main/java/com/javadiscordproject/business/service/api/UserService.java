@@ -6,4 +6,6 @@ import com.javadiscordproject.presentation.dto.UserDTO;
 
 
 public interface UserService {
+	public void registerUser(UserModel userModel);
+	public UserModel findByUsername(String username);
 }

@@ -1,5 +1,6 @@
 package com.javadiscordproject.presentation.controller;
 
+import com.javadiscordproject.business.service.api.UserService;
 import com.javadiscordproject.business.service.implementation.UserMapper;
 import com.javadiscordproject.business.service.implementation.UserServiceImpl;
 import com.javadiscordproject.domain.model.UserModel;
@@ -19,22 +20,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
     
-	private UserServiceImpl userServiceImpl;
+	private UserService userService;
 	private UserMapper userMapper;
 	
-	public UserController(UserServiceImpl userServiceImpl, UserMapper userMapper) {
-		this.userServiceImpl = userServiceImpl;
+	public UserController(UserService userService, UserMapper userMapper) {
+		this.userService = userService;
 		this.userMapper = userMapper;
 	}
 	
 	@PostMapping("/register")
     public void registerUser(@Valid @RequestBody UserDTO userDTO) {
-        userServiceImpl.registerUser(userMapper.toModel(userDTO));
+        userService.registerUser(userMapper.toModel(userDTO));
     }
 	
 	@GetMapping("/findUserByUsername")
 	public ResponseEntity<UserModel> findUserByUsername(@RequestParam String username) {
-		UserModel user = userServiceImpl.findByUsername(username);
+		UserModel user = userService.findByUsername(username);
 	    if (user != null) {
 	        return ResponseEntity.ok(user);
 	    }
