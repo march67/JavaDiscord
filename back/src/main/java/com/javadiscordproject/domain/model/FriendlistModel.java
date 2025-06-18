@@ -31,7 +31,7 @@ public class FriendlistModel {
 	@MapsId("userId_2")
 	private UserModel user_2;
 	
-	private String friendRequest_status;
+	private String friendRequestStatus;
 	
 	public FriendlistModel() { 
 		this.id = new FriendlistId();
@@ -46,11 +46,11 @@ public class FriendlistModel {
 	}
 	
 	public String getFriendRequest_status() {
-		return friendRequest_status;
+		return friendRequestStatus;
 	}
 
-	public void setFriendRequest_status(String friendRequest_status) {
-		this.friendRequest_status = friendRequest_status;
+	public void setFriendRequest_status(String friendRequestStatus) {
+		this.friendRequestStatus = friendRequestStatus;
 	}
 
 	// Handle composite key

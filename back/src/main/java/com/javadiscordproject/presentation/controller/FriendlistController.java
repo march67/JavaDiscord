@@ -1,7 +1,12 @@
 package com.javadiscordproject.presentation.controller;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,26 +25,26 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/friendlist")
 public class FriendlistController {
-	private FriendlistService friendListService;
+	private FriendlistService friendlistService;
 	private FriendlistMapper friendlistMapper;
 	private JwtTokenUtil jwtTokenUtil;
 	
 	public FriendlistController(FriendlistService friendListService, FriendlistMapper friendlistMapper, JwtTokenUtil jwtTokenUtil) {
-		this.friendListService = friendListService;
+		this.friendlistService = friendListService;
 		this.friendlistMapper = friendlistMapper;
 		this.jwtTokenUtil = jwtTokenUtil;
 	}
 	
 	@PostMapping("/add-friend")
-	public ResponseEntity<FriendRequestDTO> addFriend(@RequestBody FriendRequestDTO friendRequestDTO, HttpServletRequest request) {
+	public ResponseEntity<Void> addFriend(@RequestBody FriendRequestDTO friendRequestDTO, HttpServletRequest request) {
 		// Retrieve the user ID of the friend request sender from the claims
 		String authHeader = request.getHeader("Authorization");
 		String token = authHeader.substring(7); // delete "Bearer " string		
 		friendRequestDTO.setUserId_1(jwtTokenUtil.extractUserId(token));
 				
 		// The friend request receiver user Id is taken from the body 
-		friendListService.sendFriendRequest(friendlistMapper.toModel(friendRequestDTO));
-		return null;
+		friendlistService.sendFriendRequest(friendlistMapper.toModel(friendRequestDTO));
+		return ResponseEntity.noContent().build();
 	}
 	
 	@PostMapping("/refuse")
@@ -49,7 +54,7 @@ public class FriendlistController {
 		String token = authHeader.substring(7);	
 		friendRequestDTO.setUserId_1(jwtTokenUtil.extractUserId(token));
 		
-		friendListService.refuseFriendRequest(friendlistMapper.toModel(friendRequestDTO));
+		friendlistService.refuseFriendRequest(friendlistMapper.toModel(friendRequestDTO));
 		
 		return ResponseEntity.noContent().build();
 	}
@@ -61,7 +66,7 @@ public class FriendlistController {
 		String token = authHeader.substring(7);	
 		friendRequestDTO.setUserId_1(jwtTokenUtil.extractUserId(token));
 		
-		friendListService.acceptFriendRequest(friendlistMapper.toModel(friendRequestDTO));
+		friendlistService.acceptFriendRequest(friendlistMapper.toModel(friendRequestDTO));
 		
 		return ResponseEntity.noContent().build();
 	}
@@ -74,7 +79,19 @@ public class FriendlistController {
 		
 		Long userId_2 = jwtTokenUtil.extractUserId(token);
         
-		friendListService.deleteFriend(friendId, userId_2);
+		friendlistService.deleteFriend(friendId, userId_2);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/get-friendlist")
+	public ResponseEntity<Set<Long>> getFriendlist(HttpServletRequest request) {
+		// Retrieve the user ID of the friend request sender from the claims
+		String authHeader = request.getHeader("Authorization");
+		String token = authHeader.substring(7);
+		Long userId = jwtTokenUtil.extractUserId(token);
+		
+		Set<Long> friendlistId = friendlistService.getFriendlist(userId);
 		
 		return ResponseEntity.noContent().build();
 	}
