@@ -1,12 +1,29 @@
 package com.javadiscordproject.business.service.implementation;
 
-import com.javadiscordproject.business.service.api.ConversationService;
+import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+import com.javadiscordproject.business.service.api.ConversationService;
+import com.javadiscordproject.domain.model.ConversationModel;
+import com.javadiscordproject.infrastructure.persistence.repository.ConversationRepository;
+
+@Service
 public class ConversationServiceImpl implements ConversationService {
+	private ConversationRepository conversationRepository;
+	
+	public ConversationServiceImpl(ConversationRepository conversationRepository) {
+		this.conversationRepository = conversationRepository;
+	}
+	
+	@Override
+	public void createConversation(ConversationModel conversationModel) {
+		conversationRepository.save(conversationModel);
+	}
 
 	@Override
-	public void createConversation(Long id) {
-		// TODO Auto-generated method stub
-		
+	public Optional<ConversationModel> findConversation(Long conversationId) {
+		Optional<ConversationModel> result = conversationRepository.findById(conversationId);
+		return result;
 	}
 }

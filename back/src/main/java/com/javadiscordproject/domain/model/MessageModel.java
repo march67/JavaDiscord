@@ -31,4 +31,16 @@ public class MessageModel {
     
     @CreationTimestamp
     private LocalDateTime createdAt;
+    
+    public MessageModel() {}
+    
+    public MessageModel(UserModel messageAuthor, ConversationModel conversation, String messageContent) {
+    	this.user = messageAuthor;
+    	this.conversation = conversation;
+    	this.messageContent = messageContent;
+    }
+
+	public Long getId() {
+		return this.id;
+	}
 }

@@ -1,5 +1,10 @@
 package com.javadiscordproject.business.service.api;
 
-public interface MessageService {
+import java.util.List;
 
+import com.javadiscordproject.domain.model.MessageModel;
+
+public interface MessageService {
+	void createMessage(MessageModel messageModel);
+	List<MessageModel> getMessagesByConversationId(Long conversationId);
 }
