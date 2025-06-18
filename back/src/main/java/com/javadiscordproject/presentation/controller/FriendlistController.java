@@ -1,12 +1,16 @@
 package com.javadiscordproject.presentation.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javadiscordproject.business.service.api.FriendlistService;
+import com.javadiscordproject.domain.model.FriendlistModel;
+import com.javadiscordproject.domain.model.UserModel;
 import com.javadiscordproject.infrastructure.security.jwt.JwtTokenUtil;
 import com.javadiscordproject.mapper.FriendlistMapper;
 import com.javadiscordproject.presentation.dto.Friendlist.FriendRequestDTO;
@@ -61,4 +65,18 @@ public class FriendlistController {
 		
 		return ResponseEntity.noContent().build();
 	}
+	
+	@DeleteMapping("/delete/{friendId}")
+	public ResponseEntity<Void> delete(@PathVariable Long userId_1, HttpServletRequest request) {		
+		// Retrieve the user ID of the friend request sender from the claims
+		String authHeader = request.getHeader("Authorization");
+		String token = authHeader.substring(7);
+		
+		Long userId_2 = jwtTokenUtil.extractUserId(token);
+        
+		friendListService.deleteFriend(userId_1, userId_2);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
 }

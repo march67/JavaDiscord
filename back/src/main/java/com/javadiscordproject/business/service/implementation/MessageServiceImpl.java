@@ -26,7 +26,4 @@ public class MessageServiceImpl implements MessageService {
 		List<MessageModel> messages = messageRepository.findByConversationId(conversationId);
 		return messages;
 	}
-	
-	
-
 }
