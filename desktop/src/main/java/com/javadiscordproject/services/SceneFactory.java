@@ -10,9 +10,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
+import static com.javadiscordproject.utils.UIConstants.DEFAULT_HEIGHT;
+import static com.javadiscordproject.utils.UIConstants.DEFAULT_WIDTH;
+
 public class SceneFactory {
-    private static final double DEFAULT_WIDTH = 800;
-    private static final double DEFAULT_HEIGHT = 500;
     private static final String CSS_PATH = "/styles/styles.css";
 
     private static final Map<SceneType, String> SCENE_RESOURCES = Map.of(
