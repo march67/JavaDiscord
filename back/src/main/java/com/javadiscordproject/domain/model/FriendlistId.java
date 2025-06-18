@@ -16,8 +16,14 @@ public class FriendlistId implements Serializable{
 	public FriendlistId() {}
 	
 	public FriendlistId(long userId_1, long userId_2) {
-		this.userId_1 = userId_1;
-		this.userId_2 = userId_2;
+		// Composite key rule order
+		if( userId_1 < userId_2) {
+			this.userId_1 = userId_1;
+			this.userId_2 = userId_2;
+		} else {
+			this.userId_1 = userId_2;
+			this.userId_2 = userId_1;
+		}
 	}
 
 	public Long getUserId_1() {

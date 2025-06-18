@@ -64,7 +64,7 @@ public class FriendlistServiceImpl implements FriendlistService {
 	}
 	
 	@Override
-	public Optional<FriendlistModel> findFriendRequest(Long userId1, Long userId2) {
+	public Optional<FriendlistModel> findFriendRequest(Long userId1, Long userId2) {		
 		FriendlistId id = new FriendlistId(userId1, userId2);
 		Optional<FriendlistModel> entity = friendlistRepository.findById(id);
 		return entity;
