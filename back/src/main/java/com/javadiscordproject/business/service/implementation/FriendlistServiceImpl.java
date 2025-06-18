@@ -25,21 +25,33 @@ public class FriendlistServiceImpl implements FriendlistService {
 
 	@Override
 	public void acceptFriendRequest(FriendlistModel friendlistModel) {
-		// TODO Auto-generated method stub
-		
+		findFriendRequest(friendlistModel).ifPresentOrElse(
+				entity -> {
+					entity.setFriendRequest_status("accepted");
+					friendlistRepository.save(entity);
+				},
+				() -> System.out.println("Friend request not found")
+				
+			);
 	}
 
 	@Override
 	public void refuseFriendRequest(FriendlistModel friendlistModel) {
-		// TODO Auto-generated method stub
-		
+		findFriendRequest(friendlistModel).ifPresentOrElse(
+				entity -> {
+					entity.setFriendRequest_status("refused");
+					friendlistRepository.save(entity);
+				},
+				() -> System.out.println("Friend request not found")
+				
+			);
 	}
 
 	@Override
-	public void findFriendRequest(FriendlistModel friendlistModel) {
+	public Optional<FriendlistModel> findFriendRequest(FriendlistModel friendlistModel) {
 		FriendlistId id = new FriendlistId(friendlistModel.getUserId_1(), friendlistModel.getUserId_2());
-		Optional<FriendlistModel> result = friendlistRepository.findById(id);
-		System.out.println(result);
+		Optional<FriendlistModel> entity = friendlistRepository.findById(id);
+		return entity;
 	}
 
 }
