@@ -54,19 +54,39 @@ public class FriendlistModel {
 	}
 
 	// Handle composite key
-	public void setUsers(UserModel user1, UserModel user2) {
-		this.user_1 = user1;
-		this.user_2 = user2;
+	public void setUsers(UserModel user1, UserModel user2) {		
+		// handle pair order to avoid duplicata, always lowest as user_1
+		Long minId = Math.min(user1.getId(), user2.getId());
+		Long maxId = Math.max(user1.getId(), user2.getId());
+		if (user1.getId() < user2.getId()) {
+			this.user_1 = user1;
+			this.user_2 = user2;
+		} else {
+			this.user_1 = user2;
+			this.user_2 = user1;
+		}
 		
 	    // Synchronize IDs between the composite ID and the foreign keys IDs
 	    if (user1 != null) {
-	        this.userId1 = user1.getId(); // foreign key 1
-	        this.id.setUserId_1(user1.getId()); // composite ID
+	        this.userId1 = minId; // foreign key 1
+	        this.id.setUserId_1(minId); // composite ID
 	    }
 	    
 	    if (user2 != null) {
-	        this.userId2 = user2.getId(); // foreign key 2
-	        this.id.setUserId_2(user2.getId()); // composite ID
+	        this.userId2 = maxId; // foreign key 2
+	        this.id.setUserId_2(maxId); // composite ID
 	    }
+	}
+	
+	public FriendlistId getId() {
+		return this.id;
+	}
+	
+	public Long getUserId_1() {
+		return this.userId1;
+	}
+	
+	public Long getUserId_2() {
+		return this.userId2;
 	}
 }

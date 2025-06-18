@@ -1,5 +1,6 @@
 package com.javadiscordproject.infrastructure.security.jwt;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class CustomUserDetails implements UserDetails {
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("ROLE_" + role));
+		//return List.of(new SimpleGrantedAuthority("ROLE_" + role));
+		return Arrays.asList(new SimpleGrantedAuthority("ROLE_" + role));
 	}
 
 	@Override

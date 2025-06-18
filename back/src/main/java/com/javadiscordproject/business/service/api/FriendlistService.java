@@ -6,4 +6,5 @@ public interface FriendlistService {
 	public void sendFriendRequest(FriendlistModel friendlistModel);
 	public void acceptFriendRequest(FriendlistModel friendlistModel);
 	public void refuseFriendRequest(FriendlistModel friendlistModel);
+	public void findFriendRequest(FriendlistModel model);
 }

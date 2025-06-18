@@ -37,4 +37,26 @@ public class FriendlistController {
 		friendListService.sendFriendRequest(friendlistMapper.toModel(friendRequestDTO));
 		return null;
 	}
+	
+	@PostMapping("/refuse")
+	public ResponseEntity<Void> refuse(@RequestBody FriendRequestDTO friendRequestDTO, HttpServletRequest request) {
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PostMapping("/accept")
+	public ResponseEntity<Void> accept(@RequestBody FriendRequestDTO friendRequestDTO, HttpServletRequest request) {
+		// Retrieve the user ID of the friend request sender from the claims
+		String authHeader = request.getHeader("Authorization");
+		String token = authHeader.substring(7);	
+		friendRequestDTO.setUserId_1(jwtTokenUtil.extractUserId(token));
+		
+		try {
+			friendListService.findFriendRequest(friendlistMapper.toModel(friendRequestDTO));
+		} catch (Exception e) {
+			System.out.println("Exception levée de type : " + e);
+		}
+		
+		return ResponseEntity.noContent().build();
+	}
 }
