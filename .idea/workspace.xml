@@ -5,15 +5,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0d0e107-d0c4-427e-935e-296e583e5dd3" name="Changes" comment="ws ok no security">
-      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/ws/JwtAuthenticationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/api/ConversationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/api/FriendlistService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/api/MessageService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/implementation/ConversationServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/implementation/FriendlistServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/implementation/MessageServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/ConversationModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/FriendlistId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/FriendlistModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/MessageModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/UserConversationId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/UserConversationModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/persistence/repository/ConversationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/persistence/repository/FriendlistRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/security/jwt/CustomUserDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/mapper/FriendlistMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/FriendlistController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/dto/Friendlist/FriendRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker/dockerfiles/maven/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documentation/LoopingImage.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documentation/mcd.lo1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documentation/mcd.loo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/b44e5d86-c4c6-49f1-8a51-6df2402d9411.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b44e5d86-c4c6-49f1-8a51-6df2402d9411.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/ChatMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/ChatMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/WebsocketConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/WebsocketConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/back/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/api/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/api/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/implementation/CustomUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/implementation/CustomUserDetailsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/implementation/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/implementation/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/implementation/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/UserModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/domain/model/UserModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/persistence/dao/api/UserDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/persistence/dao/implementation/UserDaoImpl.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/persistence/repository/MessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/persistence/repository/MessageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/persistence/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/persistence/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/security/jwt/JwtTokenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/security/jwt/JwtTokenUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/dto/AuthRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/dto/Auth/AuthRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/dto/AuthResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/dto/Auth/AuthResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/dto/User/UserDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/back/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/test/java/com/javadiscordproject/infrastructure/persistence/dao/UserDaoImplTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +91,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Docker.docker.postgresql: Compose Deployment.executor": "Run",
+    "Docker.docker: Compose Deployment.executor": "Run",
     "Maven.Desktop_Front.executor": "Run",
     "Maven.back.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
@@ -62,13 +101,14 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.Main.executor": "Run",
-    "git-widget-placeholder": "feature/SCRUM-71-mise-en-place-du-web-socket",
+    "git-widget-placeholder": "Merging feature/SCRUM-71-mise-en-place-du-web-socket",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "corretto-21",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Thomas/IdeaProjects/moreless-bitbucket",
+    "last_opened_file_path": "C:/Users/thoma/IdeaProjects/moreless-bitbucket/back",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -89,16 +129,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\thoma\IdeaProjects\moreless-bitbucket\back" />
       <recent name="C:\Users\Thomas\IdeaProjects\moreless-bitbucket\back" />
       <recent name="C:\Users\Thomas\IdeaProjects\moreless-bitbucket\docker" />
       <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\back" />
       <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\docker" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\thoma\IdeaProjects\moreless-bitbucket\docker" />
       <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\desktop\src\main\resources\styles\view" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.Desktop_Front">
+  <component name="RunManager" selected="Maven.back">
     <configuration name="Desktop_Front" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -173,13 +215,44 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker.postgresql: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="postgresql" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
+      <item itemvalue="Docker.docker.postgresql: Compose Deployment" />
+      <item itemvalue="Docker.docker: Compose Deployment" />
       <item itemvalue="Maven.Desktop_Front" />
       <item itemvalue="Maven.back" />
       <item itemvalue="Spring Boot.Main" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker: Compose Deployment" />
+        <item itemvalue="Docker.docker.postgresql: Compose Deployment" />
         <item itemvalue="Spring Boot.Main" />
       </list>
     </recent_temporary>
@@ -187,8 +260,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -218,6 +291,9 @@
       <workItem from="1750077883671" duration="2595000" />
       <workItem from="1750080493156" duration="3761000" />
       <workItem from="1750084812539" duration="929000" />
+      <workItem from="1750162898582" duration="240000" />
+      <workItem from="1750163246675" duration="2616000" />
+      <workItem from="1750404487182" duration="175000" />
     </task>
     <task id="LOCAL-00001" summary="ws ok no security">
       <option name="closed" value="true" />
@@ -232,6 +308,9 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

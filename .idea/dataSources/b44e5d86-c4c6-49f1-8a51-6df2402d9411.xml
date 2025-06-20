@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="test@localhost">
-  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.52">
+  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
     <root id="1">
       <DateStyle>mdy</DateStyle>
       <IntrospectionStateNumber>798</IntrospectionStateNumber>
@@ -4859,32 +4859,32 @@ true posixrules
       <OwnerName>test</OwnerName>
     </table>
     <column id="270" parent="266" name="application_user_id">
-      <DasType>uuid|0s</DasType>
       <DefaultExpression>gen_random_uuid()</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>740</StateNumber>
+      <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
     <column id="271" parent="266" name="email">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>767</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="272" parent="266" name="username">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>769</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="273" parent="266" name="password">
-      <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>768</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <index id="274" parent="266" name="application_user_pkey">
@@ -4938,18 +4938,18 @@ true posixrules
       <UnderlyingIndexId>16458</UnderlyingIndexId>
     </key>
     <column id="280" parent="267" name="conversation_id">
-      <DasType>uuid|0s</DasType>
       <DefaultExpression>gen_random_uuid()</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>741</StateNumber>
+      <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
     <column id="281" parent="267" name="application_user_id">
-      <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>741</StateNumber>
+      <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
     <foreign-key id="282" parent="267" name="conversation_application_user_id_fkey">
@@ -4977,17 +4977,17 @@ true posixrules
       <UnderlyingIndexId>16401</UnderlyingIndexId>
     </key>
     <column id="285" parent="268" name="application_user_id">
-      <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>742</StateNumber>
+      <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
     <column id="286" parent="268" name="conversation_id">
-      <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>742</StateNumber>
+      <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
     <foreign-key id="287" parent="268" name="conversationparticipant_application_user_id_fkey">
@@ -5024,56 +5024,56 @@ conversation_id</ColNames>
       <UnderlyingIndexId>16411</UnderlyingIndexId>
     </key>
     <column id="291" parent="269" name="message_id">
-      <DasType>uuid|0s</DasType>
       <DefaultExpression>gen_random_uuid()</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>789</StateNumber>
+      <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
     <column id="292" parent="269" name="application_user_id">
-      <DasType>uuid|0s</DasType>
       <Position>2</Position>
       <StateNumber>789</StateNumber>
+      <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
     <column id="293" parent="269" name="conversation_id">
-      <DasType>uuid|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>789</StateNumber>
+      <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
     <column id="294" parent="269" name="message_content">
-      <DasType>varchar(500)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>789</StateNumber>
+      <StoredType>varchar(500)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="295" parent="269" name="created_at">
-      <DasType>timestamp|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>789</StateNumber>
+      <StoredType>timestamp|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
     <column id="296" parent="269" name="content">
-      <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
       <StateNumber>795</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="297" parent="269" name="sender">
-      <DasType>varchar(255)|0s</DasType>
       <Position>7</Position>
       <StateNumber>796</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <column id="298" parent="269" name="timestamp">
-      <DasType>varchar(255)|0s</DasType>
       <Position>8</Position>
       <StateNumber>797</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
     <foreign-key id="299" parent="269" name="message_application_user_id_fkey">

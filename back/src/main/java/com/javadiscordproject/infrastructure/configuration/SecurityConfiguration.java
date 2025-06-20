@@ -27,7 +27,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/authenticate", "/users").permitAll()
+                .requestMatchers("/authenticate", "/user/register").permitAll()
                     .requestMatchers("/chat/**").permitAll()
                 .anyRequest().authenticated())
             .sessionManagement(session -> session

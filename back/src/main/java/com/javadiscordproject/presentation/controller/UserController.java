@@ -1,38 +1,42 @@
 package com.javadiscordproject.presentation.controller;
 
-import com.javadiscordproject.business.service.implementation.UserMapper;
+import com.javadiscordproject.business.service.api.UserService;
 import com.javadiscordproject.business.service.implementation.UserServiceImpl;
 import com.javadiscordproject.domain.model.UserModel;
-import com.javadiscordproject.presentation.dto.UserDTO;
+import com.javadiscordproject.infrastructure.security.jwt.JwtTokenUtil;
+import com.javadiscordproject.mapper.UserMapper;
+import com.javadiscordproject.presentation.dto.User.UserDTO;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
-    
-	private UserServiceImpl userServiceImpl;
+	private UserService userService;
 	private UserMapper userMapper;
 	
-	public UserController(UserServiceImpl userServiceImpl, UserMapper userMapper) {
-		this.userServiceImpl = userServiceImpl;
+	public UserController(UserService userService, UserMapper userMapper) {
+		this.userService = userService;
 		this.userMapper = userMapper;
 	}
 	
-	@PostMapping("/users")
+	@PostMapping("/register")
     public void registerUser(@Valid @RequestBody UserDTO userDTO) {
-        userServiceImpl.registerUser(userMapper.toModel(userDTO));
+        userService.registerUser(userMapper.toModel(userDTO));
     }
 	
-	@GetMapping("/getUser")
+	@GetMapping("/findUserByUsername")
 	public ResponseEntity<UserModel> findUserByUsername(@RequestParam String username) {
-	    UserModel user = userServiceImpl.findByUsername(username);
+		UserModel user = userService.findByUsername(username);
 	    if (user != null) {
 	        return ResponseEntity.ok(user);
 	    }
@@ -41,11 +45,5 @@ public class UserController {
 		
 	@GetMapping("/test")
 	public void test() {
-		
-	}
-	
-	@GetMapping("/testTokenJwt")
-	public void testTokenJwt() {
-		
 	}
 }

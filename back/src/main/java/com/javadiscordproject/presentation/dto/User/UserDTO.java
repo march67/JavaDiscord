@@ -1,4 +1,4 @@
-package com.javadiscordproject.presentation.dto;
+package com.javadiscordproject.presentation.dto.User;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

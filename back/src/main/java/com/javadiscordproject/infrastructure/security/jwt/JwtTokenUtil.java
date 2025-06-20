@@ -17,6 +17,7 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtTokenUtil {
+	// class that can be used by any other classes that need anything related to the JWT
     
     @Value("${jwt.secret}")
     private String secret;
@@ -40,11 +41,23 @@ public class JwtTokenUtil {
     
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        
+        // custom claims
+        CustomUserDetails customUser = (CustomUserDetails) userDetails;
+        claims.put("userId", customUser.getId());
+        
         return createToken(claims, userDetails.getUsername());
     }
 
+    // extract the user Name from the claim
     public String extractUsername(String token) {
         return extractAllClaims(token).getSubject();
+    }
+    
+    // extract the user ID from the claim ( custom claim )
+    public Long extractUserId(String token) {
+    	Claims claims = extractAllClaims(token);
+    	return claims.get("userId", Long.class);
     }
 
     public Date extractExpiration(String token) {

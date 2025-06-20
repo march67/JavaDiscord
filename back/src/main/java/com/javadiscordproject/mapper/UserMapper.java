@@ -1,9 +1,9 @@
-package com.javadiscordproject.business.service.implementation;
+package com.javadiscordproject.mapper;
 
 import org.springframework.stereotype.Component;
 
 import com.javadiscordproject.domain.model.UserModel;
-import com.javadiscordproject.presentation.dto.UserDTO;
+import com.javadiscordproject.presentation.dto.User.UserDTO;
 
 @Component
 public class UserMapper {
