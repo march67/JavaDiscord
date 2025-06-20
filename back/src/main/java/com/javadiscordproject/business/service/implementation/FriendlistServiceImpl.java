@@ -97,7 +97,6 @@ public class FriendlistServiceImpl implements FriendlistService {
 
 	@Override
 	public Set<Long> getUsersIdFromFriendlist(Long userId) {
-		// Merging result of both where current user is in column 1 & or column 2		
 		Set<Long> friendIds = new HashSet<>(); // unique id
 		
 		// Fill the Set, either try to retrieve the first or second user of the relation
@@ -113,15 +112,26 @@ public class FriendlistServiceImpl implements FriendlistService {
 	
 	@Override
 	public Set<String> getFriendRequestsReturnUsername(Long userId) {
-		// TODO Auto-generated method stub
-		return null;
+		Set<String> friendNames = new HashSet<>();
+		
+		// Fill the Set, either try to retrieve the first or second user of the relation
+		for ( FriendlistModel relation : getFriendlistByStatus(userId, "pending") ) {
+			if (!relation.getId().getUserId_1().equals(userId)) {
+				friendNames.add(relation.getUserName_1());
+			} else if (!relation.getId().getUserId_2().equals(userId)) {
+				friendNames.add(relation.getUserName_2());
+			}
+		}
+		return friendNames;
 	}
 
 	
 	@Override
 	public Set<String> getUsersUsernameFromFriendlist(Long userId) {
-		Set<Long> usersId = getUsersIdFromFriendlist(userId);
 		Set<String> usersName = new HashSet<String>();
+		
+		Set<Long> usersId = getUsersIdFromFriendlist(userId);
+		
 		for ( Long id : usersId ) {
 			usersName.add(userService.getUsernameById(id));
 		}

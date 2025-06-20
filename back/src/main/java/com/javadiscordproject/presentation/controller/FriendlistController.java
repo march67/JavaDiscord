@@ -96,15 +96,14 @@ public class FriendlistController {
 		return ResponseEntity.ok(friendlistUsersUsername);
 	}
 	
-	@GetMapping("/friend-requests")
-	public ResponseEntity<Set<String>> getFriendRequests(HttpServletRequest request) {
+	@GetMapping("/pending-friend-requests")
+	public ResponseEntity<Set<String>> getPendingFriendRequests(HttpServletRequest request) {
 		// Retrieve the user ID of the friend request sender from the claims
 		String authHeader = request.getHeader("Authorization");
 		String token = authHeader.substring(7);
 		Long userId = jwtTokenUtil.extractUserId(token);
 		
-		//Set<String> friendRequests = friendlistService.getFriendRequestsReturnUsername(userId);
-		//return ResponseEntity.ok(friendRequests);
-		return null;
+		Set<String> friendRequests = friendlistService.getFriendRequestsReturnUsername(userId);
+		return ResponseEntity.ok(friendRequests);
 	}
 }

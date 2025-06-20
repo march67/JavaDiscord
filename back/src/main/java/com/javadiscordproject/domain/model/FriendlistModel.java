@@ -89,4 +89,12 @@ public class FriendlistModel {
 	public Long getUserId_2() {
 		return this.userId2;
 	}
+	
+	public String getUserName_1() {
+		return this.user_1.getUsername();
+	}
+	
+	public String getUserName_2() {
+		return this.user_1.getUsername();
+	}
 }
