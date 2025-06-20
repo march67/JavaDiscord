@@ -9,6 +9,7 @@ import com.javadiscordproject.domain.model.UserModel;
 
 public interface FriendlistService {
 	public void sendFriendRequest(FriendlistModel friendlistModel);
+	public void sendFriendRequestByUsername(Long idRequester, String username);
 	public void acceptFriendRequest(FriendlistModel friendlistModel);
 	public void refuseFriendRequest(FriendlistModel friendlistModel);
 	public Optional<FriendlistModel> findFriendRequest(FriendlistModel model);
@@ -17,5 +18,6 @@ public interface FriendlistService {
 	public List<FriendlistModel> getFriendlistByStatus(Long userId, String status);
 	public Set<Long> getUsersIdFromFriendlist(Long userId);
 	public Set<String> getUsersUsernameFromFriendlist(Long userId);
-	public Set<String> getFriendRequestsReturnUsername(Long userId);
+	public Set<String> getPendingFriendRequestsReturnUsername(Long userId);
+	
 }

@@ -4,6 +4,8 @@ import com.javadiscordproject.business.service.api.UserService;
 import com.javadiscordproject.domain.model.UserModel;
 import com.javadiscordproject.infrastructure.persistence.repository.UserRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,13 @@ public class UserServiceImpl implements UserService {
 		userModel.setPassword(passwordEncoder.encode(userModel.getPassword())); // crypt the password before saving in the DB => allow jwt and security config to work properly 
 		userRepository.save(userModel);
 	}
+	
+	@Override
+	public UserModel findUserById(Long id) {
+		return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+	}
 
-	public UserModel getUserByUsername(String username) {
+	public UserModel findUserByUsername(String username) {
 		return userRepository.findByUsername(username);
 	}
 

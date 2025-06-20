@@ -36,7 +36,7 @@ public class UserController {
 	
 	@GetMapping("/findUserByUsername")
 	public ResponseEntity<UserModel> findUserByUsername(@RequestParam String username) {
-		UserModel user = userService.getUserByUsername(username);
+		UserModel user = userService.findUserByUsername(username);
 	    if (user != null) {
 	        return ResponseEntity.ok(user);
 	    }

@@ -37,6 +37,20 @@ public class FriendlistServiceImpl implements FriendlistService {
 	}
 	
 	@Override
+	public void sendFriendRequestByUsername(Long idRequester, String username) {
+		FriendlistModel friendlistModel = new FriendlistModel();
+		
+    	// Search for the two existing users
+    	UserModel user1 = userService.findUserById(idRequester);
+    	UserModel user2 = userService.findUserByUsername(username);
+        friendlistModel.setUsers(user1, user2);
+        
+        // Set status & save relation
+        friendlistModel.setFriendRequest_status("pending");
+        friendlistRepository.save(friendlistModel);
+	}
+	
+	@Override
 	public void acceptFriendRequest(FriendlistModel friendlistModel) {
 		findFriendRequest(friendlistModel).ifPresentOrElse(
 				entity -> {
@@ -52,8 +66,7 @@ public class FriendlistServiceImpl implements FriendlistService {
 	public void refuseFriendRequest(FriendlistModel friendlistModel) {
 		findFriendRequest(friendlistModel).ifPresentOrElse(
 				entity -> {
-					entity.setFriendRequest_status("refused");
-					friendlistRepository.save(entity);
+					friendlistRepository.delete(entity);
 				},
 				() -> System.out.println("Friend request not found")
 				
@@ -103,7 +116,7 @@ public class FriendlistServiceImpl implements FriendlistService {
 		for ( FriendlistModel relation : getFriendlistByStatus(userId, "accepted") ) {
 			if (!relation.getId().getUserId_1().equals(userId)) {
 				friendIds.add(relation.getId().getUserId_1());
-			} else if (!relation.getId().getUserId_2().equals(userId)) {
+			} else {
 				friendIds.add(relation.getId().getUserId_2());
 			}
 		}
@@ -111,14 +124,14 @@ public class FriendlistServiceImpl implements FriendlistService {
 	}
 	
 	@Override
-	public Set<String> getFriendRequestsReturnUsername(Long userId) {
+	public Set<String> getPendingFriendRequestsReturnUsername(Long userId) {
 		Set<String> friendNames = new HashSet<>();
 		
-		// Fill the Set, either try to retrieve the first or second user of the relation
+		// Fill the Set, either try to retrieve the first or second user of the relation ( excludes search of the current user himself )
 		for ( FriendlistModel relation : getFriendlistByStatus(userId, "pending") ) {
 			if (!relation.getId().getUserId_1().equals(userId)) {
 				friendNames.add(relation.getUserName_1());
-			} else if (!relation.getId().getUserId_2().equals(userId)) {
+			} else {
 				friendNames.add(relation.getUserName_2());
 			}
 		}
@@ -130,14 +143,15 @@ public class FriendlistServiceImpl implements FriendlistService {
 	public Set<String> getUsersUsernameFromFriendlist(Long userId) {
 		Set<String> usersName = new HashSet<String>();
 		
-		Set<Long> usersId = getUsersIdFromFriendlist(userId);
-		
-		for ( Long id : usersId ) {
-			usersName.add(userService.getUsernameById(id));
+		// Fill the Set, either try to retrieve the first or second user of the relation ( excludes search of the current user himself )
+		for ( FriendlistModel relation : getFriendlistByStatus(userId, "accepted") ) {
+			if (!relation.getId().getUserId_1().equals(userId)) {
+				usersName.add(relation.getUserName_1());
+			} else {
+				usersName.add(relation.getUserName_2());
+			}
 		}
-		
+
 		return usersName;
 	}
-
-
 }
