@@ -5,6 +5,7 @@ import com.javadiscordproject.models.UserSession;
 public class SessionManager {
     private static SessionManager instance;
     private UserSession currentSession;
+    private String token;
 
     private SessionManager() {
     }
@@ -38,5 +39,13 @@ public class SessionManager {
 
     public String getEmail() {
         return isAuthenticated() ? currentSession.getEmail() : null;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

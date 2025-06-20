@@ -1,5 +1,6 @@
 package com.javadiscordproject.services.websocket;
 
+import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.ChatMessageDTO;
 import com.javadiscordproject.utils.CustomStompSessionHandler;
 import javafx.application.Platform;
@@ -8,6 +9,7 @@ import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
+import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
@@ -26,7 +28,6 @@ public class WebSocketService {
     private boolean isConnected = false;
     private static final int CONNECTION_TIMEOUT_SECONDS = 3; // Timeout after 3 seconds
 
-    // Constructor
     public WebSocketService() {}
 
     // Connect to WebSocket server with timeout
@@ -43,18 +44,21 @@ public class WebSocketService {
 
             // Connect and get session with timeout
             StompSessionHandler sessionHandler = new CustomStompSessionHandler();
-            try {
-                stompSession = stompClient.connectAsync(WEBSOCKET_URL, sessionHandler)
-                        .get(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
-            } catch (TimeoutException e) {
-                System.out.println("Connection timed out after " + CONNECTION_TIMEOUT_SECONDS + " seconds");
-                isConnected = false;
-                return false;
-            }
 
-            // If we got here, we're connected
+            // FIXED: Add JWT token to HTTP headers instead of STOMP headers
+            WebSocketHttpHeaders httpHeaders = new WebSocketHttpHeaders();
+            String jwtToken = SessionManager.getInstance().getToken();
+            System.out.println("JWT token: " + jwtToken);
+            httpHeaders.add("Authorization", "Bearer " + jwtToken);
+
+            // Use empty STOMP headers since authentication is now in HTTP headers
+            StompHeaders connectHeaders = new StompHeaders();
+
+            stompSession = stompClient
+                    .connectAsync(WEBSOCKET_URL, httpHeaders, connectHeaders, sessionHandler)
+                    .get(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+
             if (stompSession != null && stompSession.isConnected()) {
-                // Subscribe to the topic
                 stompSession.subscribe(TOPIC_ENDPOINT, new StompFrameHandler() {
                     @Override
                     public Type getPayloadType(StompHeaders headers) {
@@ -83,6 +87,10 @@ public class WebSocketService {
         } catch (InterruptedException | ExecutionException e) {
             System.out.println("Error connecting: " + e.getMessage());
             e.printStackTrace();
+            isConnected = false;
+            return false;
+        } catch (TimeoutException e) {
+            System.out.println("Connection timed out after " + CONNECTION_TIMEOUT_SECONDS + " seconds");
             isConnected = false;
             return false;
         }

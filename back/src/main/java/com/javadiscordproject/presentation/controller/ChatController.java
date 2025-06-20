@@ -1,7 +1,7 @@
 package com.javadiscordproject.presentation.controller;
 
-import com.javadiscordproject.domain.model.ChatMessage;
 import com.javadiscordproject.infrastructure.persistence.repository.MessageRepository;
+import com.javadiscordproject.presentation.dto.Chat.MessageDTO;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -23,22 +23,19 @@ public class ChatController {
 
     @MessageMapping("/chat")
     @SendTo("/topic/messages")
-    public ChatMessage handleMessage(ChatMessage message, SimpMessageHeaderAccessor headerAccessor) {
-        // Get authenticated user from WebSocket session
+    public MessageDTO handleMessage(MessageDTO message, SimpMessageHeaderAccessor headerAccessor) {
         Principal user = headerAccessor.getUser();
         if (user != null) {
-            // Set the sender from the authenticated user
             message.setSender(user.getName());
         }
 
-        // Set timestamp
         message.setTimestamp(LocalDateTime.now().toString());
 
         saveMessageToDatabase(message);
         return message;
     }
 
-    private void saveMessageToDatabase(ChatMessage message) {
+    private void saveMessageToDatabase(MessageDTO message) {
         // messageRepository.save(message);
         System.out.println("Message : " + message.getSender() + " " + message.getContent() + " " + message.getTimestamp());
     }

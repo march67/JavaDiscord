@@ -7,5 +7,5 @@ import com.javadiscordproject.models.LoginDTO;
 
 public interface IAuthService {
     CompletableFuture<Boolean> register(RegisterDTO registerDto);
-    CompletableFuture<Boolean> login(LoginDTO loginDto);
+    CompletableFuture<String> login(LoginDTO loginDto);
 }

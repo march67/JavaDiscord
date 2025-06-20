@@ -1,37 +1,22 @@
-package com.javadiscordproject.domain.model;
+package com.javadiscordproject.presentation.dto.Chat;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
-@Entity
-@Table(name = "Message")
-public class ChatMessage {
+public class MessageDTO {
 
-    @Id
-    @GeneratedValue
-    private Long applicationMessageId;
     private String sender;
     private String content;
     private String timestamp;
 
-    public ChatMessage() {
+    public MessageDTO() {
     }
 
-    public ChatMessage(String sender, String content, String timestamp) {
+    public MessageDTO(String sender, String content, String timestamp) {
         super();
         this.sender = sender;
         this.content = content;
         this.timestamp = timestamp;
-    }
-
-    // Getters et setters
-
-    public long getApplicationMessageId() {
-        return this.applicationMessageId;
-    }
-
-    public void setApplicationMessageId(long applicationMessageId) {
-        this.applicationMessageId = applicationMessageId;
     }
 
     public String getTimestamp() {
@@ -58,4 +43,3 @@ public class ChatMessage {
         this.sender = sender;
     }
 }
-

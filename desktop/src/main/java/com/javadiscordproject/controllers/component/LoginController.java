@@ -76,10 +76,11 @@ public class LoginController {
             LoginDTO loginDto = new LoginDTO(username, password);
 
             authService.login(loginDto)
-                    .thenAccept(success -> {
+                    .thenAccept(token -> {
                         Platform.runLater(() -> {
                             setLoading(false);
-                            if (success) {
+                            if (!token.isEmpty()) {
+                                SessionManager.getInstance().setToken(token);
                                 handleSuccessfulLogin(username);
                             } else {
                                 showError("Login Failed",

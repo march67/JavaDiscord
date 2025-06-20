@@ -28,8 +28,8 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/authenticate", "/user/register").permitAll()
-                    .requestMatchers("/chat/**").permitAll()
-                .anyRequest().authenticated())
+                    .requestMatchers("/ws", "/ws/**").permitAll()
+                    .anyRequest().authenticated())
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -45,4 +45,5 @@ public class SecurityConfiguration {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
+
 }

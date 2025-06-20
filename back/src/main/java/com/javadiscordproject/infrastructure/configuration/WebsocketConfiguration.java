@@ -1,6 +1,7 @@
 package com.javadiscordproject.infrastructure.configuration;
 
 import com.javadiscordproject.business.service.ws.JwtAuthenticationService;
+import com.javadiscordproject.infrastructure.interceptor.JwtHandshakeInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -29,6 +30,7 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
         this.jwtAuthenticationService = jwtAuthenticationService;
     }
 
+
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.enableSimpleBroker("/topic");
@@ -37,8 +39,9 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat")
-                .setAllowedOriginPatterns("*");
+        registry.addEndpoint("/ws")
+                .setAllowedOriginPatterns("*")
+                .addInterceptors(new JwtHandshakeInterceptor());
     }
 
     @Override
