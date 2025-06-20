@@ -35,7 +35,7 @@ public class FriendlistServiceImpl implements FriendlistService {
 		friendlistModel.setFriendRequest_status("pending");
 		friendlistRepository.save(friendlistModel);
 	}
-
+	
 	@Override
 	public void acceptFriendRequest(FriendlistModel friendlistModel) {
 		findFriendRequest(friendlistModel).ifPresentOrElse(
@@ -84,19 +84,24 @@ public class FriendlistServiceImpl implements FriendlistService {
 				() -> System.out.println("Friend relation not found")
 			);
 	}
+	
+	@Override
+	public List<FriendlistModel> getFriendlistByStatus(Long userId, String status) {
+		// Merging result of both where current user is in column 1 & or column 2
+		List<FriendlistModel> friendlist_part_1 = friendlistRepository.findByUserId1AndFriendRequestStatus(userId, status);
+		List<FriendlistModel> friendlist_part_2 = friendlistRepository.findByUserId2AndFriendRequestStatus(userId, status);
+		List<FriendlistModel> friendlist = new ArrayList<>(friendlist_part_1);
+		friendlist.addAll(friendlist_part_2);
+		return friendlist;
+	}
 
 	@Override
 	public Set<Long> getUsersIdFromFriendlist(Long userId) {
-		// Merging result of both where current user is in column 1 & or column 2
-		List<FriendlistModel> friendlist_part_1 = friendlistRepository.findByUserId1AndFriendRequestStatus(userId, "accepted");
-		List<FriendlistModel> friendlist_part_2 = friendlistRepository.findByUserId2AndFriendRequestStatus(userId, "accepted");
-		List<FriendlistModel> friendlist = new ArrayList<>(friendlist_part_1);
-		friendlist.addAll(friendlist_part_2);
-		
+		// Merging result of both where current user is in column 1 & or column 2		
 		Set<Long> friendIds = new HashSet<>(); // unique id
 		
 		// Fill the Set, either try to retrieve the first or second user of the relation
-		for ( FriendlistModel relation : friendlist ) {
+		for ( FriendlistModel relation : getFriendlistByStatus(userId, "accepted") ) {
 			if (!relation.getId().getUserId_1().equals(userId)) {
 				friendIds.add(relation.getId().getUserId_1());
 			} else if (!relation.getId().getUserId_2().equals(userId)) {
@@ -105,6 +110,13 @@ public class FriendlistServiceImpl implements FriendlistService {
 		}
 		return friendIds;
 	}
+	
+	@Override
+	public Set<String> getFriendRequestsReturnUsername(Long userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	@Override
 	public Set<String> getUsersUsernameFromFriendlist(Long userId) {
@@ -116,4 +128,6 @@ public class FriendlistServiceImpl implements FriendlistService {
 		
 		return usersName;
 	}
+
+
 }
