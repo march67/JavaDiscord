@@ -1,9 +1,11 @@
 package com.javadiscordproject.business.service.api;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.javadiscordproject.domain.model.FriendlistId;
 import com.javadiscordproject.domain.model.FriendlistModel;
 import com.javadiscordproject.domain.model.UserModel;
 
@@ -19,5 +21,4 @@ public interface FriendlistService {
 	public Set<Long> getUsersIdFromFriendlist(Long userId);
 	public Set<String> getUsersUsernameFromFriendlist(Long userId);
 	public Set<String> getPendingFriendRequestsReturnUsername(Long userId);
-	
 }

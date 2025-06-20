@@ -1,7 +1,10 @@
 package com.javadiscordproject.domain.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,13 +20,29 @@ public class ConversationModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @CreationTimestamp
+    private LocalDateTime lastMessageDateTime;
+    
     public ConversationModel() {}
     
     public ConversationModel(Long id) {
     	this.id = id;
     }
     
+    public ConversationModel(Long id, LocalDateTime lastMessageDateTime) {
+    	this.lastMessageDateTime = lastMessageDateTime;
+    	this.id = id;
+    }
+    
     public Long getId() {
     	return this.id;
     }
+    
+	public LocalDateTime getLastMessageDateTime() {
+		return lastMessageDateTime;
+	}
+
+	public void setLastMessageDateTime(LocalDateTime lastMessageDateTime) {
+		this.lastMessageDateTime = lastMessageDateTime;
+	}
 } 

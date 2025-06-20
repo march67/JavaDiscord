@@ -1,5 +1,6 @@
 package com.javadiscordproject.business.service.implementation;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -25,5 +26,13 @@ public class ConversationServiceImpl implements ConversationService {
 	public Optional<ConversationModel> findConversation(Long conversationId) {
 		Optional<ConversationModel> result = conversationRepository.findById(conversationId);
 		return result;
+	}
+
+	@Override
+	public void updateLastMessageDateTime(Long conversationId) {
+		Optional<ConversationModel> entity = findConversation(conversationId);
+		if (entity.isPresent()) {
+			entity.get().setLastMessageDateTime(LocalDateTime.now());
+		}
 	}
 }

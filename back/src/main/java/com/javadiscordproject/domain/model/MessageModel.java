@@ -43,4 +43,8 @@ public class MessageModel {
 	public Long getId() {
 		return this.id;
 	}
+	
+	public Long getConversationId() {
+		return this.conversation.getId();
+	}
 }

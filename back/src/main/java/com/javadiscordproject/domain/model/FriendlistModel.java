@@ -1,5 +1,9 @@
 package com.javadiscordproject.domain.model;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -32,7 +36,7 @@ public class FriendlistModel {
 	private UserModel user_2;
 	
 	private String friendRequestStatus;
-	
+
 	public FriendlistModel() { 
 		this.id = new FriendlistId();
 	}
