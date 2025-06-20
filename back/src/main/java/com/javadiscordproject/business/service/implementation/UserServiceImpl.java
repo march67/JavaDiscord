@@ -22,7 +22,12 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(userModel);
 	}
 
-	public UserModel findByUsername(String username) {
+	public UserModel getUserByUsername(String username) {
 		return userRepository.findByUsername(username);
+	}
+
+	@Override
+	public String getUsernameById(Long userId) {
+		return userRepository.findById(userId).map(UserModel::getUsername).orElse(null);
 	}
 }

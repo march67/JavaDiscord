@@ -84,16 +84,16 @@ public class FriendlistController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping("/get-friendlist")
-	public ResponseEntity<Set<Long>> getFriendlist(HttpServletRequest request) {
+	@GetMapping("/friendlist")
+	public ResponseEntity<Set<String>> getFriendlist(HttpServletRequest request) {
 		// Retrieve the user ID of the friend request sender from the claims
 		String authHeader = request.getHeader("Authorization");
 		String token = authHeader.substring(7);
 		Long userId = jwtTokenUtil.extractUserId(token);
 		
-		Set<Long> friendlistId = friendlistService.getFriendlist(userId);
+		Set<String> friendlistUsersUsername = friendlistService.getUsersUsernameFromFriendlist(userId);
 		
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok(friendlistUsersUsername);
 	}
 	
 }

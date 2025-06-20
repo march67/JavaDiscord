@@ -86,7 +86,7 @@ public class FriendlistServiceImpl implements FriendlistService {
 	}
 
 	@Override
-	public Set<Long> getFriendlist(Long userId) {
+	public Set<Long> getUsersIdFromFriendlist(Long userId) {
 		// Merging result of both where current user is in column 1 & or column 2
 		List<FriendlistModel> friendlist_part_1 = friendlistRepository.findByUserId1AndFriendRequestStatus(userId, "accepted");
 		List<FriendlistModel> friendlist_part_2 = friendlistRepository.findByUserId2AndFriendRequestStatus(userId, "accepted");
@@ -103,9 +103,17 @@ public class FriendlistServiceImpl implements FriendlistService {
 				friendIds.add(relation.getId().getUserId_2());
 			}
 		}
-		
-		System.out.println("eaz");	
-		
 		return friendIds;
+	}
+	
+	@Override
+	public Set<String> getUsersUsernameFromFriendlist(Long userId) {
+		Set<Long> usersId = getUsersIdFromFriendlist(userId);
+		Set<String> usersName = new HashSet<String>();
+		for ( Long id : usersId ) {
+			usersName.add(userService.getUsernameById(id));
+		}
+		
+		return usersName;
 	}
 }
