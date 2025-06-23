@@ -112,7 +112,7 @@ public class LoginController {
     }
 
     private void handleSuccessfulLogin(String username) {
-        SessionManager.getInstance().createSession(username, "email@example.com"); // L'email devrait venir de votre API
+        SessionManager.getInstance().createSession(username, "email@example.com");
         clearForm();
         authController.onSuccessfulAuth();
     }

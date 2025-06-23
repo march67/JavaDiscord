@@ -5,7 +5,6 @@ public class LoginDTO {
     private String username;
     private String password;
 
-    // Constructeurs
     public LoginDTO() {}
 
     public LoginDTO(String username, String password) {

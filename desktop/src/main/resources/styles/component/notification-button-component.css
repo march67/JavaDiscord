@@ -1,0 +1,37 @@
+.notification-container {
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+    -fx-alignment: CENTER;
+    -fx-padding: 10 0;
+}
+
+.notification-button {
+    -fx-background-color: -secondary-color;
+    -fx-text-fill: -primary-color;
+    -fx-font-size: 20px;
+    -fx-pref-width: 48px;
+    -fx-pref-height: 48px;
+    -fx-min-width: 48px;
+    -fx-min-height: 48px;
+    -fx-max-width: 48px;
+    -fx-max-height: 48px;
+    -fx-background-radius: 24;
+    -fx-cursor: hand;
+    -fx-border-radius: 24;
+}
+
+.notification-button:hover {
+    -fx-background-color: -primary-color-hover;
+}
+
+.notification-button:pressed {
+    -fx-background-color: #2B2D31;
+}
+
+.notification-dot {
+    -fx-fill: #ED4245;
+    -fx-stroke: #2B2D31;
+    -fx-stroke-width: 2;
+    -fx-translate-x: -5;
+    -fx-translate-y: 5;
+}

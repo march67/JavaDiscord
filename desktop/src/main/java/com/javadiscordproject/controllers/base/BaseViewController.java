@@ -1,6 +1,6 @@
 package com.javadiscordproject.controllers.base;
 
-import com.javadiscordproject.services.SceneManager;
+import com.javadiscordproject.managers.SceneManager;
 
 abstract public class BaseViewController {
     protected SceneManager sceneManager;

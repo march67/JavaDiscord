@@ -5,10 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0d0e107-d0c4-427e-935e-296e583e5dd3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/UIConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/FriendListController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/NotificationButtonController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/FriendDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/api/friend/FriendService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/api/friend/IFriendService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/friend-list-component.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/notification-button-component.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/friend-list-component.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/notification-button-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/base/BaseViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/base/BaseViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/ConversationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/ConversationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/ConversationListController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/LeftNavbarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/LeftNavbarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/view/HomeViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/view/HomeViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/managers/ControllerManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/LoginDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/LoginDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/RegisterDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/RegisterDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/MessageDisplayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/MessageDisplayService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/SceneFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/SceneFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/SceneManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/SceneManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/SceneManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/managers/SceneManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/conversation-list-component.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/conversation-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/conversation-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/conversation-list-component.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,10 +44,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="FxmlFile" />
-        <option value="CSS File" />
-        <option value="AnnotationType" />
         <option value="Class" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -43,48 +69,69 @@
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.Desktop_Front.executor": "Run",
-    "Maven.back.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.Main.executor": "Run",
-    "git-widget-placeholder": "feature/SCRUM-84-front-friend-feature",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "corretto-21",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/donic/IdeaProjects/JavaDiscord/back",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "Errors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.Desktop_Front.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.back .executor&quot;: &quot;Run&quot;,
+    &quot;Maven.back [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.back [javafx:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.back [org.apache.maven.plugins:maven-clean-plugin:3.2.0:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.back [org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.back [org.springframework.boot:spring-boot-maven-plugin:3.3.5:run].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.back.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.desktop [org.openjfx:javafx-maven-plugin:0.0.8:run].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.back.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/SCRUM-84-front-friend-feature&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/donic/IdeaProjects/javadiscord/back&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\back" />
-      <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\docker" />
+      <recent name="C:\Users\donic\IdeaProjects\javadiscord\docker" />
+      <recent name="C:\Users\donic\IdeaProjects\javadiscord\back" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\desktop\src\main\resources\images" />
-      <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\desktop\src\main\resources\styles" />
-      <recent name="C:\Users\donic\IdeaProjects\JavaDiscord\desktop\src\main\resources\styles\view" />
+      <recent name="C:\Users\donic\IdeaProjects\javadiscord\desktop\src\main\resources\fxml\componenent" />
+      <recent name="C:\Users\donic\IdeaProjects\javadiscord\desktop\src\main\resources\fxml\view" />
     </key>
   </component>
   <component name="RunManager" selected="Maven.Desktop_Front">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="desktop" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="desktop" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Desktop_Front" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -115,7 +162,7 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
-    <configuration name="back" type="MavenRunConfiguration" factoryName="Maven">
+    <configuration name="back " type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
         <option name="myRunnerSettings" />
@@ -145,7 +192,7 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
-    <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+    <configuration name="back" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="back" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.javadiscordproject.Main" />
@@ -160,20 +207,21 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Maven.back " />
       <item itemvalue="Maven.Desktop_Front" />
-      <item itemvalue="Maven.back" />
-      <item itemvalue="Spring Boot.Main" />
+      <item itemvalue="Spring Boot.back" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.Main" />
+        <item itemvalue="Spring Boot.back" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-corretto-21.0.2-f644763e9732-54352fe9" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -187,27 +235,55 @@
       <updated>1731698437577</updated>
       <workItem from="1731698441507" duration="1995000" />
       <workItem from="1731701579460" duration="59000" />
-      <workItem from="1731706885964" duration="8436000" />
-      <workItem from="1733128465605" duration="4398000" />
-      <workItem from="1733324831565" duration="320000" />
-      <workItem from="1733325527673" duration="6646000" />
-      <workItem from="1733681809002" duration="25247000" />
-      <workItem from="1733757762876" duration="47178000" />
+      <workItem from="1731706885964" duration="4982000" />
+      <workItem from="1733684296594" duration="11000" />
+      <workItem from="1733684324903" duration="11744000" />
+      <workItem from="1733922336131" duration="660000" />
+      <workItem from="1734027356981" duration="5330000" />
+      <workItem from="1735155977669" duration="1965000" />
+      <workItem from="1735235060262" duration="1281000" />
+      <workItem from="1735292327310" duration="5902000" />
+      <workItem from="1735396455322" duration="1202000" />
+      <workItem from="1735474185833" duration="2747000" />
+      <workItem from="1735660282614" duration="34000" />
+      <workItem from="1735804128633" duration="5731000" />
+      <workItem from="1735892994739" duration="3851000" />
+      <workItem from="1736001197714" duration="1290000" />
+      <workItem from="1736676129104" duration="2000" />
+      <workItem from="1737152322162" duration="386000" />
+      <workItem from="1737473777982" duration="724000" />
+      <workItem from="1737707602433" duration="5000" />
+      <workItem from="1737962348842" duration="3000" />
+      <workItem from="1738006318509" duration="8000" />
+      <workItem from="1738587887511" duration="593000" />
+      <workItem from="1749822426618" duration="5909000" />
+      <workItem from="1749829664331" duration="475000" />
+      <workItem from="1749895958482" duration="772000" />
+      <workItem from="1750016121121" duration="4136000" />
+      <workItem from="1750146375101" duration="182000" />
+      <workItem from="1750161962732" duration="1166000" />
+      <workItem from="1750403871121" duration="21878000" />
+      <workItem from="1750493930528" duration="835000" />
+      <workItem from="1750604619760" duration="943000" />
+      <workItem from="1750665805006" duration="6511000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/loader/ResourceLoader.java</url>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

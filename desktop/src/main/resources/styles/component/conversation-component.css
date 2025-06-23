@@ -84,23 +84,29 @@
 }
 
 .user-message-container {
-    -fx-alignment: CENTER_LEFT;
+    -fx-alignment: CENTER_RIGHT;
 }
 
 .other-message-container {
-    -fx-alignment: CENTER_RIGHT;
-}
-.user-content {
     -fx-alignment: CENTER_LEFT;
 }
 
-.other-content {
+.user-content {
     -fx-alignment: CENTER_RIGHT;
 }
 
-.other-username {
+.other-content {
+    -fx-alignment: CENTER_LEFT;
+}
+
+.user-username {
     -fx-alignment: CENTER_RIGHT;
     -fx-text-alignment: RIGHT;
+}
+
+.other-username {
+    -fx-alignment: CENTER_LEFT;
+    -fx-text-alignment: LEFT;
 }
 
 .user-message, .other-message {
@@ -109,12 +115,12 @@
 
 .user-message {
     -fx-background-color: -primary-color;
-    -fx-background-radius: 12 12 12 0;
+    -fx-background-radius: 12 12 0 12;
 }
 
 .other-message {
     -fx-background-color: white;
-    -fx-background-radius: 12 12 0 12;
+    -fx-background-radius: 12 12 12 0;
 }
 
 .message-label {

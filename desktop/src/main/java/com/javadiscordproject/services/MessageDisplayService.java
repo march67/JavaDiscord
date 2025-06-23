@@ -40,11 +40,9 @@ public class MessageDisplayService {
         contentBox.setSpacing(2);
         contentBox.getStyleClass().add(message.isUser() ? "user-content" : "other-content");
 
-        // Création du label pour le nom d'utilisateur
         Label usernameLabel = new Label(message.getSender());
         usernameLabel.getStyleClass().add(message.isUser() ? "user-username" : "other-username");
 
-        // Création du conteneur pour le message
         Label messageLabel = new Label(message.getContent());
         messageLabel.getStyleClass().add("message-label");
 

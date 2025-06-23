@@ -3,6 +3,7 @@ package com.javadiscordproject.services;
 import com.javadiscordproject.controllers.view.AuthViewController;
 import com.javadiscordproject.controllers.base.BaseViewController;
 import com.javadiscordproject.controllers.view.HomeViewController;
+import com.javadiscordproject.managers.SceneManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
