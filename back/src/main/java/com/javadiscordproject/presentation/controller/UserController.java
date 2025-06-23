@@ -31,7 +31,7 @@ public class UserController {
 	
 	@PostMapping("/register")
     public void registerUser(@Valid @RequestBody UserDTO userDTO) {
-        userService.registerUser(userMapper.toModel(userDTO));
+        userService.saveUser(userMapper.toModel(userDTO));
     }
 	
 	@GetMapping("/findUserByUsername")

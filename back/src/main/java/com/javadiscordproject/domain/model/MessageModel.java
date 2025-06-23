@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,11 +21,11 @@ public class MessageModel {
     private Long id;
     
     @ManyToOne
-    @JoinColumn(name = "idUser")
+    @JoinColumn(name = "userId")
 	private UserModel user;
     
     @ManyToOne
-    @JoinColumn(name = "idConversation")
+    @JoinColumn(name = "conversationId")
     private ConversationModel conversation;
     
     private String messageContent;
@@ -32,7 +33,8 @@ public class MessageModel {
     @CreationTimestamp
     private LocalDateTime createdAt;
     
-    public MessageModel() {}
+    public MessageModel() {
+    }
     
     public MessageModel(UserModel messageAuthor, ConversationModel conversation, String messageContent) {
     	this.user = messageAuthor;
@@ -44,7 +46,15 @@ public class MessageModel {
 		return this.id;
 	}
 	
-	public Long getConversationId() {
-		return this.conversation.getId();
+	public ConversationModel getConversation() {
+		return this.conversation;
+	}
+	
+	public UserModel getUser() {
+		return this.user;
+	}
+
+	public String getMessageContent() {
+		return messageContent;
 	}
 }

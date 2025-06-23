@@ -6,27 +6,29 @@ import org.springframework.stereotype.Service;
 
 import com.javadiscordproject.business.service.api.ConversationService;
 import com.javadiscordproject.business.service.api.MessageService;
+import com.javadiscordproject.business.service.api.UserConversationService;
 import com.javadiscordproject.domain.model.MessageModel;
+import com.javadiscordproject.domain.model.UserConversationId;
 import com.javadiscordproject.infrastructure.persistence.repository.MessageRepository;
 
 @Service
 public class MessageServiceImpl implements MessageService {
 	private MessageRepository messageRepository;
-	private ConversationService conversationService;
+	private UserConversationService userConversationService;
 	
-	public MessageServiceImpl(MessageRepository messageRepository, ConversationService conversationService) {
+	public MessageServiceImpl(MessageRepository messageRepository, UserConversationService userConversationService) {
 		this.messageRepository = messageRepository;
-		this.conversationService = conversationService;
+		this.userConversationService = userConversationService;
 	}
 
 	@Override
-	public void createMessage(MessageModel messageModel) {
+	public void saveMessage(MessageModel messageModel) {
 		// create the message
 		messageRepository.save(messageModel);
 		
 		// update the last message date of the conversation
-		Long conversationId = messageModel.getConversationId();
-		conversationService.updateLastMessageDateTime(conversationId);
+		Long conversationId = messageModel.getConversation().getId();
+		userConversationService.updateLastMessage(conversationId);
 	}
 
 	@Override

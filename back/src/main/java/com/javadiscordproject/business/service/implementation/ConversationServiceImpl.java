@@ -18,7 +18,7 @@ public class ConversationServiceImpl implements ConversationService {
 	}
 	
 	@Override
-	public void createConversation(ConversationModel conversationModel) {
+	public void saveConversation(ConversationModel conversationModel) {
 		conversationRepository.save(conversationModel);
 	}
 
@@ -26,13 +26,5 @@ public class ConversationServiceImpl implements ConversationService {
 	public Optional<ConversationModel> findConversation(Long conversationId) {
 		Optional<ConversationModel> result = conversationRepository.findById(conversationId);
 		return result;
-	}
-
-	@Override
-	public void updateLastMessageDateTime(Long conversationId) {
-		Optional<ConversationModel> entity = findConversation(conversationId);
-		if (entity.isPresent()) {
-			entity.get().setLastMessageDateTime(LocalDateTime.now());
-		}
 	}
 }

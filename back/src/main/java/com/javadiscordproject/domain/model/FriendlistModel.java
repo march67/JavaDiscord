@@ -19,10 +19,10 @@ public class FriendlistModel {
 	@EmbeddedId
 	private FriendlistId id;
 	
-	@Column(name = "user_id_1", insertable = false, updatable = false)
+	@Column(name = "user_id_1_a", insertable = false, updatable = false)
 	private Long userId1;
 	
-	@Column(name = "user_id_2", insertable = false, updatable = false)
+	@Column(name = "user_id_2_a", insertable = false, updatable = false)
 	private Long userId2;
 	
 	@ManyToOne(fetch = FetchType.LAZY) // avoid all loading
