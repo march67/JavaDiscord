@@ -195,7 +195,7 @@
 }
 
 .logout-button {
-    -fx-background-color: #f04747;
+    -fx-background-color: -delete-color;
     -fx-text-fill: white;
     -fx-background-radius: 4;
     -fx-cursor: hand;

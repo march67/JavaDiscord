@@ -5,36 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0d0e107-d0c4-427e-935e-296e583e5dd3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/FriendListController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/NotificationButtonController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/FriendDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/api/friend/FriendService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/api/friend/IFriendService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/friend-list-component.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/notification-button-component.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/friend-list-component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/notification-button-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/api/friend/FriendRequestService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/api/friend/IFriendRequestService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/base/BaseViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/base/BaseViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/ConversationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/ConversationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/ConversationListController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/LeftNavbarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/LeftNavbarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/view/HomeViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/view/HomeViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/managers/ControllerManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/LoginDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/LoginDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/RegisterDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/RegisterDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/MessageDisplayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/MessageDisplayService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/SceneFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/SceneFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/SceneManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/managers/SceneManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/conversation-list-component.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/conversation-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/conversation-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/conversation-list-component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/NotificationButtonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/NotificationButtonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/managers/SceneManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/managers/SceneManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/friend-list-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/friend-list-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/notification-button-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/notification-button-component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +24,8 @@
       <list>
         <option value="Interface" />
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="CSS File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -265,7 +243,8 @@
       <workItem from="1750403871121" duration="21878000" />
       <workItem from="1750493930528" duration="835000" />
       <workItem from="1750604619760" duration="943000" />
-      <workItem from="1750665805006" duration="6511000" />
+      <workItem from="1750665805006" duration="7780000" />
+      <workItem from="1750919782349" duration="13108000" />
     </task>
     <servers />
   </component>

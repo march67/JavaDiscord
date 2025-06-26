@@ -13,7 +13,7 @@ public class SceneManager {
 
     private SceneManager(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        primaryStage.setTitle("Mon Application");
+        primaryStage.setTitle("Discord2");
         primaryStage.setMinWidth(DEFAULT_WIDTH);
         primaryStage.setMinHeight(DEFAULT_HEIGHT);
     }
