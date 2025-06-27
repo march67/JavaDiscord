@@ -10,4 +10,5 @@ public interface UserService {
 	public UserModel findUserByUsername(String username);
 	public UserModel findUserById(Long id);
 	public String getUsernameById(Long userId);
+	public Long getIdByUsername(String requesterUsername);
 }

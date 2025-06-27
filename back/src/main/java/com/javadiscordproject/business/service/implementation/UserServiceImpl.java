@@ -37,4 +37,9 @@ public class UserServiceImpl implements UserService {
 	public String getUsernameById(Long userId) {
 		return userRepository.findById(userId).map(UserModel::getUsername).orElse(null);
 	}
+
+	@Override
+	public Long getIdByUsername(String requesterUsername) {
+		return userRepository.findByUsername(requesterUsername).getId();
+	}
 }

@@ -51,6 +51,9 @@ public class FriendlistServiceImpl implements FriendlistService {
     	// Search for the two existing users
     	UserModel user1 = userService.findUserById(idRequester);
     	UserModel user2 = userService.findUserByUsername(username);
+    	if (user1.getId() == user2.getId()) {
+    		throw new IllegalArgumentException("User cannot friend request himself as a friend");
+    	}
         friendlistModel.setUsers(user1, user2);
         
         // Set status & save relation
