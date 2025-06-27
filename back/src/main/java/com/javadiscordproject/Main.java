@@ -47,10 +47,9 @@ public class Main {
         
         
         // Test : create message
-//        UserModel user = userService.findUserByUsername("test2");
-//        MessageModel messageModel1 = new MessageModel(user, conversation, "message 1 de user 1");
-//        MessageModel messageModel2 = new MessageModel(user, conversation, "message 2 de user 1");
-//        MessageModel messageModel3 = new MessageModel(user2, conversation, "message 1 de user2");
+//        MessageModel messageModel1 = new MessageModel(user1, conversation, "message 1 de user 1");
+//        MessageModel messageModel2 = new MessageModel(user1, conversation, "message 2 de user 1");
+//        MessageModel messageModel3 = new MessageModel(user2, conversation, "message 1 de user 2");
 //        messageService.saveMessage(messageModel1);
 //        messageService.saveMessage(messageModel2);
 //        messageService.saveMessage(messageModel3);
