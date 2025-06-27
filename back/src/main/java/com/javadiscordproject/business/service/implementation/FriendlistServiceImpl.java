@@ -1,6 +1,5 @@
 package com.javadiscordproject.business.service.implementation;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,14 +26,22 @@ public class FriendlistServiceImpl implements FriendlistService {
 	}
 
 	@Override
-	public void sendFriendRequest(FriendlistModel friendlistModel) {
+	public void sendFriendRequest(FriendlistId friendlistId) {
 		// Verify first if sender and receiver is not the same user
-		if(friendlistModel.getUserId_1().equals(friendlistModel.getUserId_2())) {
+		if(friendlistId.getUserId_1() == friendlistId.getUserId_2()) {
 			throw new IllegalArgumentException("User cannot friend request himself as a friend");
 		}
 		
-		friendlistModel.setFriendRequest_status("pending");
-		friendlistRepository.save(friendlistModel);
+		FriendlistModel entity = new FriendlistModel();
+		
+		// charge users
+		UserModel user1 = userService.findUserById(friendlistId.getUserId_1());
+		UserModel user2 = userService.findUserById(friendlistId.getUserId_2());
+		entity.setUsers(user1, user2);
+		
+		// set status and save
+		entity.setFriendRequest_status("pending");
+		friendlistRepository.save(entity);
 	}
 	
 	@Override
@@ -52,8 +59,8 @@ public class FriendlistServiceImpl implements FriendlistService {
 	}
 	
 	@Override
-	public void acceptFriendRequest(FriendlistModel friendlistModel) {
-		findFriendRequest(friendlistModel).ifPresentOrElse(
+	public void acceptFriendRequest(FriendlistId friendlistId) {
+		findFriendRequest(friendlistId).ifPresentOrElse(
 				entity -> {
 					entity.setFriendRequest_status("accepted");
 					friendlistRepository.save(entity);
@@ -64,8 +71,8 @@ public class FriendlistServiceImpl implements FriendlistService {
 	}
 
 	@Override
-	public void refuseFriendRequest(FriendlistModel friendlistModel) {
-		findFriendRequest(friendlistModel).ifPresentOrElse(
+	public void refuseFriendRequest(FriendlistId friendlistId) {
+		findFriendRequest(friendlistId).ifPresentOrElse(
 				entity -> {
 					friendlistRepository.delete(entity);
 				},
@@ -84,6 +91,12 @@ public class FriendlistServiceImpl implements FriendlistService {
 	@Override
 	public Optional<FriendlistModel> findFriendRequest(Long userId1, Long userId2) {		
 		FriendlistId id = new FriendlistId(userId1, userId2);
+		Optional<FriendlistModel> entity = friendlistRepository.findById(id);
+		return entity;
+	}
+	
+	@Override
+	public Optional<FriendlistModel> findFriendRequest(FriendlistId id) {		
 		Optional<FriendlistModel> entity = friendlistRepository.findById(id);
 		return entity;
 	}

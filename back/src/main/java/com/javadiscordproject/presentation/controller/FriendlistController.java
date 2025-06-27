@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javadiscordproject.business.service.api.FriendlistService;
+import com.javadiscordproject.domain.model.FriendlistId;
 import com.javadiscordproject.infrastructure.security.jwt.JwtTokenUtil;
 import com.javadiscordproject.mapper.FriendlistMapper;
 import com.javadiscordproject.presentation.dto.Friendlist.FriendRequestByIdDTO;
@@ -32,51 +33,57 @@ public class FriendlistController {
 		this.jwtTokenUtil = jwtTokenUtil;
 	}
 	
-	@PostMapping("/add-friend-by-id")
-	public ResponseEntity<Void> addFriendById(@RequestBody FriendRequestByIdDTO friendRequestByIdDTO, HttpServletRequest request) {
+	@PostMapping("/add-friend/by-id/{receiverId}")
+	public ResponseEntity<Void> addFriendById(@PathVariable Long receiverId, HttpServletRequest request) {
 		// Retrieve the user ID of the friend request sender from the claims
 		String authHeader = request.getHeader("Authorization");
 		String token = authHeader.substring(7); // delete "Bearer " string		
-		friendRequestByIdDTO.setUserId_1(jwtTokenUtil.extractUserId(token));
+		Long requesterId = jwtTokenUtil.extractUserId(token);
+		
+		FriendlistId id = new FriendlistId(requesterId, receiverId);
 				
 		// The friend request receiver user Id is taken from the body 
-		friendlistService.sendFriendRequest(friendlistMapper.toModel(friendRequestByIdDTO));
+		friendlistService.sendFriendRequest(id);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PostMapping("/add-friend-by-username")
-	public ResponseEntity<Void> addFriendByUsername(@RequestBody Map<String, String> requestBody, HttpServletRequest request) {
+	@PostMapping("/add-friend/by-username/{username}")
+	public ResponseEntity<Void> addFriendByUsername(@PathVariable String username, HttpServletRequest request) {
 		// Retrieve the user ID of the friend request sender from the claims
 		String authHeader = request.getHeader("Authorization");
 		String token = authHeader.substring(7); // delete "Bearer " string	
-		Long idRequester = jwtTokenUtil.extractUserId(token);
+		Long requesterId = jwtTokenUtil.extractUserId(token);
 		
-		friendlistService.sendFriendRequestByUsername(idRequester, requestBody.get("username"));
+		friendlistService.sendFriendRequestByUsername(requesterId, username);
 
 		return ResponseEntity.noContent().build();
 	}
 	
 	
-	@PostMapping("/refuse")
-	public ResponseEntity<Void> refuse(@RequestBody FriendRequestByIdDTO friendRequestByIdDTO, HttpServletRequest request) {
+	@PostMapping("/refuse/{requesterId}")
+	public ResponseEntity<Void> refuse(@PathVariable Long requesterId, HttpServletRequest request) {
 		// Retrieve the user ID of the friend request sender from the claims
 		String authHeader = request.getHeader("Authorization");
 		String token = authHeader.substring(7);	
-		friendRequestByIdDTO.setUserId_1(jwtTokenUtil.extractUserId(token));
+		Long receiverId = jwtTokenUtil.extractUserId(token);
 		
-		friendlistService.refuseFriendRequest(friendlistMapper.toModel(friendRequestByIdDTO));
+		FriendlistId id = new FriendlistId(receiverId, requesterId);
+		
+		friendlistService.refuseFriendRequest(id);
 		
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PostMapping("/accept")
-	public ResponseEntity<Void> accept(@RequestBody FriendRequestByIdDTO friendRequestByIdDTO, HttpServletRequest request) {
+	@PostMapping("/accept/{requesterId}")
+	public ResponseEntity<Void> accept(@PathVariable Long requesterId, HttpServletRequest request) {
 		// Retrieve the user ID of the friend request sender from the claims
 		String authHeader = request.getHeader("Authorization");
 		String token = authHeader.substring(7);	
-		friendRequestByIdDTO.setUserId_1(jwtTokenUtil.extractUserId(token));
+		Long receiverId = jwtTokenUtil.extractUserId(token);
 		
-		friendlistService.acceptFriendRequest(friendlistMapper.toModel(friendRequestByIdDTO));
+		FriendlistId id = new FriendlistId(receiverId, requesterId);
+		
+		friendlistService.acceptFriendRequest(id);
 		
 		return ResponseEntity.noContent().build();
 	}

@@ -40,6 +40,12 @@ public class FriendlistModel {
 	public FriendlistModel() { 
 		this.id = new FriendlistId();
 	}
+	 
+	public FriendlistModel(FriendlistId friendlistId) {
+		this.id = friendlistId;
+		this.userId1 = Math.min(friendlistId.getUserId_1(), friendlistId.getUserId_2());
+		this.userId2 = Math.max(friendlistId.getUserId_1(), friendlistId.getUserId_2());
+	}
 
 	public void setUserId1(Long userId1) {
 		this.userId1 = userId1;
@@ -99,6 +105,6 @@ public class FriendlistModel {
 	}
 	
 	public String getUserName_2() {
-		return this.user_1.getUsername();
+		return this.user_2.getUsername();
 	}
 }
