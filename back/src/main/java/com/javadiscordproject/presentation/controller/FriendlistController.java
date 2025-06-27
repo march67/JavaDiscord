@@ -1,8 +1,6 @@
 package com.javadiscordproject.presentation.controller;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javadiscordproject.business.service.api.FriendlistService;
-import com.javadiscordproject.domain.model.FriendlistModel;
-import com.javadiscordproject.domain.model.UserModel;
 import com.javadiscordproject.infrastructure.security.jwt.JwtTokenUtil;
 import com.javadiscordproject.mapper.FriendlistMapper;
 import com.javadiscordproject.presentation.dto.Friendlist.FriendRequestByIdDTO;
