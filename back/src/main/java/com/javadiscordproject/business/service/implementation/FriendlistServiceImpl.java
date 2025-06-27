@@ -26,7 +26,7 @@ public class FriendlistServiceImpl implements FriendlistService {
 	}
 
 	@Override
-	public void sendFriendRequest(FriendlistId friendlistId) {
+	public void sendFriendRequest(FriendlistId friendlistId, Long requesterId) {
 		// Verify first if sender and receiver is not the same user
 		if(friendlistId.getUserId_1() == friendlistId.getUserId_2()) {
 			throw new IllegalArgumentException("User cannot friend request himself as a friend");
@@ -39,8 +39,9 @@ public class FriendlistServiceImpl implements FriendlistService {
 		UserModel user2 = userService.findUserById(friendlistId.getUserId_2());
 		entity.setUsers(user1, user2);
 		
-		// set status and save
+		// set status + requester and save
 		entity.setFriendRequest_status("pending");
+		entity.setRequesterId(requesterId);
 		friendlistRepository.save(entity);
 	}
 	
@@ -56,17 +57,23 @@ public class FriendlistServiceImpl implements FriendlistService {
     	}
         friendlistModel.setUsers(user1, user2);
         
-        // Set status & save relation
+        // Set status + requester and save
         friendlistModel.setFriendRequest_status("pending");
+        friendlistModel.setRequesterId(idRequester);
         friendlistRepository.save(friendlistModel);
 	}
 	
 	@Override
-	public void acceptFriendRequest(FriendlistId friendlistId) {
+	public void acceptFriendRequest(FriendlistId friendlistId, Long requesterId) {
 		findFriendRequest(friendlistId).ifPresentOrElse(
 				entity -> {
-					entity.setFriendRequest_status("accepted");
-					friendlistRepository.save(entity);
+					if ( !(requesterId == entity.getRequesterId())) {
+						entity.setFriendRequest_status("accepted");
+						friendlistRepository.save(entity);
+					}
+					else {
+						throw new IllegalArgumentException("The requester cannot accept the request sent by himself");
+					}
 				},
 				() -> System.out.println("Friend request not found")
 				

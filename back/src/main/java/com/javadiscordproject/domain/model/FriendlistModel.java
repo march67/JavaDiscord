@@ -35,6 +35,8 @@ public class FriendlistModel {
 	@MapsId("userId_2")
 	private UserModel user_2;
 	
+	private Long requesterId; // used to make sure that the requester doesn't himself accept the request
+	
 	private String friendRequestStatus;
 
 	public FriendlistModel() { 
@@ -106,5 +108,13 @@ public class FriendlistModel {
 	
 	public String getUserName_2() {
 		return this.user_2.getUsername();
+	}
+
+	public Long getRequesterId() {
+		return requesterId;
+	}
+
+	public void setRequesterId(Long requesterId) {
+		this.requesterId = requesterId;
 	}
 }

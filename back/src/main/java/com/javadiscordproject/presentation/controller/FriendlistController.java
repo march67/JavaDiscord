@@ -48,7 +48,7 @@ public class FriendlistController {
 		FriendlistId id = new FriendlistId(requesterId, receiverId);
 				
 		// The friend request receiver user Id is taken from the body 
-		friendlistService.sendFriendRequest(id);
+		friendlistService.sendFriendRequest(id, requesterId);
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -80,17 +80,17 @@ public class FriendlistController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PostMapping("/accept/{requesterUsername}")
-	public ResponseEntity<Void> accept(@PathVariable String requesterUsername, HttpServletRequest request) {
+	@PostMapping("/accept/{username}")
+	public ResponseEntity<Void> accept(@PathVariable String username, HttpServletRequest request) {
 		// Retrieve the user ID of the friend request sender from the claims
 		String authHeader = request.getHeader("Authorization");
 		String token = authHeader.substring(7);	
-		Long receiverId = jwtTokenUtil.extractUserId(token);
-		Long requesterId = userService.getIdByUsername(requesterUsername);
+		Long requesterId = jwtTokenUtil.extractUserId(token);
+		Long userId = userService.getIdByUsername(username);
 		
-		FriendlistId id = new FriendlistId(receiverId, requesterId);
+		FriendlistId id = new FriendlistId(requesterId, userId);
 		
-		friendlistService.acceptFriendRequest(id);
+		friendlistService.acceptFriendRequest(id, requesterId);
 		
 		return ResponseEntity.noContent().build();
 	}

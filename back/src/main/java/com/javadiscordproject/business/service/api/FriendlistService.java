@@ -8,9 +8,9 @@ import com.javadiscordproject.domain.model.FriendlistId;
 import com.javadiscordproject.domain.model.FriendlistModel;
 
 public interface FriendlistService {
-	public void sendFriendRequest(FriendlistId friendlistId);
+	public void sendFriendRequest(FriendlistId friendlistId, Long requesterId);
 	public void sendFriendRequestByUsername(Long idRequester, String username);
-	public void acceptFriendRequest(FriendlistId friendlistId);
+	public void acceptFriendRequest(FriendlistId friendlistId, Long requesterId);
 	public void refuseFriendRequest(FriendlistId friendlistId);
 	public Optional<FriendlistModel> findFriendRequest(FriendlistModel model);
 	public Optional<FriendlistModel> findFriendRequest(Long userId1, Long userId2);
