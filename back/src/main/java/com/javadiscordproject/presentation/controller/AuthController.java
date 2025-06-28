@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javadiscordproject.infrastructure.security.jwt.JwtTokenUtil;
-import com.javadiscordproject.presentation.dto.AuthRequestDTO;
-import com.javadiscordproject.presentation.dto.AuthResponseDTO;
+import com.javadiscordproject.presentation.dto.Auth.AuthRequestDTO;
+import com.javadiscordproject.presentation.dto.Auth.AuthResponseDTO;
 
 @RestController
 public class AuthController {
     
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager; // is responsible for the credentials check ( and not the JWT itself )
     
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -38,6 +38,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
+        // Authentification succedeed, process to generate JWT
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequestDTO.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
 

@@ -10,15 +10,27 @@ import jakarta.persistence.Column;
 @Entity
 @Table(name = "application_user")
 public class UserModel {
-    private String applicationUserId;
-    private String email;
-    private String username;
-    private String password;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public String getApplicationUserId() {
-    	return this.applicationUserId;
+    private Long id;
+    
+    @Column(unique = true, nullable = false)
+    private String email;
+    private String username;
+    
+    @Column(unique = true, nullable = false)
+    private String password;
+    
+    public UserModel() {}
+    
+    public UserModel(String email, String username, String password) {
+    	this.email = email;
+    	this.username = username;
+    	this.password = password;
+    }
+    
+    public Long getId() {
+    	return this.id;
     }
     
     // Getters
@@ -35,8 +47,8 @@ public class UserModel {
     }
     
     // Setters
-    public void setApplicationUserId(String applicationUserId) {
-        this.applicationUserId = applicationUserId;
+    public void setApplicationUserId(Long applicationUserId) {
+        this.id = applicationUserId;
     }    
     
     
@@ -51,5 +63,4 @@ public class UserModel {
     public void setPassword(String password) {
     	this.password = password;
     }
-      
 }

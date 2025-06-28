@@ -1,4 +1,4 @@
-package com.javadiscordproject.presentation.dto;
+package com.javadiscordproject.presentation.dto.Auth;
 
 public class AuthResponseDTO {
     private String token;
