@@ -7,5 +7,5 @@ import com.javadiscordproject.domain.model.UserModel;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserModel, Long> {
-	UserModel findByUsername(String username);
+	public UserModel findByUsername(String username);
 }

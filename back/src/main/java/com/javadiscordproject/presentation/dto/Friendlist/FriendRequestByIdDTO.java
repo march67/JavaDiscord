@@ -4,15 +4,15 @@ import com.javadiscordproject.domain.model.UserModel;
 
 import jakarta.persistence.Column;
 
-public class FriendRequestDTO {
+public class FriendRequestByIdDTO {
 	private Long userId_1;
-	private Long userId_2;	
+	private Long userId_2;
 	
     // Empty constructor for JSON deserialization
-    public FriendRequestDTO() {
+    public FriendRequestByIdDTO() {
     }
     
-	public FriendRequestDTO(Long userId_1, Long userId_2) {
+	public FriendRequestByIdDTO(Long userId_1, Long userId_2) {
 		this.userId_1 = userId_1;
 		this.userId_2 = userId_2;
 	}

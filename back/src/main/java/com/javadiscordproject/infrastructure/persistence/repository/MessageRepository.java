@@ -9,5 +9,6 @@ import com.javadiscordproject.domain.model.MessageModel;
 
 @Repository
 public interface MessageRepository extends JpaRepository<MessageModel, Long>{
-	List<MessageModel> findByConversationId(Long idConversation);
+    List<MessageModel> findByUserId(Long userId);
+    List<MessageModel> findByConversationId(Long conversationId);
 }

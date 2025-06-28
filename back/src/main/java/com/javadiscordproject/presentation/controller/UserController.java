@@ -31,12 +31,12 @@ public class UserController {
 	
 	@PostMapping("/register")
     public void registerUser(@Valid @RequestBody UserDTO userDTO) {
-        userService.registerUser(userMapper.toModel(userDTO));
+        userService.saveUser(userMapper.toModel(userDTO));
     }
 	
 	@GetMapping("/findUserByUsername")
 	public ResponseEntity<UserModel> findUserByUsername(@RequestParam String username) {
-		UserModel user = userService.findByUsername(username);
+		UserModel user = userService.findUserByUsername(username);
 	    if (user != null) {
 	        return ResponseEntity.ok(user);
 	    }

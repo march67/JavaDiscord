@@ -6,7 +6,7 @@ import com.javadiscordproject.domain.model.FriendlistId;
 import com.javadiscordproject.domain.model.FriendlistModel;
 import com.javadiscordproject.domain.model.UserModel;
 import com.javadiscordproject.infrastructure.persistence.repository.UserRepository;
-import com.javadiscordproject.presentation.dto.Friendlist.FriendRequestDTO;
+import com.javadiscordproject.presentation.dto.Friendlist.FriendRequestByIdDTO;
 
 @Component
 public class FriendlistMapper {
@@ -16,24 +16,24 @@ public class FriendlistMapper {
 		this.userRepository = userRepository;
 	}
 	
-    public FriendlistModel toModel(FriendRequestDTO friendRequestDTO) {
+    public FriendlistModel toModel(FriendRequestByIdDTO friendRequestByIdDTO) {
     	FriendlistModel friendlistModel = new FriendlistModel();
     	
     	// Search for the two existing users
-    	UserModel user1 = userRepository.findById(friendRequestDTO.getUserId_1()).orElseThrow(() -> new RuntimeException("Utilisateur 1 non trouvé"));
-    	UserModel user2 = userRepository.findById(friendRequestDTO.getUserId_2()).orElseThrow(() -> new RuntimeException("Utilisateur 2 non trouvé"));
+    	UserModel user1 = userRepository.findById(friendRequestByIdDTO.getUserId_1()).orElseThrow(() -> new RuntimeException("Utilisateur 1 non trouvé"));
+    	UserModel user2 = userRepository.findById(friendRequestByIdDTO.getUserId_2()).orElseThrow(() -> new RuntimeException("Utilisateur 2 non trouvé"));
     	
         friendlistModel.setUsers(user1, user2);
         
         return friendlistModel;
     }
 
-    public FriendRequestDTO toDTO(FriendlistModel friendlistModel) { 
-        FriendRequestDTO friendRequestDTO = new FriendRequestDTO();
+    public FriendRequestByIdDTO toDTO(FriendlistModel friendlistModel) { 
+        FriendRequestByIdDTO friendRequestByIdDTO = new FriendRequestByIdDTO();
         
-        friendRequestDTO.setUserId_1(friendRequestDTO.getUserId_1());
-        friendRequestDTO.setUserId_2(friendRequestDTO.getUserId_2());
+        friendRequestByIdDTO.setUserId_1(friendRequestByIdDTO.getUserId_1());
+        friendRequestByIdDTO.setUserId_2(friendRequestByIdDTO.getUserId_2());
         
-        return friendRequestDTO;
+        return friendRequestByIdDTO;
     }
 }

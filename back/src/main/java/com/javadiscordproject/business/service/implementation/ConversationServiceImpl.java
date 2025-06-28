@@ -1,5 +1,6 @@
 package com.javadiscordproject.business.service.implementation;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class ConversationServiceImpl implements ConversationService {
 	}
 	
 	@Override
-	public void createConversation(ConversationModel conversationModel) {
+	public void saveConversation(ConversationModel conversationModel) {
 		conversationRepository.save(conversationModel);
 	}
 

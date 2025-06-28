@@ -18,7 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserModel user = userServiceImpl.findByUsername(username);
+        UserModel user = userServiceImpl.findUserByUsername(username);
         
         // old without the CustomUserDetails
 //        return org.springframework.security.core.userdetails.User

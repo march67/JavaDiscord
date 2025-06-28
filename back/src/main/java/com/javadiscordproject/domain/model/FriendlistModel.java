@@ -1,5 +1,9 @@
 package com.javadiscordproject.domain.model;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -31,10 +35,18 @@ public class FriendlistModel {
 	@MapsId("userId_2")
 	private UserModel user_2;
 	
-	private String friendRequestStatus;
+	private Long requesterId; // used to make sure that the requester doesn't himself accept the request
 	
+	private String friendRequestStatus;
+
 	public FriendlistModel() { 
 		this.id = new FriendlistId();
+	}
+	 
+	public FriendlistModel(FriendlistId friendlistId) {
+		this.id = friendlistId;
+		this.userId1 = Math.min(friendlistId.getUserId_1(), friendlistId.getUserId_2());
+		this.userId2 = Math.max(friendlistId.getUserId_1(), friendlistId.getUserId_2());
 	}
 
 	public void setUserId1(Long userId1) {
@@ -88,5 +100,21 @@ public class FriendlistModel {
 	
 	public Long getUserId_2() {
 		return this.userId2;
+	}
+	
+	public String getUserName_1() {
+		return this.user_1.getUsername();
+	}
+	
+	public String getUserName_2() {
+		return this.user_2.getUsername();
+	}
+
+	public Long getRequesterId() {
+		return requesterId;
+	}
+
+	public void setRequesterId(Long requesterId) {
+		this.requesterId = requesterId;
 	}
 }

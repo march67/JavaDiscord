@@ -1,13 +1,9 @@
 package com.javadiscordproject.domain.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,13 +13,19 @@ public class ConversationModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    private String randomFieldToFixBug;
+    
     public ConversationModel() {}
     
-    public ConversationModel(Long id) {
-    	this.id = id;
+    public ConversationModel(String randomFieldText) {
+    	this.randomFieldToFixBug = randomFieldText;
     }
-    
+
     public Long getId() {
     	return this.id;
     }
+
+	public String getRandomFieldToFixBug() {
+		return randomFieldToFixBug;
+	}
 } 

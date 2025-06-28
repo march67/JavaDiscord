@@ -19,4 +19,13 @@ public class UserConversationId implements Serializable{
 		this.userId = userId;
 		this.conversationId = conversationId;
 	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public Long getConversationId() {
+		return conversationId;
+	}
+
 }

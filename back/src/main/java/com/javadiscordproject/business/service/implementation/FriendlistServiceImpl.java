@@ -26,22 +26,54 @@ public class FriendlistServiceImpl implements FriendlistService {
 	}
 
 	@Override
-	public void sendFriendRequest(FriendlistModel friendlistModel) {
+	public void sendFriendRequest(FriendlistId friendlistId, Long requesterId) {
 		// Verify first if sender and receiver is not the same user
-		if(friendlistModel.getUserId_1().equals(friendlistModel.getUserId_2())) {
+		if(friendlistId.getUserId_1() == friendlistId.getUserId_2()) {
 			throw new IllegalArgumentException("User cannot friend request himself as a friend");
 		}
 		
-		friendlistModel.setFriendRequest_status("pending");
-		friendlistRepository.save(friendlistModel);
+		FriendlistModel entity = new FriendlistModel();
+		
+		// charge users
+		UserModel user1 = userService.findUserById(friendlistId.getUserId_1());
+		UserModel user2 = userService.findUserById(friendlistId.getUserId_2());
+		entity.setUsers(user1, user2);
+		
+		// set status + requester and save
+		entity.setFriendRequest_status("pending");
+		entity.setRequesterId(requesterId);
+		friendlistRepository.save(entity);
 	}
-
+	
 	@Override
-	public void acceptFriendRequest(FriendlistModel friendlistModel) {
-		findFriendRequest(friendlistModel).ifPresentOrElse(
+	public void sendFriendRequestByUsername(Long idRequester, String username) {
+		FriendlistModel friendlistModel = new FriendlistModel();
+		
+    	// Search for the two existing users
+    	UserModel user1 = userService.findUserById(idRequester);
+    	UserModel user2 = userService.findUserByUsername(username);
+    	if (user1.getId() == user2.getId()) {
+    		throw new IllegalArgumentException("User cannot friend request himself as a friend");
+    	}
+        friendlistModel.setUsers(user1, user2);
+        
+        // Set status + requester and save
+        friendlistModel.setFriendRequest_status("pending");
+        friendlistModel.setRequesterId(idRequester);
+        friendlistRepository.save(friendlistModel);
+	}
+	
+	@Override
+	public void acceptFriendRequest(FriendlistId friendlistId, Long requesterId) {
+		findFriendRequest(friendlistId).ifPresentOrElse(
 				entity -> {
-					entity.setFriendRequest_status("accepted");
-					friendlistRepository.save(entity);
+					if ( !(requesterId == entity.getRequesterId())) {
+						entity.setFriendRequest_status("accepted");
+						friendlistRepository.save(entity);
+					}
+					else {
+						throw new IllegalArgumentException("The requester cannot accept the request sent by himself");
+					}
 				},
 				() -> System.out.println("Friend request not found")
 				
@@ -49,11 +81,10 @@ public class FriendlistServiceImpl implements FriendlistService {
 	}
 
 	@Override
-	public void refuseFriendRequest(FriendlistModel friendlistModel) {
-		findFriendRequest(friendlistModel).ifPresentOrElse(
+	public void refuseFriendRequest(FriendlistId friendlistId) {
+		findFriendRequest(friendlistId).ifPresentOrElse(
 				entity -> {
-					entity.setFriendRequest_status("refused");
-					friendlistRepository.save(entity);
+					friendlistRepository.delete(entity);
 				},
 				() -> System.out.println("Friend request not found")
 				
@@ -73,6 +104,12 @@ public class FriendlistServiceImpl implements FriendlistService {
 		Optional<FriendlistModel> entity = friendlistRepository.findById(id);
 		return entity;
 	}
+	
+	@Override
+	public Optional<FriendlistModel> findFriendRequest(FriendlistId id) {		
+		Optional<FriendlistModel> entity = friendlistRepository.findById(id);
+		return entity;
+	}
 
 
 	@Override
@@ -84,28 +121,61 @@ public class FriendlistServiceImpl implements FriendlistService {
 				() -> System.out.println("Friend relation not found")
 			);
 	}
-
+	
 	@Override
-	public Set<Long> getFriendlist(Long userId) {
+	public List<FriendlistModel> getFriendlistByStatus(Long userId, String status) {
 		// Merging result of both where current user is in column 1 & or column 2
-		List<FriendlistModel> friendlist_part_1 = friendlistRepository.findByUserId1AndFriendRequestStatus(userId, "accepted");
-		List<FriendlistModel> friendlist_part_2 = friendlistRepository.findByUserId2AndFriendRequestStatus(userId, "accepted");
+		List<FriendlistModel> friendlist_part_1 = friendlistRepository.findByUserId1AndFriendRequestStatus(userId, status);
+		List<FriendlistModel> friendlist_part_2 = friendlistRepository.findByUserId2AndFriendRequestStatus(userId, status);
 		List<FriendlistModel> friendlist = new ArrayList<>(friendlist_part_1);
 		friendlist.addAll(friendlist_part_2);
-		
+		return friendlist;
+	}
+
+	@Override
+	public Set<Long> getUsersIdFromFriendlist(Long userId) {
 		Set<Long> friendIds = new HashSet<>(); // unique id
 		
 		// Fill the Set, either try to retrieve the first or second user of the relation
-		for ( FriendlistModel relation : friendlist ) {
+		for ( FriendlistModel relation : getFriendlistByStatus(userId, "accepted") ) {
 			if (!relation.getId().getUserId_1().equals(userId)) {
 				friendIds.add(relation.getId().getUserId_1());
-			} else if (!relation.getId().getUserId_2().equals(userId)) {
+			} else {
 				friendIds.add(relation.getId().getUserId_2());
 			}
 		}
-		
-		System.out.println("eaz");	
-		
 		return friendIds;
+	}
+	
+	@Override
+	public Set<String> getPendingFriendRequestsReturnUsername(Long userId) {
+		Set<String> friendNames = new HashSet<>();
+		
+		// Fill the Set, either try to retrieve the first or second user of the relation ( excludes search of the current user himself )
+		for ( FriendlistModel relation : getFriendlistByStatus(userId, "pending") ) {
+			if (!relation.getId().getUserId_1().equals(userId)) {
+				friendNames.add(relation.getUserName_1());
+			} else {
+				friendNames.add(relation.getUserName_2());
+			}
+		}
+		return friendNames;
+	}
+
+	
+	@Override
+	public Set<String> getUsersUsernameFromFriendlist(Long userId) {
+		Set<String> usersName = new HashSet<String>();
+		
+		// Fill the Set, either try to retrieve the first or second user of the relation ( excludes search of the current user himself )
+		for ( FriendlistModel relation : getFriendlistByStatus(userId, "accepted") ) {
+			if (!relation.getId().getUserId_1().equals(userId)) {
+				usersName.add(relation.getUserName_1());
+			} else {
+				usersName.add(relation.getUserName_2());
+			}
+		}
+
+		return usersName;
 	}
 }
