@@ -1,5 +1,5 @@
 // AuthService.java
-package com.javadiscordproject.services.api;
+package com.javadiscordproject.services.api.auth;
 
 import com.javadiscordproject.models.RegisterDTO;
 import com.javadiscordproject.models.LoginDTO;

@@ -1,7 +1,7 @@
 // AuthController.java
 package com.javadiscordproject.controllers.view;
 
-import com.javadiscordproject.controllers.component.BaseController;
+import com.javadiscordproject.controllers.base.BaseViewController;
 import com.javadiscordproject.controllers.component.LoginController;
 import com.javadiscordproject.controllers.component.RegisterController;
 import javafx.fxml.FXML;
@@ -14,8 +14,8 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AuthController extends BaseController {
-    private static final Logger logger = Logger.getLogger(AuthController.class.getName());
+public class AuthViewController extends BaseViewController {
+    private static final Logger logger = Logger.getLogger(AuthViewController.class.getName());
 
     @FXML
     private StackPane stackContainer;

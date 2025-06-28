@@ -6,7 +6,6 @@ public class RegisterDTO {
     private String password;
     private String email;
 
-    // Constructeurs
     public RegisterDTO() {}
 
     public RegisterDTO(String username, String password, String email) {
@@ -15,7 +14,6 @@ public class RegisterDTO {
         this.email = email;
     }
 
-    // Getters et Setters
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
     public String getPassword() { return password; }

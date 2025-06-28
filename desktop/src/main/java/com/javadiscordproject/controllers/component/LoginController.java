@@ -1,10 +1,10 @@
 package com.javadiscordproject.controllers.component;
 
-import com.javadiscordproject.controllers.view.AuthController;
+import com.javadiscordproject.controllers.view.AuthViewController;
 import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.LoginDTO;
-import com.javadiscordproject.services.api.AuthService;
-import com.javadiscordproject.services.api.IAuthService;
+import com.javadiscordproject.services.api.auth.AuthService;
+import com.javadiscordproject.services.api.auth.IAuthService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -25,7 +25,7 @@ public class LoginController {
     @FXML private Button loginButton;
     @FXML private Button showRegister;
 
-    private AuthController authController;
+    private AuthViewController authController;
     private final IAuthService authService;
 
     public LoginController() {
@@ -51,7 +51,7 @@ public class LoginController {
         }
     }
 
-    public void setAuthController(AuthController controller) {
+    public void setAuthController(AuthViewController controller) {
         this.authController = controller;
     }
 
@@ -112,7 +112,7 @@ public class LoginController {
     }
 
     private void handleSuccessfulLogin(String username) {
-        SessionManager.getInstance().createSession(username, "email@example.com"); // L'email devrait venir de votre API
+        SessionManager.getInstance().createSession(username, "email@example.com");
         clearForm();
         authController.onSuccessfulAuth();
     }

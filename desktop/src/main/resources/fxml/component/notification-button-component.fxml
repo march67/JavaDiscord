@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.javadiscordproject.controllers.component.NotificationButtonController"
+           fx:id="rootContainer"
+           styleClass="notification-container">
+
+    <Button fx:id="notificationButton"
+            text="🔔"
+            onAction="#onNotificationClick"
+            styleClass="notification-button" />
+
+    <Circle fx:id="notificationDot"
+            radius="6"
+            styleClass="notification-dot"
+            visible="false" />
+
+</StackPane>

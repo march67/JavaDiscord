@@ -1,8 +1,9 @@
 package com.javadiscordproject.services;
 
-import com.javadiscordproject.controllers.view.AuthController;
-import com.javadiscordproject.controllers.component.BaseController;
-import com.javadiscordproject.controllers.view.HomeController;
+import com.javadiscordproject.controllers.view.AuthViewController;
+import com.javadiscordproject.controllers.base.BaseViewController;
+import com.javadiscordproject.controllers.view.HomeViewController;
+import com.javadiscordproject.managers.SceneManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,9 +11,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
+import static com.javadiscordproject.utils.UIConstants.DEFAULT_HEIGHT;
+import static com.javadiscordproject.utils.UIConstants.DEFAULT_WIDTH;
+
 public class SceneFactory {
-    private static final double DEFAULT_WIDTH = 800;
-    private static final double DEFAULT_HEIGHT = 600;
     private static final String CSS_PATH = "/styles/styles.css";
 
     private static final Map<SceneType, String> SCENE_RESOURCES = Map.of(
@@ -21,8 +23,8 @@ public class SceneFactory {
     );
 
     private static final Map<SceneType, Class<?>> SCENE_CONTROLLERS = Map.of(
-            SceneType.AUTH, AuthController.class,
-            SceneType.HOME, HomeController.class
+            SceneType.AUTH, AuthViewController.class,
+            SceneType.HOME, HomeViewController.class
     );
 
     public static Scene createScene(SceneType type, SceneManager sceneManager) {
@@ -43,8 +45,8 @@ public class SceneFactory {
             Parent root = loader.load();
 
             Object controller = loader.getController();
-            if (controller instanceof BaseController) {
-                ((BaseController) controller).setSceneManager(sceneManager);
+            if (controller instanceof BaseViewController) {
+                ((BaseViewController) controller).setSceneManager(sceneManager);
             }
 
             Scene scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox fx:id="rootContainer"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.javadiscordproject.controllers.component.FriendListController"
+      styleClass="root-container"
+      prefWidth="240"
+      minWidth="240">
+
+    <HBox styleClass="header-container">
+        <Label text="Direct Messages"
+               styleClass="header-title"/>
+    </HBox>
+
+    <VBox styleClass="buttons-container" spacing="5">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+
+        <ToggleButton fx:id="friendsButton"
+                      text="Amis"
+                      styleClass="nav-button"
+                      selected="true"
+                      maxWidth="Infinity">
+            <toggleGroup>
+                <ToggleGroup fx:id="navigationGroup"/>
+            </toggleGroup>
+        </ToggleButton>
+
+        <ToggleButton fx:id="addFriendButton"
+                      text="Ajouter des amis"
+                      styleClass="nav-button"
+                      maxWidth="Infinity"
+                      toggleGroup="$navigationGroup"/>
+    </VBox>
+
+    <HBox styleClass="search-container">
+        <padding>
+            <Insets top="0" right="10" bottom="10" left="10"/>
+        </padding>
+        <TextField fx:id="searchField"
+                   promptText="Rechercher..."
+                   styleClass="search-field"
+                   HBox.hgrow="ALWAYS"/>
+    </HBox>
+
+    <ScrollPane fx:id="friendsScrollPane"
+                VBox.vgrow="ALWAYS"
+                fitToWidth="true"
+                styleClass="friends-scroll-pane">
+        <VBox fx:id="friendsList"
+              spacing="2"
+              styleClass="friends-list-container">
+            <padding>
+                <Insets top="5" right="10" bottom="5" left="10"/>
+            </padding>
+        </VBox>
+    </ScrollPane>
+
+    <VBox styleClass="user-info-section">
+
+        <Label fx:id="currentUserLabel" styleClass="current-user-label"/>
+    </VBox>
+    <VBox styleClass="logout-section">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        <Button fx:id="logoutButton"
+                text="Déconnexion"
+                styleClass="logout-button"
+                maxWidth="Infinity"/>
+    </VBox>
+
+</VBox>

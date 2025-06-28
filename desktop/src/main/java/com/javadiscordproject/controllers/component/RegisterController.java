@@ -1,9 +1,9 @@
 package com.javadiscordproject.controllers.component;
 
-import com.javadiscordproject.controllers.view.AuthController;
+import com.javadiscordproject.controllers.view.AuthViewController;
 import com.javadiscordproject.models.RegisterDTO;
-import com.javadiscordproject.services.api.AuthService;
-import com.javadiscordproject.services.api.IAuthService;
+import com.javadiscordproject.services.api.auth.AuthService;
+import com.javadiscordproject.services.api.auth.IAuthService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -23,7 +23,7 @@ public class RegisterController {
     @FXML private Button registerButton;
     @FXML private Button showLogin;
 
-    private AuthController authController;
+    private AuthViewController authController;
     private final IAuthService authService;
 
     public RegisterController() {
@@ -49,7 +49,7 @@ public class RegisterController {
         }
     }
 
-    public void setAuthController(AuthController controller) {
+    public void setAuthController(AuthViewController controller) {
         this.authController = controller;
     }
 

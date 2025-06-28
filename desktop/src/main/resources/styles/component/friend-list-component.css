@@ -1,0 +1,206 @@
+.root-container {
+    -fx-background-color: -secondary-color;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: -primary-color;
+}
+
+.header-container {
+    -fx-background-color: -secondary-color;
+    -fx-min-height: -header-height;
+    -fx-max-height: -header-height;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 15;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: -primary-color;
+}
+
+.header-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+}
+
+.buttons-container {
+    -fx-background-color: transparent;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -primary-color;
+    -fx-font-size: 14px;
+    -fx-padding: 8 12;
+    -fx-cursor: hand;
+    -fx-background-radius: 4;
+    -fx-border-width: 0;
+}
+
+.nav-button:hover {
+    -fx-background-color: derive(-primary-color, 90%);
+}
+
+.nav-button:selected {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+}
+
+.search-container {
+    -fx-background-color: transparent;
+}
+
+.search-field {
+    -fx-background-color: derive(-primary-color, 95%);
+    -fx-text-fill: -primary-color;
+    -fx-prompt-text-fill: derive(-primary-color, 60%);
+    -fx-padding: 6 10;
+    -fx-background-radius: 4;
+    -fx-border-width: 0;
+}
+
+.search-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: -primary-color;
+    -fx-border-width: 1;
+}
+
+.friends-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-hbar-policy: NEVER;
+    -fx-vbar-policy: AS_NEEDED;
+}
+
+.friends-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.friends-scroll-pane .scroll-bar:vertical {
+    -fx-pref-width: 8;
+    -fx-background-color: transparent;
+}
+
+.friends-scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+}
+
+.friends-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: derive(-primary-color, 80%);
+    -fx-background-radius: 4;
+}
+
+.friends-list-container {
+    -fx-background-color: transparent;
+}
+
+.friend-item {
+    -fx-padding: 8 10;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-background-radius: 4;
+}
+
+.friend-item:hover {
+    -fx-background-color: derive(-primary-color, 90%);
+}
+
+.friend-item.selected {
+    -fx-background-color: derive(-primary-color, 85%);
+}
+
+.friend-avatar {
+    -fx-min-width: 32;
+    -fx-min-height: 32;
+    -fx-max-width: 32;
+    -fx-max-height: 32;
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-background-radius: 16;
+}
+
+.friend-name {
+    -fx-font-size: 14px;
+    -fx-text-fill: -primary-color;
+    -fx-font-weight: normal;
+}
+
+.friend-online {
+    -fx-font-size: 12px;
+    -fx-text-fill: #43b581;
+}
+
+.friend-offline {
+    -fx-font-size: 12px;
+    -fx-text-fill: derive(-primary-color, 60%);
+}
+
+.loading-label, .empty-label {
+    -fx-text-fill: derive(-primary-color, 60%);
+    -fx-font-size: 14px;
+    -fx-padding: 20;
+}
+
+.add-friend-view {
+    -fx-padding: 20;
+}
+
+.add-friend-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+    -fx-padding: 0 0 10 0;
+}
+
+.add-friend-field {
+    -fx-background-color: white;
+    -fx-text-fill: -primary-color;
+    -fx-prompt-text-fill: derive(-primary-color, 60%);
+    -fx-padding: 8 12;
+    -fx-background-radius: 4;
+    -fx-border-color: -primary-color;
+    -fx-border-width: 1;
+}
+
+.add-friend-button {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-padding: 8 16;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.add-friend-button:hover {
+    -fx-background-color: derive(-primary-color, -10%);
+}
+
+.user-info-section {
+    -fx-background-color: -secondary-color;
+    -fx-border-color: transparent transparent -primary-color transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.current-user-label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-max-width: infinity;
+}
+
+.logout-section {
+    -fx-background-color: -secondary-color;
+    -fx-border-color: -primary-color transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+.logout-button {
+    -fx-background-color: -delete-color;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+
+.logout-button:hover {
+    -fx-background-color: #d84444;
+}

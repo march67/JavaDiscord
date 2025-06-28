@@ -1,0 +1,115 @@
+.notification-container {
+    -fx-pref-width: 50px;
+    -fx-pref-height: 50px;
+    -fx-alignment: CENTER;
+    -fx-padding: 10 0;
+}
+
+.notification-button {
+    -fx-background-color: -secondary-color;
+    -fx-text-fill: -primary-color;
+    -fx-font-size: 20px;
+    -fx-pref-width: 48px;
+    -fx-pref-height: 48px;
+    -fx-min-width: 48px;
+    -fx-min-height: 48px;
+    -fx-max-width: 48px;
+    -fx-max-height: 48px;
+    -fx-background-radius: 24;
+    -fx-cursor: hand;
+    -fx-border-radius: 24;
+}
+
+.notification-button:hover {
+    -fx-background-color: -primary-color-hover;
+}
+
+.notification-button:pressed {
+    -fx-background-color: -primary-color;
+}
+
+.notification-dot {
+    -fx-fill: -delete-color;
+    -fx-stroke: -secondary-color;
+    -fx-stroke-width: 2;
+    -fx-translate-x: -5;
+    -fx-translate-y: 5;
+}
+
+.notification-popup {
+    -fx-background-color: -secondary-color;
+    -fx-padding: 20;
+}
+
+.notification-popup-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+}
+
+.notification-popup-scrollpane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+.notification-popup-scrollpane .viewport {
+    -fx-background-color: transparent;
+}
+
+.notification-popup-scrollpane .scroll-bar:vertical {
+    -fx-background-color: -third-color;
+}
+
+.notification-popup-scrollpane .scroll-bar:vertical .thumb {
+    -fx-background-color: -primary-color;
+    -fx-background-radius: 5;
+}
+
+.notification-popup-requests-container {
+    -fx-padding: 10;
+    -fx-background-color: transparent;
+}
+
+.notification-popup-no-requests {
+    -fx-text-fill: -primary-color;
+    -fx-font-size: 14px;
+}
+
+.friend-request-item {
+    -fx-background-color: -third-color;
+    -fx-padding: 10;
+    -fx-background-radius: 8;
+}
+
+.friend-request-username {
+    -fx-text-fill: -primary-color;
+    -fx-font-size: 14px;
+}
+
+.friend-request-accept-button {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 30px;
+    -fx-cursor: hand;
+    -fx-background-radius: 4;
+}
+
+.friend-request-accept-button:hover {
+    -fx-background-color: -primary-color-hover;
+}
+
+.friend-request-decline-button {
+    -fx-background-color: -delete-color;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 30px;
+    -fx-cursor: hand;
+    -fx-background-radius: 4;
+}
+
+.friend-request-decline-button:hover {
+    -fx-opacity: 0.8;
+}
