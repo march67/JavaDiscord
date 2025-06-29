@@ -9,10 +9,28 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"
     volumes:
-      # Volume persistant local à chaque développeur
-      - postgres_data:/var/lib/postgresql/data  
-      # Définition des schémas
-      #- ./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      # Volume persistant
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
 
+  api:
+    build:
+      context: ../back # Contexte relatif depuis le docker-compose.yml
+      dockerfile: Dockerfile-api
+    container_name: spring-boot-api
+    ports:
+      - "${API_PORT}:8080"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+# Persiste les données
 volumes:
  postgres_data:
+
+# Met en réseau les services
+networks:
+  app-network:
+    driver: bridge
