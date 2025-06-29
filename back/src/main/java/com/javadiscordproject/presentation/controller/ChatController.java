@@ -2,6 +2,7 @@ package com.javadiscordproject.presentation.controller;
 
 import com.javadiscordproject.infrastructure.persistence.repository.MessageRepository;
 import com.javadiscordproject.presentation.dto.Chat.MessageDTO;
+import com.javadiscordproject.presentation.dto.Chat.NotificationDTO;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -39,4 +40,15 @@ public class ChatController {
         // messageRepository.save(message);
         System.out.println("Message : " + message.getSender() + " " + message.getContent() + " " + message.getTimestamp());
     }
+
+    @MessageMapping("/notification")
+    @SendTo("/topic/notifications")
+    public NotificationDTO handleNotification(NotificationDTO notification) {
+        notification.setTimestamp(LocalDateTime.now().toString());
+
+        System.out.println("Notification: " + notification.getTitle() + " - " + notification.getContent());
+
+        return notification;
+    }
+
 }

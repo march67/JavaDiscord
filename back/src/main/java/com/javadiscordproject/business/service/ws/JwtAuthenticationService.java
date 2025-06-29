@@ -21,7 +21,6 @@ public class JwtAuthenticationService {
     }
 
     public String generateToken(String username) {
-        // Ici, on crée un UserDetails minimal pour la génération du token
         User userDetails = new User(username, "", Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
         return jwtTokenUtil.generateToken(userDetails);
     }
@@ -31,7 +30,6 @@ public class JwtAuthenticationService {
     }
 
     public boolean isTokenValid(String token) {
-        // Ici, on ne peut pas valider sans UserDetails, donc on vérifie juste l'expiration
         return !jwtTokenUtil.extractExpiration(token).before(new java.util.Date());
     }
 
