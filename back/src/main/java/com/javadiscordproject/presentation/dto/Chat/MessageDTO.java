@@ -7,6 +7,7 @@ public class MessageDTO {
 
     private String sender;
     private String content;
+    private String conversationId;
     private String timestamp;
 
     public MessageDTO() {
@@ -41,5 +42,13 @@ public class MessageDTO {
 
     public void setSender(String sender) {
         this.sender = sender;
+    }
+
+    public String getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(String conversationId) {
+        this.conversationId = conversationId;
     }
 }
