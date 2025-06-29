@@ -57,4 +57,24 @@ public class MessageModel {
 	public String getMessageContent() {
 		return messageContent;
 	}
+
+	public void setUser(UserModel user) {
+		this.user = user;
+	}
+
+	public void setConversation(ConversationModel conversation) {
+		this.conversation = conversation;
+	}
+
+	public void setMessageContent(String messageContent) {
+		this.messageContent = messageContent;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 }
