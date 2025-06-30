@@ -108,7 +108,7 @@ public class FriendlistController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping("/friendlist")
+	@GetMapping()
 	public ResponseEntity<Set<String>> getFriendlist(HttpServletRequest request) {
 		// Retrieve the user ID of the friend request sender from the claims
 		String authHeader = request.getHeader("Authorization");

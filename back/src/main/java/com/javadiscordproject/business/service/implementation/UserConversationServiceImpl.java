@@ -27,6 +27,9 @@ public class UserConversationServiceImpl implements UserConversationService {
 	@Override
 	public void updateLastMessage(Long conversationId) {
 		List<UserConversationModel> userConversations = userConversationRepository.findByConversationId(conversationId);
+		if (userConversations.isEmpty()) {
+			throw new EntityNotFoundException("UserConversation not found with conversation id = " + conversationId);
+		}
 		
 		for (UserConversationModel entity : userConversations) {
 			entity.updateLastMessageDateTime();
