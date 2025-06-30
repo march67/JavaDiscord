@@ -110,8 +110,9 @@ public class FriendlistServiceImpl implements FriendlistService {
 
 
 	@Override
-	public void deleteFriend(Long userId1, Long userId2) {
-		FriendlistModel entity = findFriendRequest(userId1, userId2);
+	public void deleteFriend(String friendUsername, Long userId2) {
+		UserModel friend = userService.findUserByUsername(friendUsername);
+		FriendlistModel entity = findFriendRequest(friend.getId(), userId2);
 		friendlistRepository.delete(entity);
 	}
 	

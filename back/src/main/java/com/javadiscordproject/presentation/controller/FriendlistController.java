@@ -95,15 +95,15 @@ public class FriendlistController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@DeleteMapping("/delete/{friendId}")
-	public ResponseEntity<Void> delete(@PathVariable Long friendId, HttpServletRequest request) {		
+	@DeleteMapping("/{friendUsername}")
+	public ResponseEntity<Void> delete(@PathVariable String friendUsername, HttpServletRequest request) {		
 		// Retrieve the user ID of the friend request sender from the claims
 		String authHeader = request.getHeader("Authorization");
 		String token = authHeader.substring(7);
 		
 		Long userId_2 = jwtTokenUtil.extractUserId(token);
         
-		friendlistService.deleteFriend(friendId, userId_2);
+		friendlistService.deleteFriend(friendUsername, userId_2);
 		
 		return ResponseEntity.noContent().build();
 	}
