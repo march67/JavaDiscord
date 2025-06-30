@@ -153,10 +153,14 @@ public class FriendlistServiceImpl implements FriendlistService {
 		
 		// Fill the Set, either try to retrieve the first or second user of the relation ( excludes search of the current user himself )
 		for ( FriendlistModel relation : getFriendlistByStatus(userId, "pending") ) {
-			if (!relation.getId().getUserId_1().equals(userId)) {
-				friendNames.add(relation.getUserName_1());
-			} else {
-				friendNames.add(relation.getUserName_2());
+			// Only get pending request from other requester, not the request made by the user itself
+			if ( !(relation.getRequesterId().equals(userId))) {
+				// Get the username of the requester
+				if (!relation.getId().getUserId_1().equals(userId)) {
+					friendNames.add(relation.getUserName_1());
+				} else {
+					friendNames.add(relation.getUserName_2());
+				}
 			}
 		}
 		return friendNames;
