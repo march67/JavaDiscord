@@ -1,13 +1,11 @@
 package com.javadiscordproject.business.service.implementation;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import com.javadiscordproject.business.service.api.ConversationService;
 import com.javadiscordproject.domain.model.ConversationModel;
 import com.javadiscordproject.infrastructure.persistence.repository.ConversationRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ConversationServiceImpl implements ConversationService {
@@ -23,8 +21,8 @@ public class ConversationServiceImpl implements ConversationService {
 	}
 
 	@Override
-	public Optional<ConversationModel> findConversation(Long conversationId) {
-		Optional<ConversationModel> result = conversationRepository.findById(conversationId);
-		return result;
+	public ConversationModel findConversation(Long conversationId) {
+		return conversationRepository.findById(conversationId)
+				.orElseThrow(() -> new EntityNotFoundException("Conversation not found with id = " + conversationId));
 	}
 }

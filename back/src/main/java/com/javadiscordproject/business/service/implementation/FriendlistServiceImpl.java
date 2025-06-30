@@ -15,6 +15,8 @@ import com.javadiscordproject.domain.model.FriendlistModel;
 import com.javadiscordproject.domain.model.UserModel;
 import com.javadiscordproject.infrastructure.persistence.repository.FriendlistRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class FriendlistServiceImpl implements FriendlistService {
 	private FriendlistRepository friendlistRepository;
@@ -65,61 +67,53 @@ public class FriendlistServiceImpl implements FriendlistService {
 	
 	@Override
 	public void acceptFriendRequest(FriendlistId friendlistId, Long requesterId) {
-		findFriendRequest(friendlistId).ifPresentOrElse(
-				entity -> {
-					if ( !(requesterId == entity.getRequesterId())) {
-						entity.setFriendRequest_status("accepted");
-						friendlistRepository.save(entity);
-					}
-					else {
-						throw new IllegalArgumentException("The requester cannot accept the request sent by himself");
-					}
-				},
-				() -> System.out.println("Friend request not found")
-				
-			);
+		FriendlistModel entity = findFriendRequest(friendlistId);
+		
+		if ( !(requesterId == entity.getRequesterId())) {
+			entity.setFriendRequest_status("accepted");
+			friendlistRepository.save(entity);
+		}
+		else {
+			throw new IllegalArgumentException("The requester cannot accept the request sent by himself");
+		}
 	}
 
 	@Override
 	public void refuseFriendRequest(FriendlistId friendlistId) {
-		findFriendRequest(friendlistId).ifPresentOrElse(
-				entity -> {
-					friendlistRepository.delete(entity);
-				},
-				() -> System.out.println("Friend request not found")
-				
-			);
+		FriendlistModel entity = findFriendRequest(friendlistId);
+		friendlistRepository.delete(entity);
 	}
 
 	@Override
-	public Optional<FriendlistModel> findFriendRequest(FriendlistModel friendlistModel) {
+	//public Optional<FriendlistModel> findFriendRequest(FriendlistModel friendlistModel) {
+	public FriendlistModel findFriendRequest(FriendlistModel friendlistModel) {
 		FriendlistId id = new FriendlistId(friendlistModel.getUserId_1(), friendlistModel.getUserId_2());
-		Optional<FriendlistModel> entity = friendlistRepository.findById(id);
+		FriendlistModel entity = friendlistRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Friend request not found between user 1 = " + id.getUserId_1() + " user 2 = " + id.getUserId_2()));
 		return entity;
 	}
 	
 	@Override
-	public Optional<FriendlistModel> findFriendRequest(Long userId1, Long userId2) {		
+	public FriendlistModel findFriendRequest(Long userId1, Long userId2) {		
 		FriendlistId id = new FriendlistId(userId1, userId2);
-		Optional<FriendlistModel> entity = friendlistRepository.findById(id);
+		FriendlistModel entity = friendlistRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Friend request not found between user 1 = " + userId1 + " user 2 = " + userId2 ));
 		return entity;
 	}
 	
 	@Override
-	public Optional<FriendlistModel> findFriendRequest(FriendlistId id) {		
-		Optional<FriendlistModel> entity = friendlistRepository.findById(id);
+	public FriendlistModel findFriendRequest(FriendlistId id) {		
+		FriendlistModel entity = friendlistRepository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("Friend request not found between user 1 = " + id.getUserId_1() + " user 2 = " + id.getUserId_2()));
 		return entity;
 	}
 
 
 	@Override
-	public void deleteFriend(Long userId1, Long userId2) {
-		findFriendRequest(userId1, userId2).ifPresentOrElse(
-				entity -> {
-					friendlistRepository.delete(entity);
-				},
-				() -> System.out.println("Friend relation not found")
-			);
+	public void deleteFriend(String friendUsername, Long userId2) {
+		UserModel friend = userService.findUserByUsername(friendUsername);
+		FriendlistModel entity = findFriendRequest(friend.getId(), userId2);
+		friendlistRepository.delete(entity);
 	}
 	
 	@Override
@@ -128,6 +122,11 @@ public class FriendlistServiceImpl implements FriendlistService {
 		List<FriendlistModel> friendlist_part_1 = friendlistRepository.findByUserId1AndFriendRequestStatus(userId, status);
 		List<FriendlistModel> friendlist_part_2 = friendlistRepository.findByUserId2AndFriendRequestStatus(userId, status);
 		List<FriendlistModel> friendlist = new ArrayList<>(friendlist_part_1);
+		
+		if (friendlist.isEmpty()) {
+			throw new EntityNotFoundException("List is empty with status relation as " + status + " for userId = " + userId);
+		}
+		
 		friendlist.addAll(friendlist_part_2);
 		return friendlist;
 	}
@@ -153,10 +152,14 @@ public class FriendlistServiceImpl implements FriendlistService {
 		
 		// Fill the Set, either try to retrieve the first or second user of the relation ( excludes search of the current user himself )
 		for ( FriendlistModel relation : getFriendlistByStatus(userId, "pending") ) {
-			if (!relation.getId().getUserId_1().equals(userId)) {
-				friendNames.add(relation.getUserName_1());
-			} else {
-				friendNames.add(relation.getUserName_2());
+			// Only get pending request from other requester, not the request made by the user itself
+			if ( !(relation.getRequesterId().equals(userId))) {
+				// Get the username of the requester
+				if (!relation.getId().getUserId_1().equals(userId)) {
+					friendNames.add(relation.getUserName_1());
+				} else {
+					friendNames.add(relation.getUserName_2());
+				}
 			}
 		}
 		return friendNames;

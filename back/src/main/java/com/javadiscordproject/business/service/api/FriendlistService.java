@@ -12,10 +12,10 @@ public interface FriendlistService {
 	public void sendFriendRequestByUsername(Long idRequester, String username);
 	public void acceptFriendRequest(FriendlistId friendlistId, Long requesterId);
 	public void refuseFriendRequest(FriendlistId friendlistId);
-	public Optional<FriendlistModel> findFriendRequest(FriendlistModel model);
-	public Optional<FriendlistModel> findFriendRequest(Long userId1, Long userId2);
-	public Optional<FriendlistModel> findFriendRequest(FriendlistId friendlistId);
-	public void deleteFriend(Long userId1, Long userId2);
+	public FriendlistModel findFriendRequest(FriendlistModel model);
+	public FriendlistModel findFriendRequest(Long userId1, Long userId2);
+	public FriendlistModel findFriendRequest(FriendlistId friendlistId);
+	public void deleteFriend(String friendUsernamee, Long userId2);
 	public List<FriendlistModel> getFriendlistByStatus(Long userId, String status);
 	public Set<Long> getUsersIdFromFriendlist(Long userId);
 	public Set<String> getUsersUsernameFromFriendlist(Long userId);

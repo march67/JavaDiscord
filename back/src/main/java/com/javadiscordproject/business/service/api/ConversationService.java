@@ -5,6 +5,6 @@ import java.util.Optional;
 import com.javadiscordproject.domain.model.ConversationModel;
 
 public interface ConversationService {
-	void saveConversation(ConversationModel conversationModel);
-	Optional<ConversationModel> findConversation(Long conversationId);
+	public void saveConversation(ConversationModel conversationModel);
+	public ConversationModel findConversation(Long conversationId);
 }

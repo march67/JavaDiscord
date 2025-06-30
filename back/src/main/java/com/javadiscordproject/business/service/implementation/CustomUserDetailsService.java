@@ -19,14 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserModel user = userServiceImpl.findUserByUsername(username);
-        
-        // old without the CustomUserDetails
-//        return org.springframework.security.core.userdetails.User
-//                .withUsername(user.getUsername())
-//                .password(user.getPassword())
-//                .roles("USER")
-//                .build();
-        
+
         // new with CustomUserDetails ( to put in the user ID in the claims )
         return new CustomUserDetails(
         		user.getId(),

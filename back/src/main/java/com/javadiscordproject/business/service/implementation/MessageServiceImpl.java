@@ -11,6 +11,8 @@ import com.javadiscordproject.domain.model.MessageModel;
 import com.javadiscordproject.domain.model.UserConversationId;
 import com.javadiscordproject.infrastructure.persistence.repository.MessageRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class MessageServiceImpl implements MessageService {
 	private MessageRepository messageRepository;
@@ -34,6 +36,10 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public List<MessageModel> getMessagesByConversationId(Long conversationId) {
 		List<MessageModel> messages = messageRepository.findByConversationId(conversationId);
+		if (messages.isEmpty()) {
+			throw new EntityNotFoundException("Not message found at conversation id = " + conversationId);
+		}
+		
 		return messages;
 	}
 }

@@ -29,17 +29,22 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
 	}
 
+	@Override
 	public UserModel findUserByUsername(String username) {
-		return userRepository.findByUsername(username);
+		return userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
 	}
 
 	@Override
 	public String getUsernameById(Long userId) {
-		return userRepository.findById(userId).map(UserModel::getUsername).orElse(null);
+		return userRepository.findById(userId)
+				.map(UserModel::getUsername)
+				.orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
 	}
 
 	@Override
-	public Long getIdByUsername(String requesterUsername) {
-		return userRepository.findByUsername(requesterUsername).getId();
+	public Long getIdByUsername(String username) {
+		return userRepository.findByUsername(username)
+				.map(UserModel::getId)
+				.orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
 	}
 }
