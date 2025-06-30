@@ -1,6 +1,7 @@
 // AuthService.java
 package com.javadiscordproject.services.api.auth;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.javadiscordproject.models.RegisterDTO;
 import com.javadiscordproject.models.LoginDTO;
 import com.javadiscordproject.utils.ApiConstants;
@@ -42,7 +43,7 @@ public class AuthService implements IAuthService {
     }
 
     @Override
-    public CompletableFuture<Boolean> login(LoginDTO loginDto) {
+    public CompletableFuture<String> login(LoginDTO loginDto) {
         try {
             String jsonBody = objectMapper.writeValueAsString(loginDto);
             HttpRequest request = HttpRequest.newBuilder()
@@ -54,10 +55,18 @@ public class AuthService implements IAuthService {
             return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .thenApply(response -> {
                         int status = response.statusCode();
-                        return status == 200;
+                        if (status == 200) {
+                            try {
+                                JsonNode jsonResponse = objectMapper.readTree(response.body());
+                                return jsonResponse.get("token").asText();
+                            } catch (Exception e) {
+                                return null;
+                            }
+                        }
+                        return null;
                     });
         } catch (Exception e) {
-            return CompletableFuture.completedFuture(false);
+            return CompletableFuture.completedFuture(null);
         }
     }
 }

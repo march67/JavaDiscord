@@ -39,7 +39,7 @@ public class NotificationButtonController {
     private boolean hasNotifications = false;
     private IFriendRequestService friendRequestService;
     private Stage notificationPopup;
-    private VBox requestsContainer; // Garde une référence au conteneur des demandes
+    private VBox requestsContainer;
 
     @FXML
     public void initialize() {
@@ -50,7 +50,6 @@ public class NotificationButtonController {
         notificationDot.setMouseTransparent(true);
         StackPane.setAlignment(notificationDot, javafx.geometry.Pos.TOP_RIGHT);
 
-        // Vérifier s'il y a des demandes d'amis en attente
         checkForPendingRequests();
     }
 

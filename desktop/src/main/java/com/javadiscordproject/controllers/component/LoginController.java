@@ -74,11 +74,11 @@ public class LoginController {
             LoginDTO loginDto = new LoginDTO(username, password);
 
             authService.login(loginDto)
-                    .thenAccept(success -> {
+                    .thenAccept(token -> {
                         Platform.runLater(() -> {
                             setLoading(false);
-                            if (success) {
-                                handleSuccessfulLogin(username);
+                            if (token != null) {
+                                handleSuccessfulLogin(username, token);
                             } else {
                                 showError("Login Failed",
                                         "Invalid username or password.");
@@ -111,8 +111,8 @@ public class LoginController {
         return true;
     }
 
-    private void handleSuccessfulLogin(String username) {
-        SessionManager.getInstance().createSession(username, "email@example.com");
+    private void handleSuccessfulLogin(String username, String token) {
+        SessionManager.getInstance().createSession(username, token);
         clearForm();
         authController.onSuccessfulAuth();
     }
