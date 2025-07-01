@@ -117,7 +117,6 @@ public class ConversationController {
         recipientName.setText(username);
         messageList.getChildren().clear();
 
-        // Activer le champ de saisie
         inputField.setDisable(false);
         inputField.requestFocus();
 

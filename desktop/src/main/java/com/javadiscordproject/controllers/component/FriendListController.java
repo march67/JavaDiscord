@@ -2,6 +2,7 @@ package com.javadiscordproject.controllers.component;
 import com.javadiscordproject.managers.SceneManager;
 import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.FriendDTO;
+import com.javadiscordproject.services.api.friend.IFriendService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -33,6 +34,10 @@ public class FriendListController {
 
     private List<FriendDTO> allFriends = new ArrayList<>();
     private FriendSelectionListener friendSelectionListener;
+    private IFriendService friendService;
+    public void setFriendService(IFriendService friendService) {
+        this.friendService = friendService;
+    }
 
     public interface FriendSelectionListener {
         void onFriendSelected(String username);
@@ -137,18 +142,60 @@ public class FriendListController {
         usernameField.setPromptText("Nom d'utilisateur");
         usernameField.getStyleClass().add("add-friend-field");
 
+        Label statusLabel = new Label();
+        statusLabel.getStyleClass().add("status-label");
+        statusLabel.setVisible(false);
+
         Button addButton = new Button("Envoyer la demande");
         addButton.getStyleClass().add("add-friend-button");
         addButton.setOnAction(e -> {
             String username = usernameField.getText().trim();
-            if (!username.isEmpty()) {
-                // TODO: Implémenter l'envoi de demande d'ami
-                LOGGER.info("Demande d'ami envoyée à: " + username);
-                usernameField.clear();
+            if (!username.isEmpty() && friendService != null) {
+                addButton.setDisable(true);
+                statusLabel.setText("Envoi en cours...");
+                statusLabel.setVisible(true);
+
+                friendService.addFriend(username).thenAccept(success -> {
+                    Platform.runLater(() -> {
+                        if (success) {
+                            statusLabel.setText("Demande d'ami envoyée avec succès!");
+                            statusLabel.getStyleClass().add("success");
+                            usernameField.clear();
+
+                            new Thread(() -> {
+                                try {
+                                    Thread.sleep(2000);
+                                    Platform.runLater(() -> {
+                                        friendsButton.setSelected(true);
+                                        if (friendService != null) {
+                                            friendService.getFriendsList().thenAccept(friends -> {
+                                                updateFriendsList(friends);
+                                            });
+                                        }
+                                    });
+                                } catch (InterruptedException ex) {
+                                    // Ignorer
+                                }
+                            }).start();
+                        } else {
+                            statusLabel.setText("Erreur lors de l'envoi de la demande");
+                            statusLabel.getStyleClass().add("error");
+                        }
+                        addButton.setDisable(false);
+                    });
+                }).exceptionally(throwable -> {
+                    Platform.runLater(() -> {
+                        statusLabel.setText("Erreur de connexion");
+                        statusLabel.getStyleClass().add("error");
+                        addButton.setDisable(false);
+                        LOGGER.log(Level.SEVERE, "Erreur lors de l'ajout d'ami", throwable);
+                    });
+                    return null;
+                });
             }
         });
 
-        addFriendView.getChildren().addAll(titleLabel, usernameField, addButton);
+        addFriendView.getChildren().addAll(titleLabel, usernameField, statusLabel, addButton);
         friendsList.getChildren().add(addFriendView);
     }
 
@@ -159,6 +206,32 @@ public class FriendListController {
                 displayFriends(friends);
             }
         });
+    }
+
+    public void refreshFriendsList() {
+        if (friendService != null) {
+            showLoadingMessage();
+
+            friendService.getFriendsList().thenAccept(friends -> {
+                Platform.runLater(() -> {
+                    updateFriendsList(friends);
+                    if (friendsButton.isSelected()) {
+                        displayFriends(friends);
+                    }
+
+                    LOGGER.info("Friends list refreshed: " + friends.size() + " friends");
+                });
+            }).exceptionally(throwable -> {
+                Platform.runLater(() -> {
+                    friendsList.getChildren().clear();
+                    Label errorLabel = new Label("Erreur lors du chargement des amis");
+                    errorLabel.getStyleClass().add("error-label");
+                    friendsList.getChildren().add(errorLabel);
+                });
+                LOGGER.log(Level.SEVERE, "Failed to refresh friends list", throwable);
+                return null;
+            });
+        }
     }
 
     private void filterFriends(String searchText) {

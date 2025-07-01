@@ -1,11 +1,11 @@
 package com.javadiscordproject.controllers.component;
 
 import com.javadiscordproject.models.FriendDTO;
+import com.javadiscordproject.services.IFriendRequestAcceptedListener;
 import com.javadiscordproject.services.api.friend.FriendRequestService;
 import com.javadiscordproject.services.api.friend.IFriendRequestService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,7 +19,6 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.net.URL;
-import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -41,6 +40,8 @@ public class NotificationButtonController {
     private Stage notificationPopup;
     private VBox requestsContainer;
 
+    private IFriendRequestAcceptedListener friendRequestAcceptedListener;
+
     @FXML
     public void initialize() {
         loadStyles();
@@ -51,6 +52,10 @@ public class NotificationButtonController {
         StackPane.setAlignment(notificationDot, javafx.geometry.Pos.TOP_RIGHT);
 
         checkForPendingRequests();
+    }
+
+    public void setFriendRequestAcceptedListener(IFriendRequestAcceptedListener listener) {
+        this.friendRequestAcceptedListener = listener;
     }
 
     private void loadStyles() {
@@ -185,6 +190,10 @@ public class NotificationButtonController {
                 Platform.runLater(() -> {
                     refreshRequestsList();
                     checkForPendingRequests();
+
+                    if (friendRequestAcceptedListener != null) {
+                        friendRequestAcceptedListener.onFriendRequestAccepted(request.getUsername());
+                    }
                 });
             } else {
                 Platform.runLater(() -> {

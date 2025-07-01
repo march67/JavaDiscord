@@ -4,6 +4,8 @@ import com.javadiscordproject.controllers.base.BaseViewController;
 import com.javadiscordproject.controllers.component.LeftNavbarController;
 import com.javadiscordproject.controllers.component.FriendListController;
 import com.javadiscordproject.controllers.component.ConversationController;
+import com.javadiscordproject.controllers.component.NotificationButtonController;
+import com.javadiscordproject.services.IFriendRequestAcceptedListener;
 import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.FriendDTO;
 import com.javadiscordproject.services.api.friend.FriendService;
@@ -43,6 +45,7 @@ public class HomeViewController extends BaseViewController {
         loadCss();
         loadComponents();
         setupEventHandlers();
+        setupFriendRequestListener();
         loadFriendsListAsync();
     }
 
@@ -69,6 +72,8 @@ public class HomeViewController extends BaseViewController {
             friendListView = friendListLoader.load();
             friendListController = friendListLoader.getController();
 
+            friendListController.setFriendService(friendService);
+
             FXMLLoader conversationLoader = new FXMLLoader(getClass().getResource("/fxml/component/conversation-component.fxml"));
             conversationView = conversationLoader.load();
             conversationController = conversationLoader.getController();
@@ -92,6 +97,23 @@ public class HomeViewController extends BaseViewController {
         }
 
         setupLogoutHandler();
+    }
+    private void setupFriendRequestListener() {
+        if (navbarController != null && navbarController.getNotificationController() != null) {
+            NotificationButtonController notificationController = navbarController.getNotificationController();
+
+            IFriendRequestAcceptedListener listener = new IFriendRequestAcceptedListener() {
+                @Override
+                public void onFriendRequestAccepted(String username) {
+                    logger.info("Friend request accepted for: " + username);
+
+                    if (friendListController != null) {
+                        friendListController.refreshFriendsList();
+                    }
+                }
+            };
+            notificationController.setFriendRequestAcceptedListener(listener);
+        }
     }
 
     private void loadFriendsListAsync() {

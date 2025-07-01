@@ -57,13 +57,47 @@ public class FriendRequestService implements IFriendRequestService {
 
     @Override
     public CompletableFuture<Boolean> acceptFriendRequest(String username) {
-        // TODO: implement API call when endpoint is available
-        return CompletableFuture.completedFuture(true);
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                String token = SessionManager.getInstance().getToken();
+
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(ApiConstants.ACCEPT_FRIEND_REQUEST_ENDPOINT + "/" + username))
+                        .header("Authorization", "Bearer " + token)
+                        .header("Accept", "*/*")
+                        .POST(HttpRequest.BodyPublishers.noBody())
+                        .build();
+
+                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                return response.statusCode() == 204;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        });
     }
 
     @Override
     public CompletableFuture<Boolean> declineFriendRequest(String username) {
-        // TODO: implement API call when endpoint is available
-        return CompletableFuture.completedFuture(true);
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                String token = SessionManager.getInstance().getToken();
+
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(ApiConstants.REFUSE_FRIEND_REQUEST_ENDPOINT + "/" + username))
+                        .header("Authorization", "Bearer " + token)
+                        .header("Accept", "*/*")
+                        .POST(HttpRequest.BodyPublishers.noBody())
+                        .build();
+
+                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                return response.statusCode() == 204;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        });
     }
 }
