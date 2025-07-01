@@ -37,4 +37,9 @@ public class UserConversationServiceImpl implements UserConversationService {
 		}
 	}
 
+	@Override
+	public List<UserConversationModel> findByUserId(Long userId) {
+		return userConversationRepository.findByUserId(userId);
+	}
+
 }

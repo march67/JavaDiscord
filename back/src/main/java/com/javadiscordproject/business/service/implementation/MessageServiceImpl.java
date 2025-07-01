@@ -3,6 +3,7 @@ package com.javadiscordproject.business.service.implementation;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.javadiscordproject.business.service.api.ConversationService;
 import com.javadiscordproject.business.service.api.MessageService;

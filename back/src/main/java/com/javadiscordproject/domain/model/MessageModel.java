@@ -57,4 +57,8 @@ public class MessageModel {
 	public String getMessageContent() {
 		return messageContent;
 	}
+	
+	public LocalDateTime getCreatedAt() {
+		return this.createdAt;
+	}
 }
