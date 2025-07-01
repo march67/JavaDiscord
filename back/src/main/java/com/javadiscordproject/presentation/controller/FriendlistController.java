@@ -1,5 +1,7 @@
 package com.javadiscordproject.presentation.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
@@ -12,21 +14,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javadiscordproject.business.service.api.FriendlistService;
+import com.javadiscordproject.business.service.api.UserConversationService;
 import com.javadiscordproject.business.service.api.UserService;
 
 import com.javadiscordproject.domain.model.FriendlistId;
 import com.javadiscordproject.infrastructure.security.jwt.CustomUserDetails;
+import com.javadiscordproject.presentation.dto.Friendlist.FriendlistDto;
 
 @RestController
 @RequestMapping("/friendlist")
 public class FriendlistController {
 	private FriendlistService friendlistService;
 	private UserService userService;
+	private UserConversationService userConversationService;
 	
-	public FriendlistController(FriendlistService friendListService, UserService userService)
+	public FriendlistController(FriendlistService friendListService, UserService userService, UserConversationService userConversationService)
 	{
 		this.friendlistService = friendListService;
 		this.userService = userService;
+		this.userConversationService = userConversationService;
 	}
 	
 	@PostMapping("/add-friend/by-id/{receiverId}")
@@ -91,13 +97,21 @@ public class FriendlistController {
 	}
 	
 	@GetMapping()
-	public ResponseEntity<Set<String>> getFriendlist(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+	public ResponseEntity<List<FriendlistDto>> getFriendlist(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
 		// Retrieve the user ID of the friend request sender from the claims
 		Long userId = customUserDetails.getId();
+		String username = customUserDetails.getUsername();
+		List<FriendlistDto> friendlistDto = new ArrayList<FriendlistDto>();
 		
 		Set<String> friendlistUsersUsername = friendlistService.getUsersUsernameFromFriendlist(userId);
 		
-		return ResponseEntity.ok(friendlistUsersUsername);
+		// retrieve conversation id
+		for (String name : friendlistUsersUsername) {
+			Long id = userConversationService.findConversationIdByUsernames(username, name);
+			friendlistDto.add(new FriendlistDto(name, id));
+		}
+	
+		return ResponseEntity.ok(friendlistDto);
 	}
 	
 	@GetMapping("/pending-friend-requests")

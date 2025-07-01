@@ -8,10 +8,14 @@ import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
+import com.javadiscordproject.business.service.api.ConversationService;
 import com.javadiscordproject.business.service.api.FriendlistService;
+import com.javadiscordproject.business.service.api.UserConversationService;
 import com.javadiscordproject.business.service.api.UserService;
+import com.javadiscordproject.domain.model.ConversationModel;
 import com.javadiscordproject.domain.model.FriendlistId;
 import com.javadiscordproject.domain.model.FriendlistModel;
+import com.javadiscordproject.domain.model.UserConversationModel;
 import com.javadiscordproject.domain.model.UserModel;
 import com.javadiscordproject.infrastructure.persistence.repository.FriendlistRepository;
 
@@ -21,10 +25,15 @@ import jakarta.persistence.EntityNotFoundException;
 public class FriendlistServiceImpl implements FriendlistService {
 	private FriendlistRepository friendlistRepository;
 	private UserService userService;
+	private UserConversationService userConversationService;
+	private ConversationService conversationService;
 	
-	public FriendlistServiceImpl(FriendlistRepository friendlistRepository, UserService userService) {
+	public FriendlistServiceImpl(FriendlistRepository friendlistRepository, UserService userService, UserConversationService userConversationService
+			, ConversationService conversationService) {
 		this.friendlistRepository = friendlistRepository;
 		this.userService = userService;
+		this.userConversationService = userConversationService;
+		this.conversationService = conversationService;
 	}
 
 	@Override
@@ -72,6 +81,17 @@ public class FriendlistServiceImpl implements FriendlistService {
 		if ( !(requesterId == entity.getRequesterId())) {
 			entity.setFriendRequest_status("accepted");
 			friendlistRepository.save(entity);
+			
+			// create new conversation between the two users
+			ConversationModel conversation = new ConversationModel();
+			conversationService.saveConversation(conversation);
+			
+			UserModel user1 = userService.findUserById(friendlistId.getUserId_1());
+			UserModel user2 = userService.findUserById(friendlistId.getUserId_2());
+			UserConversationModel userConversation1 = new UserConversationModel(user1, conversation);
+			UserConversationModel userConversation2 = new UserConversationModel(user2, conversation);
+			userConversationService.saveUserConversation(userConversation1);
+			userConversationService.saveUserConversation(userConversation2);
 		}
 		else {
 			throw new IllegalArgumentException("The requester cannot accept the request sent by himself");

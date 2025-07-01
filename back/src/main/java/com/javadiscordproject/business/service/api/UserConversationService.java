@@ -8,4 +8,5 @@ public interface UserConversationService {
 	public void saveUserConversation(UserConversationModel userConversationModel);
 	public void updateLastMessage(Long conversationId);
 	public List<UserConversationModel> findByUserId(Long userId);
+	public Long findConversationIdByUsernames(String username1, String username2);
 }

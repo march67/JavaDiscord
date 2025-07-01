@@ -13,19 +13,9 @@ public class ConversationModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String randomFieldToFixBug;
-    
     public ConversationModel() {}
     
-    public ConversationModel(String randomFieldText) {
-    	this.randomFieldToFixBug = randomFieldText;
-    }
-
     public Long getId() {
     	return this.id;
     }
-
-	public String getRandomFieldToFixBug() {
-		return randomFieldToFixBug;
-	}
 } 
