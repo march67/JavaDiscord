@@ -128,6 +128,7 @@ public class FriendlistServiceImpl implements FriendlistService {
 		}
 		
 		friendlist.addAll(friendlist_part_2);
+		
 		return friendlist;
 	}
 

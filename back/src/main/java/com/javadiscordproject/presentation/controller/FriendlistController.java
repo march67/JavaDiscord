@@ -1,49 +1,38 @@
 package com.javadiscordproject.presentation.controller;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javadiscordproject.business.service.api.FriendlistService;
 import com.javadiscordproject.business.service.api.UserService;
-import com.javadiscordproject.domain.model.FriendlistId;
-import com.javadiscordproject.infrastructure.security.jwt.JwtTokenUtil;
-import com.javadiscordproject.mapper.FriendlistMapper;
-import com.javadiscordproject.presentation.dto.Friendlist.FriendRequestByIdDTO;
 
-import jakarta.servlet.http.HttpServletRequest;
+import com.javadiscordproject.domain.model.FriendlistId;
+import com.javadiscordproject.infrastructure.security.jwt.CustomUserDetails;
 
 @RestController
 @RequestMapping("/friendlist")
 public class FriendlistController {
 	private FriendlistService friendlistService;
 	private UserService userService;
-	private FriendlistMapper friendlistMapper;
-	private JwtTokenUtil jwtTokenUtil;
 	
-	public FriendlistController(FriendlistService friendListService, FriendlistMapper friendlistMapper, JwtTokenUtil jwtTokenUtil,
-			UserService userService)
+	public FriendlistController(FriendlistService friendListService, UserService userService)
 	{
 		this.friendlistService = friendListService;
-		this.friendlistMapper = friendlistMapper;
-		this.jwtTokenUtil = jwtTokenUtil;
 		this.userService = userService;
 	}
 	
 	@PostMapping("/add-friend/by-id/{receiverId}")
-	public ResponseEntity<Void> addFriendById(@PathVariable Long receiverId, HttpServletRequest request) {
+	public ResponseEntity<Void> addFriendById(@PathVariable Long receiverId, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 		// Retrieve the user ID of the friend request sender from the claims
-		String authHeader = request.getHeader("Authorization");
-		String token = authHeader.substring(7); // delete "Bearer " string		
-		Long requesterId = jwtTokenUtil.extractUserId(token);
+		Long requesterId = customUserDetails.getId();
 		
 		FriendlistId id = new FriendlistId(requesterId, receiverId);
 				
@@ -53,11 +42,9 @@ public class FriendlistController {
 	}
 	
 	@PostMapping("/add-friend/by-username/{username}")
-	public ResponseEntity<Void> addFriendByUsername(@PathVariable String username, HttpServletRequest request) {
+	public ResponseEntity<Void> addFriendByUsername(@PathVariable String username, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 		// Retrieve the user ID of the friend request sender from the claims
-		String authHeader = request.getHeader("Authorization");
-		String token = authHeader.substring(7); // delete "Bearer " string	
-		Long requesterId = jwtTokenUtil.extractUserId(token);
+		Long requesterId = customUserDetails.getId();
 		
 		friendlistService.sendFriendRequestByUsername(requesterId, username);
 
@@ -66,11 +53,10 @@ public class FriendlistController {
 	
 	
 	@PostMapping("/refuse/{requesterUsername}")
-	public ResponseEntity<Void> refuse(@PathVariable String requesterUsername, HttpServletRequest request) {
+	public ResponseEntity<Void> refuse(@PathVariable String requesterUsername, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 		// Retrieve the user ID of the friend request sender from the claims
-		String authHeader = request.getHeader("Authorization");
-		String token = authHeader.substring(7);	
-		Long receiverId = jwtTokenUtil.extractUserId(token);
+		Long receiverId = customUserDetails.getId();
+		
 		Long requesterId = userService.getIdByUsername(requesterUsername);
 		
 		FriendlistId id = new FriendlistId(receiverId, requesterId);
@@ -81,11 +67,10 @@ public class FriendlistController {
 	}
 	
 	@PostMapping("/accept/{username}")
-	public ResponseEntity<Void> accept(@PathVariable String username, HttpServletRequest request) {
+	public ResponseEntity<Void> accept(@PathVariable String username, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
 		// Retrieve the user ID of the friend request sender from the claims
-		String authHeader = request.getHeader("Authorization");
-		String token = authHeader.substring(7);	
-		Long requesterId = jwtTokenUtil.extractUserId(token);
+		Long requesterId = customUserDetails.getId();
+		
 		Long userId = userService.getIdByUsername(username);
 		
 		FriendlistId id = new FriendlistId(requesterId, userId);
@@ -96,12 +81,9 @@ public class FriendlistController {
 	}
 	
 	@DeleteMapping("/{friendUsername}")
-	public ResponseEntity<Void> delete(@PathVariable String friendUsername, HttpServletRequest request) {		
+	public ResponseEntity<Void> delete(@PathVariable String friendUsername, @AuthenticationPrincipal CustomUserDetails customUserDetails) {		
 		// Retrieve the user ID of the friend request sender from the claims
-		String authHeader = request.getHeader("Authorization");
-		String token = authHeader.substring(7);
-		
-		Long userId_2 = jwtTokenUtil.extractUserId(token);
+		Long userId_2 = customUserDetails.getId();
         
 		friendlistService.deleteFriend(friendUsername, userId_2);
 		
@@ -109,11 +91,9 @@ public class FriendlistController {
 	}
 	
 	@GetMapping()
-	public ResponseEntity<Set<String>> getFriendlist(HttpServletRequest request) {
+	public ResponseEntity<Set<String>> getFriendlist(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
 		// Retrieve the user ID of the friend request sender from the claims
-		String authHeader = request.getHeader("Authorization");
-		String token = authHeader.substring(7);
-		Long userId = jwtTokenUtil.extractUserId(token);
+		Long userId = customUserDetails.getId();
 		
 		Set<String> friendlistUsersUsername = friendlistService.getUsersUsernameFromFriendlist(userId);
 		
@@ -121,11 +101,9 @@ public class FriendlistController {
 	}
 	
 	@GetMapping("/pending-friend-requests")
-	public ResponseEntity<Set<String>> getPendingFriendRequests(HttpServletRequest request) {
+	public ResponseEntity<Set<String>> getPendingFriendRequests(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
 		// Retrieve the user ID of the friend request sender from the claims
-		String authHeader = request.getHeader("Authorization");
-		String token = authHeader.substring(7);
-		Long userId = jwtTokenUtil.extractUserId(token);
+		Long userId = customUserDetails.getId();
 		
 		Set<String> friendRequests = friendlistService.getPendingFriendRequestsReturnUsername(userId);
 		return ResponseEntity.ok(friendRequests);
