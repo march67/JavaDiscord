@@ -8,6 +8,8 @@ public class ApiConstants {
     public static final String FRIEND_LIST_ENDPOINT = BASE_URL + "friendlist";
     public static final String PENDING_FRIEND_REQUESTS_ENDPOINT = BASE_URL + "friendlist/pending-friend-requests";
 
+
+
     private ApiConstants() {
     }
 }

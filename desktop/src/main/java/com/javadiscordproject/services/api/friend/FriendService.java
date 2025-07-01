@@ -37,7 +37,7 @@ public class FriendService implements IFriendService {
                         .build();
 
                 HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
+                System.out.println("Response: " + response.body());
                 if (response.statusCode() == 200) {
                     List<String> friendNames = objectMapper.readValue(response.body(), new TypeReference<List<String>>() {});
                     List<FriendDTO> friends = new ArrayList<>();
@@ -56,9 +56,29 @@ public class FriendService implements IFriendService {
     }
 
     @Override
-    public CompletableFuture<Boolean> addFriend(String friendId) {
-        // TODO: implement later
-        return CompletableFuture.completedFuture(false);
+    public CompletableFuture<Boolean> addFriend(String friendUsername) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                String token = SessionManager.getInstance().getToken();
+
+                String url = ApiConstants.ADD_FRIEND_ENDPOINT + "/" + friendUsername;
+
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .header("Authorization", "Bearer " + token)
+                        .header("Accept", "*/*")
+                        .POST(HttpRequest.BodyPublishers.noBody())
+                        .build();
+
+                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                return response.statusCode() >= 200 && response.statusCode() < 300;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        });
     }
 
     @Override

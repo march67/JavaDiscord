@@ -122,11 +122,6 @@ public class FriendlistServiceImpl implements FriendlistService {
 		List<FriendlistModel> friendlist_part_1 = friendlistRepository.findByUserId1AndFriendRequestStatus(userId, status);
 		List<FriendlistModel> friendlist_part_2 = friendlistRepository.findByUserId2AndFriendRequestStatus(userId, status);
 		List<FriendlistModel> friendlist = new ArrayList<>(friendlist_part_1);
-		
-		if (friendlist.isEmpty()) {
-			throw new EntityNotFoundException("List is empty with status relation as " + status + " for userId = " + userId);
-		}
-		
 		friendlist.addAll(friendlist_part_2);
 		
 		return friendlist;
