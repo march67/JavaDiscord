@@ -1,7 +1,6 @@
 package com.javadiscordproject.services.api.friend;
 
 import com.javadiscordproject.managers.SessionManager;
-import com.javadiscordproject.models.FriendDTO;
 import com.javadiscordproject.utils.ApiConstants;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +23,7 @@ public class FriendRequestService implements IFriendRequestService {
     }
 
     @Override
-    public CompletableFuture<List<FriendDTO>> getPendingFriendRequests() {
+    public CompletableFuture<List<String>> getPendingFriendRequests() {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 String token = SessionManager.getInstance().getToken();
@@ -40,11 +39,7 @@ public class FriendRequestService implements IFriendRequestService {
 
                 if (response.statusCode() == 200) {
                     List<String> pendingUsernames = objectMapper.readValue(response.body(), new TypeReference<List<String>>() {});
-                    List<FriendDTO> pendingRequests = new ArrayList<>();
-                    for (String username : pendingUsernames) {
-                        pendingRequests.add(new FriendDTO(username));
-                    }
-                    return pendingRequests;
+                    return pendingUsernames;
                 } else {
                     return new ArrayList<>();
                 }

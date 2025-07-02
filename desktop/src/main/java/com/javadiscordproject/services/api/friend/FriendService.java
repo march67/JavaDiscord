@@ -38,12 +38,12 @@ public class FriendService implements IFriendService {
 
                 HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
                 System.out.println("Response: " + response.body());
+
                 if (response.statusCode() == 200) {
-                    List<String> friendNames = objectMapper.readValue(response.body(), new TypeReference<List<String>>() {});
-                    List<FriendDTO> friends = new ArrayList<>();
-                    for (String name : friendNames) {
-                        friends.add(new FriendDTO(name));
-                    }
+                    List<FriendDTO> friends = objectMapper.readValue(
+                            response.body(),
+                            new TypeReference<List<FriendDTO>>() {}
+                    );
                     return friends;
                 } else {
                     return new ArrayList<>();

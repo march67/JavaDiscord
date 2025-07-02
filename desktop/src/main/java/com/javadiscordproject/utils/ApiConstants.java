@@ -10,6 +10,7 @@ public class ApiConstants {
     public static final String ADD_FRIEND_ENDPOINT = BASE_URL + "friendlist/add-friend/by-username";
     public static final String ACCEPT_FRIEND_REQUEST_ENDPOINT = BASE_URL + "friendlist/accept";
     public static final String REFUSE_FRIEND_REQUEST_ENDPOINT = BASE_URL + "friendlist/refuse";
+    public static final String MESSAGE_ENDPOINT = BASE_URL + "message";
 
 
 

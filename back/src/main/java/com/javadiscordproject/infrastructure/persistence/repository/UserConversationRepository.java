@@ -12,4 +12,6 @@ import com.javadiscordproject.domain.model.UserConversationModel;
 @Repository
 public interface UserConversationRepository extends JpaRepository<UserConversationModel, UserConversationId> {
 	public List<UserConversationModel> findByConversationId(Long conversationId);
+	public List<UserConversationModel> findByUserId(Long userId);
+	public Long countByConversationId(Long conversationId);
 }
