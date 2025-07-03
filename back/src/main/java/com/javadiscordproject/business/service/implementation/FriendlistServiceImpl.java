@@ -48,6 +48,9 @@ public class FriendlistServiceImpl implements FriendlistService {
 		// charge users
 		UserModel user1 = userService.findUserById(friendlistId.getUserId_1());
 		UserModel user2 = userService.findUserById(friendlistId.getUserId_2());
+		
+		if (areFriends(user1, user2)) throw new IllegalArgumentException("Users " + user1.getUsername() + " " + user2.getUsername() + " are already friends");
+		
 		entity.setUsers(user1, user2);
 		
 		// set status + requester and save
@@ -63,10 +66,23 @@ public class FriendlistServiceImpl implements FriendlistService {
     	// Search for the two existing users
     	UserModel user1 = userService.findUserById(idRequester);
     	UserModel user2 = userService.findUserByUsername(username);
+    	
+    	// Business rules
     	if (user1.getId() == user2.getId()) {
     		throw new IllegalArgumentException("User cannot friend request himself as a friend");
     	}
         friendlistModel.setUsers(user1, user2);
+        
+        if (areFriends(user1, user2)) throw new IllegalArgumentException("Users " + user1.getUsername() + " " + user2.getUsername() + " are already friends");
+        
+        // Auto accept friend request if a request from the receiver is already sent to the requester
+        for ( String pendingUsername : getPendingFriendRequestsReturnUsername(user1.getId())) {
+        	if(pendingUsername.equals(username)) {
+        		FriendlistId friendlistId = findFriendRequest(user1.getId(), user2.getId()).getId();
+        		acceptFriendRequest(friendlistId, idRequester);
+        		return;
+        	}
+        };
         
         // Set status + requester and save
         friendlistModel.setFriendRequest_status("pending");
@@ -105,7 +121,6 @@ public class FriendlistServiceImpl implements FriendlistService {
 	}
 
 	@Override
-	//public Optional<FriendlistModel> findFriendRequest(FriendlistModel friendlistModel) {
 	public FriendlistModel findFriendRequest(FriendlistModel friendlistModel) {
 		FriendlistId id = new FriendlistId(friendlistModel.getUserId_1(), friendlistModel.getUserId_2());
 		FriendlistModel entity = friendlistRepository.findById(id)
@@ -127,7 +142,7 @@ public class FriendlistServiceImpl implements FriendlistService {
 				.orElseThrow(() -> new EntityNotFoundException("Friend request not found between user 1 = " + id.getUserId_1() + " user 2 = " + id.getUserId_2()));
 		return entity;
 	}
-
+	
 
 	@Override
 	public void deleteFriend(String friendUsername, Long userId2) {
@@ -196,5 +211,15 @@ public class FriendlistServiceImpl implements FriendlistService {
 		}
 
 		return usersName;
+	}
+	
+	public boolean areFriends(UserModel user1, UserModel user2) {
+		// Search in this order first
+		if ( friendlistRepository.findByUserId1AndUserId2AndFriendRequestStatus(user1.getId(), user2.getId(), "accepted").isPresent()) {
+			return true;
+		};
+		
+		// If first search not found, search in the other order
+		return friendlistRepository.findByUserId1AndUserId2AndFriendRequestStatus(user2.getId(), user1.getId(), "accepted").isPresent();
 	}
 }

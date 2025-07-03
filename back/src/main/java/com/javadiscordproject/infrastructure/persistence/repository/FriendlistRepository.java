@@ -2,6 +2,7 @@ package com.javadiscordproject.infrastructure.persistence.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,5 +15,5 @@ public interface FriendlistRepository extends JpaRepository<FriendlistModel, Fri
 	// concate both for whole list
 	List<FriendlistModel> findByUserId1AndFriendRequestStatus(Long user_id_1, String friendRequestStatus); // column 1
 	List<FriendlistModel> findByUserId2AndFriendRequestStatus(Long user_id_1, String friendRequestStatus); // column 2
-	
+	Optional<FriendlistModel> findByUserId1AndUserId2AndFriendRequestStatus(Long userId_1, Long userId_2, String friendRequestStatus);
 }
