@@ -1,56 +1,54 @@
 package com.javadiscordproject.services;
 
-import com.javadiscordproject.models.Message;
+import com.javadiscordproject.models.MessageDTO;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MessageDisplayService {
-    public void displayMessage(Message message, VBox messageList, ScrollPane scrollPane) {
+    private static final DateTimeFormatter DISPLAY_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    public void displayMessage(MessageDTO message, VBox messageList, ScrollPane scrollPane, boolean isCurrentUser) {
         HBox messageGroup = new HBox();
-
-        if (message.isSystem()) {
-            createSystemMessage(message, messageGroup);
-        } else {
-            createUserMessage(message, messageGroup);
-        }
-
+        createUserMessage(message, messageGroup, isCurrentUser);
         messageList.getChildren().add(messageGroup);
         scrollPane.setVvalue(1.0);
     }
 
-    private void createSystemMessage(Message message, HBox messageGroup) {
-        messageGroup.getStyleClass().add("system-message-container");
-
-        Label messageLabel = new Label(message.getContent());
-        messageLabel.getStyleClass().add("message-label");
-
-        HBox messageContainer = new HBox();
-        messageContainer.getStyleClass().add("system-message");
-        messageContainer.getChildren().add(messageLabel);
-
-        messageGroup.getChildren().add(messageContainer);
-    }
-
-    private void createUserMessage(Message message, HBox messageGroup) {
-        messageGroup.getStyleClass().add(message.isUser() ? "user-message-container" : "other-message-container");
+    private void createUserMessage(MessageDTO message, HBox messageGroup, boolean isCurrentUser) {
+        messageGroup.getStyleClass().add(isCurrentUser ? "user-message-container" : "other-message-container");
 
         VBox contentBox = new VBox();
         contentBox.setSpacing(2);
-        contentBox.getStyleClass().add(message.isUser() ? "user-content" : "other-content");
+        contentBox.getStyleClass().add(isCurrentUser ? "user-content" : "other-content");
 
-        Label usernameLabel = new Label(message.getSender());
-        usernameLabel.getStyleClass().add(message.isUser() ? "user-username" : "other-username");
+        Label usernameLabel = new Label(message.getUsername());
+        usernameLabel.getStyleClass().add(isCurrentUser ? "user-username" : "other-username");
 
-        Label messageLabel = new Label(message.getContent());
+        Label messageLabel = new Label(message.getMessageContent());
         messageLabel.getStyleClass().add("message-label");
 
+        Label timeLabel = new Label(formatDateTime(message.getMessageDateTime()));
+        timeLabel.getStyleClass().add("message-time");
+        timeLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: #888;");
+
         HBox messageContainer = new HBox();
-        messageContainer.getStyleClass().add(message.isUser() ? "user-message" : "other-message");
+        messageContainer.getStyleClass().add(isCurrentUser ? "user-message" : "other-message");
         messageContainer.getChildren().add(messageLabel);
 
-        contentBox.getChildren().addAll(usernameLabel, messageContainer);
+        contentBox.getChildren().addAll(usernameLabel, messageContainer, timeLabel);
         messageGroup.getChildren().add(contentBox);
+    }
+
+    private String formatDateTime(String dateTimeString) {
+        try {
+            LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
+            return dateTime.format(DISPLAY_FORMATTER);
+        } catch (Exception e) {
+            return dateTimeString;
+        }
     }
 }

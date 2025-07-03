@@ -9,7 +9,7 @@ public class MainApplication extends Application {
     public void start(Stage primaryStage) {
         SceneManager.initialize(primaryStage);
         SceneManager.getInstance().showLoginScene();
-        SceneManager.getInstance().showHomeScene();
+        //SceneManager.getInstance().showHomeScene();
     }
 
     public static void main(String[] args) {

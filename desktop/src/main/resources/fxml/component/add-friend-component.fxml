@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox styleClass="add-friend-view" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.javadiscordproject.controllers.component.AddFriendController">
+    <Label text="Ajouter un ami" styleClass="add-friend-title"/>
+    <TextField fx:id="usernameField" promptText="Nom d'utilisateur" styleClass="add-friend-field"/>
+    <Label fx:id="statusLabel" styleClass="status-label"/>
+    <Button fx:id="addButton" text="Ajouter" styleClass="add-friend-button" onAction="#handleAddFriend"/>
+</VBox>

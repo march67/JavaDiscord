@@ -1,11 +1,10 @@
 package com.javadiscordproject.controllers.component;
 
-import com.javadiscordproject.models.FriendDTO;
+import com.javadiscordproject.services.IFriendRequestAcceptedListener;
 import com.javadiscordproject.services.api.friend.FriendRequestService;
 import com.javadiscordproject.services.api.friend.IFriendRequestService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,7 +18,6 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.net.URL;
-import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -39,7 +37,9 @@ public class NotificationButtonController {
     private boolean hasNotifications = false;
     private IFriendRequestService friendRequestService;
     private Stage notificationPopup;
-    private VBox requestsContainer; // Garde une référence au conteneur des demandes
+    private VBox requestsContainer;
+
+    private IFriendRequestAcceptedListener friendRequestAcceptedListener;
 
     @FXML
     public void initialize() {
@@ -50,8 +50,11 @@ public class NotificationButtonController {
         notificationDot.setMouseTransparent(true);
         StackPane.setAlignment(notificationDot, javafx.geometry.Pos.TOP_RIGHT);
 
-        // Vérifier s'il y a des demandes d'amis en attente
         checkForPendingRequests();
+    }
+
+    public void setFriendRequestAcceptedListener(IFriendRequestAcceptedListener listener) {
+        this.friendRequestAcceptedListener = listener;
     }
 
     private void loadStyles() {
@@ -142,8 +145,8 @@ public class NotificationButtonController {
                     requestsContainer.getChildren().add(noRequestsLabel);
                     setHasNotifications(false);
                 } else {
-                    for (FriendDTO request : requests) {
-                        HBox requestItem = createFriendRequestItem(request);
+                    for (String username : requests) {
+                        HBox requestItem = createFriendRequestItem(username);
                         requestsContainer.getChildren().add(requestItem);
                     }
                 }
@@ -151,12 +154,12 @@ public class NotificationButtonController {
         });
     }
 
-    private HBox createFriendRequestItem(FriendDTO request) {
+    private HBox createFriendRequestItem(String username) {
         HBox container = new HBox(10);
         container.setAlignment(Pos.CENTER_LEFT);
         container.getStyleClass().add("friend-request-item");
 
-        Label usernameLabel = new Label(request.getUsername());
+        Label usernameLabel = new Label(username);
         usernameLabel.getStyleClass().add("friend-request-username");
         usernameLabel.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(usernameLabel, Priority.ALWAYS);
@@ -166,26 +169,30 @@ public class NotificationButtonController {
 
         Button acceptButton = new Button("✓");
         acceptButton.getStyleClass().add("friend-request-accept-button");
-        acceptButton.setOnAction(e -> handleAcceptRequest(request, container));
+        acceptButton.setOnAction(e -> handleAcceptRequest(username, container));
 
         Button declineButton = new Button("✗");
         declineButton.getStyleClass().add("friend-request-decline-button");
-        declineButton.setOnAction(e -> handleDeclineRequest(request, container));
+        declineButton.setOnAction(e -> handleDeclineRequest(username, container));
 
         buttonsContainer.getChildren().addAll(acceptButton, declineButton);
         container.getChildren().addAll(usernameLabel, buttonsContainer);
         return container;
     }
 
-    private void handleAcceptRequest(FriendDTO request, HBox requestItem) {
+    private void handleAcceptRequest(String username, HBox requestItem) {
         requestItem.setDisable(true);
         requestItem.setOpacity(0.5);
 
-        friendRequestService.acceptFriendRequest(request.getUsername()).thenAccept(success -> {
+        friendRequestService.acceptFriendRequest(username).thenAccept(success -> {
             if (success) {
                 Platform.runLater(() -> {
                     refreshRequestsList();
                     checkForPendingRequests();
+
+                    if (friendRequestAcceptedListener != null) {
+                        friendRequestAcceptedListener.onFriendRequestAccepted(username);
+                    }
                 });
             } else {
                 Platform.runLater(() -> {
@@ -203,11 +210,11 @@ public class NotificationButtonController {
         });
     }
 
-    private void handleDeclineRequest(FriendDTO request, HBox requestItem) {
+    private void handleDeclineRequest(String username, HBox requestItem) {
         requestItem.setDisable(true);
         requestItem.setOpacity(0.5);
 
-        friendRequestService.declineFriendRequest(request.getUsername()).thenAccept(success -> {
+        friendRequestService.declineFriendRequest(username).thenAccept(success -> {
             if (success) {
                 Platform.runLater(() -> {
                     refreshRequestsList();

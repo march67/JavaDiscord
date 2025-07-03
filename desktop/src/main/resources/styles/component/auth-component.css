@@ -15,13 +15,12 @@
     -fx-padding: 0 0 20 0;
 }
 
-
 .input-field {
     -fx-pref-width: 250;
     -fx-padding: 8;
     -fx-background-radius: 4;
     -fx-border-radius: 4;
-    -fx-border-color: #cccccc;
+    -fx-border-color: -border-color-light;
     -fx-border-width: 1;
     -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
 }
@@ -32,7 +31,7 @@
 }
 
 .error-label {
-    -fx-text-fill: #ff0000;
+    -fx-text-fill: -error-color;
     -fx-font-size: 12px;
     -fx-padding: 5 0 5 0;
     -fx-visible: false;
@@ -40,7 +39,7 @@
 
 .primary-button {
     -fx-background-color: -primary-color;
-    -fx-text-fill: white;
+    -fx-text-fill: -text-color-white;
     -fx-padding: 10 20 10 20;
     -fx-cursor: hand;
     -fx-background-radius: 4;
@@ -52,9 +51,9 @@
 }
 
 .link-button {
-    -fx-background-color: transparent;
+    -fx-background-color: -transparent;
     -fx-text-fill: -primary-color;
-    -fx-border-color: transparent;
+    -fx-border-color: -transparent;
     -fx-cursor: hand;
     -fx-padding: 5;
 }

@@ -16,8 +16,9 @@ public class SessionManager {
         return instance;
     }
 
-    public void createSession(String username, String email) {
-        this.currentSession = new UserSession(username, email);
+    public void createSession(String username, String token) {
+        this.currentSession = new UserSession(username, token);
+        System.out.println("Session created for user: " + username + " with token: " + token);
     }
 
     public UserSession getCurrentSession() {
@@ -25,7 +26,7 @@ public class SessionManager {
     }
 
     public boolean isAuthenticated() {
-        return currentSession != null;
+        return currentSession != null && currentSession.getToken() != null;
     }
 
     public void clearSession() {
@@ -36,7 +37,7 @@ public class SessionManager {
         return isAuthenticated() ? currentSession.getUsername() : null;
     }
 
-    public String getEmail() {
-        return isAuthenticated() ? currentSession.getEmail() : null;
+    public String getToken() {
+        return isAuthenticated() ? currentSession.getToken() : null;
     }
 }

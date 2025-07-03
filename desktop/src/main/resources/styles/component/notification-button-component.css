@@ -48,12 +48,12 @@
 }
 
 .notification-popup-scrollpane {
-    -fx-background: transparent;
-    -fx-background-color: transparent;
+    -fx-background: -transparent;
+    -fx-background-color: -transparent;
 }
 
 .notification-popup-scrollpane .viewport {
-    -fx-background-color: transparent;
+    -fx-background-color: -transparent;
 }
 
 .notification-popup-scrollpane .scroll-bar:vertical {
@@ -67,7 +67,7 @@
 
 .notification-popup-requests-container {
     -fx-padding: 10;
-    -fx-background-color: transparent;
+    -fx-background-color: -transparent;
 }
 
 .notification-popup-no-requests {
@@ -88,7 +88,7 @@
 
 .friend-request-accept-button {
     -fx-background-color: -primary-color;
-    -fx-text-fill: white;
+    -fx-text-fill: -text-color-white;
     -fx-font-size: 14px;
     -fx-pref-width: 40px;
     -fx-pref-height: 30px;
@@ -102,7 +102,7 @@
 
 .friend-request-decline-button {
     -fx-background-color: -delete-color;
-    -fx-text-fill: white;
+    -fx-text-fill: -text-color-white;
     -fx-font-size: 14px;
     -fx-pref-width: 40px;
     -fx-pref-height: 30px;

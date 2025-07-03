@@ -1,126 +1,142 @@
 .root-container {
-    -fx-background-color: -third-color;
-    -fx-min-width: 300;
-    -fx-pref-width: 400;
+    -fx-background-color: -background-color;
+    -fx-min-width: 400;
+    -fx-pref-width: 500;
 }
 
 .header-container {
-    -fx-background-color: -third-color;
-
-    -fx-min-height: -header-height;
-    -fx-max-height: -header-height;
+    -fx-background-color: derive(-background-color-white, -3%);
+    -fx-min-height: 60px;
+    -fx-max-height: 60px;
     -fx-alignment: CENTER_LEFT;
-
     -fx-border-width: 0 0 1 1;
-    -fx-border-color: -primary-color;
-    -fx-padding: 0 15;
+    -fx-border-color: -border-color;
+    -fx-padding: 0 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 3, 0, 0, 2);
 }
-
 
 .conversation-container {
-    -fx-padding: 0 15 15 15;
-    -fx-min-width: 300;
-    -fx-border-width: 0 0 1 1;
-    -fx-border-color: -primary-color;
-
+    -fx-padding: 0 20px 16px 20px;
+    -fx-min-width: 400;
+    -fx-spacing: 12px;
 }
 
-
 .chat-scroll-pane {
-    -fx-padding: 2 31 15 15;
-    -fx-background-color: transparent;
+    -fx-padding: 16px;
+    -fx-background-color: -transparent;
     -fx-fit-to-width: true;
     -fx-hbar-policy: NEVER;
-    -fx-vbar-policy: ALWAYS;
+    -fx-vbar-policy: AS_NEEDED;
 }
 
 .chat-scroll-pane > .viewport {
-    -fx-background-color: transparent;
+    -fx-background-color: -transparent;
 }
 
 .chat-scroll-pane .scroll-bar:vertical {
-    -fx-pref-width: 16;
-    -fx-background-color: transparent;
-    -fx-padding: 0;
+    -fx-pref-width: 12;
+    -fx-background-color: -transparent;
+    -fx-padding: 8px;
 }
 
 .chat-scroll-pane .scroll-bar:vertical .track {
-    -fx-background-color: transparent;
+    -fx-background-color: derive(-background-color, -5%);
+    -fx-background-radius: 8px;
 }
 
 .chat-scroll-pane .scroll-bar:vertical .thumb {
-    -fx-background-color: derive(-primary-color, 80%);
-    -fx-background-radius: 2;
+    -fx-background-color: -primary-color;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 3, 0, 0, 0);
 }
 
 .message-container, .message-group {
     -fx-max-width: Infinity;
-    -fx-min-width: 300;
-    -fx-padding: 5;
+    -fx-min-width: 400;
+    -fx-padding: 8px;
     -fx-fill-width: true;
+    -fx-spacing: 12px;
 }
 
 .input-container {
-    -fx-padding: 10;
-    -fx-background-color: white;
-    -fx-border-color: -primary-color;
-    -fx-border-width: 1;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
+    -fx-padding: 16px;
+    -fx-background-color: -background-color-white;
+    -fx-border-color: -border-color;
+    -fx-border-width: 2;
+    -fx-border-radius: 16px;
+    -fx-background-radius: 16px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 0, 1);
+    -fx-alignment: CENTER_LEFT;
 }
 
-.header-username, .user-username, .other-username {
-    -fx-font-weight: bold;
-    -fx-text-fill: -primary-color;
+.input-container:focused {
+    -fx-border-color: -primary-color;
+    -fx-effect: dropshadow(gaussian, -primary-color-focus, 8, 0, 0, 0);
 }
 
 .header-username {
-    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color-dark;
+    -fx-font-size: 18px;
 }
 
 .user-username, .other-username {
-    -fx-font-size: 12px;
-    -fx-padding: 0 12;
+    -fx-font-size: 13px;
+    -fx-padding: 0 12px 4px 12px;
+    -fx-font-weight: bold;
 }
 
 .user-message-container {
     -fx-alignment: CENTER_RIGHT;
+    -fx-spacing: 8px;
+    -fx-padding: 4px 0;
 }
 
 .other-message-container {
     -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 8px;
+    -fx-padding: 4px 0;
 }
 
 .user-content {
     -fx-alignment: CENTER_RIGHT;
+    -fx-spacing: 4px;
 }
 
 .other-content {
     -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 4px;
 }
 
 .user-username {
     -fx-alignment: CENTER_RIGHT;
     -fx-text-alignment: RIGHT;
+    -fx-text-fill: derive(-primary-color, -10%);
 }
 
 .other-username {
     -fx-alignment: CENTER_LEFT;
     -fx-text-alignment: LEFT;
+    -fx-text-fill: -text-color-muted;
 }
 
 .user-message, .other-message {
-    -fx-padding: 8 12;
+    -fx-padding: 12px 16px;
+    -fx-max-width: 300;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 4, 0, 0, 2);
 }
 
 .user-message {
     -fx-background-color: -primary-color;
-    -fx-background-radius: 12 12 0 12;
+    -fx-background-radius: 12px 12px 6px 12px;
 }
 
 .other-message {
-    -fx-background-color: white;
-    -fx-background-radius: 12 12 12 0;
+    -fx-background-color: -background-color-white;
+    -fx-background-radius: 12px 12px 12px 6px;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1;
+    -fx-border-radius: 12px 12px 12px 6px;
 }
 
 .message-label {
@@ -129,30 +145,58 @@
 }
 
 .user-message .message-label {
-    -fx-text-fill: white;
+    -fx-text-fill: -text-color-white;
+    -fx-font-weight: bold;
 }
 
 .other-message .message-label {
-    -fx-text-fill: black;
+    -fx-text-fill: -text-color-dark;
+    -fx-font-weight: normal;
 }
 
 .message-input {
-    -fx-background-color: transparent;
-    -fx-text-fill: black;
-    -fx-prompt-text-fill: derive(-primary-color, 40%);
-    -fx-padding: 8;
+    -fx-background-color: -transparent;
+    -fx-text-fill: -text-color-dark;
+    -fx-prompt-text-fill: -text-color-muted;
+    -fx-padding: 12px;
+    -fx-font-size: 14px;
+    -fx-border-width: 0;
 }
+
+.message-input:focused {
+    -fx-background-color: -transparent;
+}
+
 .system-message-container {
     -fx-alignment: CENTER;
+    -fx-padding: 16px 0;
 }
 
 .system-message {
-    -fx-padding: 8 12;
-    -fx-background-color: derive(-third-color, 20%);
-    -fx-background-radius: 8;
+    -fx-padding: 8px 16px;
+    -fx-background-color: derive(-background-color, -8%);
+    -fx-background-radius: 16px;
+    -fx-border-color: -border-color;
+    -fx-border-width: 1;
+    -fx-border-radius: 16px;
 }
 
 .system-message .message-label {
-    -fx-text-fill: derive(-primary-color, -20%);
+    -fx-text-fill: -text-color-muted;
     -fx-font-style: italic;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.user-message-container:hover .user-message,
+.other-message-container:hover .other-message {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 6, 0, 0, 3);
+}
+
+.message-timestamp {
+    -fx-text-fill: -text-color-light;
+    -fx-font-size: 11px;
+    -fx-font-style: italic;
+    -fx-padding: 4px 0 0 0;
+    -fx-alignment: CENTER_RIGHT;
 }

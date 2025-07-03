@@ -6,7 +6,10 @@ import com.javadiscordproject.services.api.auth.AuthService;
 import com.javadiscordproject.services.api.auth.IAuthService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.logging.Level;
@@ -34,6 +37,7 @@ public class RegisterController {
     public void initialize() {
         loadCSS();
         setupEventHandlers();
+        setupEnterKeyListeners();
     }
 
     private void loadCSS() {
@@ -56,6 +60,27 @@ public class RegisterController {
     private void setupEventHandlers() {
         registerButton.setOnAction(event -> handleRegistration());
         showLogin.setOnAction(event -> authController.showLoginForm());
+    }
+    private void setupEnterKeyListeners() {
+        addEnterKeyListenerToAllInputs(formContainer);
+    }
+
+    private void addEnterKeyListenerToAllInputs(Node node) {
+        if (node instanceof TextInputControl) {
+            node.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                if (event.getCode() == KeyCode.ENTER) {
+                    handleRegistration();
+                    event.consume();
+                }
+            });
+        }
+
+        if (node instanceof javafx.scene.Parent) {
+            javafx.scene.Parent parent = (javafx.scene.Parent) node;
+            for (Node child : parent.getChildrenUnmodifiable()) {
+                addEnterKeyListenerToAllInputs(child);
+            }
+        }
     }
 
     private void handleRegistration() {

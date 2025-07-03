@@ -1,34 +1,122 @@
 package com.javadiscordproject.services.api.friend;
 
+import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.FriendDTO;
-import java.util.Arrays;
+import com.javadiscordproject.utils.ApiConstants;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class FriendService implements IFriendService {
 
-    private final List<FriendDTO> friends = Arrays.asList(
-            new FriendDTO("Alice"),
-            new FriendDTO("Bob"),
-            new FriendDTO("Charlie"),
-            new FriendDTO("Diana"),
-            new FriendDTO("Eve")
-    );
+    private final HttpClient httpClient;
+    private final ObjectMapper objectMapper;
 
-    @Override
-    public CompletableFuture<List<FriendDTO>> getFriendsList() {
-        return CompletableFuture.completedFuture(friends);
+    public FriendService() {
+        this.httpClient = HttpClient.newHttpClient();
+        this.objectMapper = new ObjectMapper();
     }
 
     @Override
-    public CompletableFuture<Boolean> addFriend(String friendId) {
-        // TODO: implement later
-        return CompletableFuture.completedFuture(false);
+    public CompletableFuture<List<FriendDTO>> getFriendsList() {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                String token = SessionManager.getInstance().getToken();
+
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(ApiConstants.FRIEND_LIST_ENDPOINT))
+                        .header("Authorization", "Bearer " + token)
+                        .header("Accept", "application/json")
+                        .GET()
+                        .build();
+
+                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                System.out.println("Response: " + response.body());
+
+                if (response.statusCode() == 200) {
+                    List<FriendDTO> friends = objectMapper.readValue(
+                            response.body(),
+                            new TypeReference<List<FriendDTO>>() {}
+                    );
+                    return friends;
+                } else {
+                    return new ArrayList<>();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new ArrayList<>();
+            }
+        });
+    }
+
+    @Override
+    public CompletableFuture<AddFriendResult> addFriend(String friendUsername) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                String token = SessionManager.getInstance().getToken();
+
+                String url = ApiConstants.ADD_FRIEND_ENDPOINT + "/" + friendUsername;
+
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .header("Authorization", "Bearer " + token)
+                        .header("Accept", "*/*")
+                        .POST(HttpRequest.BodyPublishers.noBody())
+                        .build();
+
+                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() >= 200 && response.statusCode() < 300) {
+                    return new AddFriendResult(true, "Demande d'ami envoyée avec succès!", friendUsername);
+                } else if (response.statusCode() == 404) {
+                    return new AddFriendResult(false, "L'utilisateur '" + friendUsername + "' n'existe pas", friendUsername);
+                } else if (response.statusCode() == 409) {
+                    return new AddFriendResult(false, "'" + friendUsername + "' est déjà dans votre liste d'amis", friendUsername);
+                } else {
+                    return new AddFriendResult(false, "Erreur lors de l'envoi de la demande", friendUsername);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new AddFriendResult(false, "Erreur de connexion", friendUsername);
+            }
+        });
     }
 
     @Override
     public CompletableFuture<Boolean> removeFriend(String friendId) {
         // TODO: implement later
         return CompletableFuture.completedFuture(false);
+    }
+
+    // Classe pour encapsuler le résultat de l'ajout d'ami
+    public static class AddFriendResult {
+        private final boolean success;
+        private final String message;
+        private final String username;
+
+        public AddFriendResult(boolean success, String message, String username) {
+            this.success = success;
+            this.message = message;
+            this.username = username;
+        }
+
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public String getUsername() {
+            return username;
+        }
     }
 }

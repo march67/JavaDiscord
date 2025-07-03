@@ -1,15 +1,19 @@
 package com.javadiscordproject.controllers.component;
+import com.javadiscordproject.listeners.FriendSelectionListener;
 import com.javadiscordproject.managers.SceneManager;
 import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.FriendDTO;
+import com.javadiscordproject.services.api.friend.IFriendService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Priority;
 import javafx.geometry.Pos;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
@@ -33,10 +37,14 @@ public class FriendListController {
 
     private List<FriendDTO> allFriends = new ArrayList<>();
     private FriendSelectionListener friendSelectionListener;
+    private IFriendService friendService;
+    private VBox addFriendView;
 
-    public interface FriendSelectionListener {
-        void onFriendSelected(String username);
+    public void setFriendService(IFriendService friendService) {
+        this.friendService = friendService;
+        loadAddFriendView();
     }
+
 
     @FXML
     public void initialize() {
@@ -46,6 +54,22 @@ public class FriendListController {
         setupLogoutButton();
         displayCurrentUser();
         showLoadingMessage();
+        loadAddFriendView();
+    }
+
+    private void loadAddFriendView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/component/add-friend-component.fxml"));
+            addFriendView = loader.load();
+            AddFriendController controller = loader.getController();
+            controller.setFriendService(friendService);
+            controller.setOnSuccessCallback(() -> {
+                navigateToFriendsList();
+                refreshFriendsList();
+            });
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to load add friend view", e);
+        }
     }
 
     private void loadStyles() {
@@ -126,30 +150,13 @@ public class FriendListController {
         searchField.setVisible(false);
         searchField.setManaged(false);
         friendsList.getChildren().clear();
-
-        VBox addFriendView = new VBox(10);
-        addFriendView.getStyleClass().add("add-friend-view");
-
-        Label titleLabel = new Label("Ajouter un ami");
-        titleLabel.getStyleClass().add("add-friend-title");
-
-        TextField usernameField = new TextField();
-        usernameField.setPromptText("Nom d'utilisateur");
-        usernameField.getStyleClass().add("add-friend-field");
-
-        Button addButton = new Button("Envoyer la demande");
-        addButton.getStyleClass().add("add-friend-button");
-        addButton.setOnAction(e -> {
-            String username = usernameField.getText().trim();
-            if (!username.isEmpty()) {
-                // TODO: Implémenter l'envoi de demande d'ami
-                LOGGER.info("Demande d'ami envoyée à: " + username);
-                usernameField.clear();
-            }
-        });
-
-        addFriendView.getChildren().addAll(titleLabel, usernameField, addButton);
-        friendsList.getChildren().add(addFriendView);
+        if (addFriendView != null) {
+            friendsList.getChildren().add(addFriendView);
+        } else {
+            Label errorLabel = new Label("Erreur de chargement");
+            errorLabel.getStyleClass().add("error-label");
+            friendsList.getChildren().add(errorLabel);
+        }
     }
 
     public void updateFriendsList(List<FriendDTO> friends) {
@@ -159,6 +166,32 @@ public class FriendListController {
                 displayFriends(friends);
             }
         });
+    }
+
+    public void refreshFriendsList() {
+        if (friendService != null) {
+            showLoadingMessage();
+
+            friendService.getFriendsList().thenAccept(friends -> {
+                Platform.runLater(() -> {
+                    updateFriendsList(friends);
+                    if (friendsButton.isSelected()) {
+                        displayFriends(friends);
+                    }
+
+                    LOGGER.info("Friends list refreshed: " + friends.size() + " friends");
+                });
+            }).exceptionally(throwable -> {
+                Platform.runLater(() -> {
+                    friendsList.getChildren().clear();
+                    Label errorLabel = new Label("Erreur lors du chargement des amis");
+                    errorLabel.getStyleClass().add("error-label");
+                    friendsList.getChildren().add(errorLabel);
+                });
+                LOGGER.log(Level.SEVERE, "Failed to refresh friends list", throwable);
+                return null;
+            });
+        }
     }
 
     private void filterFriends(String searchText) {
@@ -207,7 +240,7 @@ public class FriendListController {
 
         friendItem.setOnMouseClicked(e -> {
             if (friendSelectionListener != null) {
-                friendSelectionListener.onFriendSelected(friend.getUsername());
+                friendSelectionListener.onFriendSelected(friend.getUsername(), friend.getConversationId());
             }
             friendsList.getChildren().forEach(node -> node.getStyleClass().remove("selected"));
             friendItem.getStyleClass().add("selected");
@@ -218,5 +251,10 @@ public class FriendListController {
 
     public void setFriendSelectionListener(FriendSelectionListener listener) {
         this.friendSelectionListener = listener;
+    }
+
+    public void navigateToFriendsList() {
+        friendsButton.setSelected(true);
+        showFriendsList();
     }
 }
