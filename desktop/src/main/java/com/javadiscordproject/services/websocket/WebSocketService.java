@@ -122,12 +122,6 @@ public class WebSocketService {
         }
     }
 
-    // TODO: remove this
-    // Send the predefined static message
-    public boolean sendStaticMessage() {
-        return sendMessage("JavaFX Client", "Hello World!");
-    }
-
     // Check if connected
     public boolean isConnected() {
         return isConnected && stompSession != null && stompSession.isConnected();

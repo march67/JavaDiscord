@@ -32,9 +32,8 @@ public class WebSocketInitializer {
 
             if (connected) {
                 // Send the static test message
-                boolean messageSent = webSocketService.sendStaticMessage();
-                System.out.println("Static message sent successfully: " + messageSent);
-                return messageSent;
+                System.out.println("Static message sent successfully: ");
+                return true;
             } else {
                 System.out.println("Failed to connect to WebSocket server - continue with application startup");
                 return false;
@@ -63,17 +62,6 @@ public class WebSocketInitializer {
             System.out.println("Error retrying WebSocket connection: " + e.getMessage());
             return false;
         }
-    }
-
-    /**
-     * Send the static test message
-     * @return true if message was sent successfully
-     */
-    public boolean sendStaticMessage() {
-        if (webSocketService != null && webSocketService.isConnected()) {
-            return webSocketService.sendStaticMessage();
-        }
-        return false;
     }
 
     /**

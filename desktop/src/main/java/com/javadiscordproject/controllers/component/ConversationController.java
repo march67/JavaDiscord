@@ -1,9 +1,11 @@
 package com.javadiscordproject.controllers.component;
 
 import com.javadiscordproject.managers.SessionManager;
+import com.javadiscordproject.managers.WebSocketManager;
 import com.javadiscordproject.models.MessageDTO;
 import com.javadiscordproject.services.MessageDisplayService;
 import com.javadiscordproject.services.api.message.MessageService;
+import com.javadiscordproject.services.websocket.WebSocketService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -37,7 +39,9 @@ public class ConversationController {
     private Long currentConversationId;
     private boolean hasActiveConversation = false;
 
+    private final WebSocketService webSocketService;
     public ConversationController() {
+        this.webSocketService = new WebSocketService();
         this.messageDisplayService = new MessageDisplayService();
         this.messageService = new MessageService();
         this.currentUser = null;
@@ -103,13 +107,21 @@ public class ConversationController {
         }
 
         String messageText = inputField.getText().trim();
+        if (messageText.isEmpty()) return;
+
         String displayName = loggedInUsername != null ? loggedInUsername : CURRENT_USER_DISPLAY;
+        String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
-        String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        MessageDTO userMessage = new MessageDTO(displayName, messageText, currentTime);
+        // Envoyer via WebSocket
+        boolean sent = webSocketService.sendMessage(displayName, messageText);
 
-        messageDisplayService.displayMessage(userMessage, messageList, messageScrollPane, true);
-        inputField.clear();
+        if (sent) {
+            MessageDTO userMessage = new MessageDTO(displayName, messageText, currentTime);
+            messageDisplayService.displayMessage(userMessage, messageList, messageScrollPane, true);
+            inputField.clear();
+        } else {
+            System.err.println("Échec de l'envoi du message");
+        }
     }
 
     public void changeConversation(String username, Long conversationId) {
