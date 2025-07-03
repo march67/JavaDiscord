@@ -28,6 +28,8 @@ public class FriendlistServiceImpl implements FriendlistService {
 	private UserConversationService userConversationService;
 	private ConversationService conversationService;
 	
+	public record UserPair(UserModel requester, UserModel receiver) {}
+	
 	public FriendlistServiceImpl(FriendlistRepository friendlistRepository, UserService userService, UserConversationService userConversationService
 			, ConversationService conversationService) {
 		this.friendlistRepository = friendlistRepository;
@@ -49,7 +51,11 @@ public class FriendlistServiceImpl implements FriendlistService {
 		UserModel user1 = userService.findUserById(friendlistId.getUserId_1());
 		UserModel user2 = userService.findUserById(friendlistId.getUserId_2());
 		
+		// Already friend case
 		if (areFriends(user1, user2)) throw new IllegalArgumentException("Users " + user1.getUsername() + " " + user2.getUsername() + " are already friends");
+		
+        // Auto accept friend request if a request from the receiver is already sent to the requester
+        if (autoAcceptFriendRequest(user1, user2, requesterId)) return;
 		
 		entity.setUsers(user1, user2);
 		
@@ -60,34 +66,28 @@ public class FriendlistServiceImpl implements FriendlistService {
 	}
 	
 	@Override
-	public void sendFriendRequestByUsername(Long idRequester, String username) {
+	public void sendFriendRequestByUsername(Long requesterId, String username) {
 		FriendlistModel friendlistModel = new FriendlistModel();
 		
     	// Search for the two existing users
-    	UserModel user1 = userService.findUserById(idRequester);
+    	UserModel user1 = userService.findUserById(requesterId);
     	UserModel user2 = userService.findUserByUsername(username);
     	
-    	// Business rules
+    	// Requester is accepting his own request case
     	if (user1.getId() == user2.getId()) {
     		throw new IllegalArgumentException("User cannot friend request himself as a friend");
     	}
         
-        
+    	// Already friend case
         if (areFriends(user1, user2)) throw new IllegalArgumentException("Users " + user1.getUsername() + " " + user2.getUsername() + " are already friends");
         
         // Auto accept friend request if a request from the receiver is already sent to the requester
-        for ( String pendingUsername : getPendingFriendRequestsReturnUsername(user1.getId())) {
-        	if(pendingUsername.equals(username)) {
-        		FriendlistId friendlistId = findFriendRequest(user1.getId(), user2.getId()).getId();
-        		acceptFriendRequest(friendlistId, idRequester);
-        		return;
-        	}
-        };
+        if (autoAcceptFriendRequest(user1, user2, requesterId)) return;
         
         // Set Users(id) + Status + RequesterId then save
         friendlistModel.setUsers(user1, user2);
         friendlistModel.setFriendRequest_status("pending");
-        friendlistModel.setRequesterId(idRequester);
+        friendlistModel.setRequesterId(requesterId);
         friendlistRepository.save(friendlistModel);
 	}
 	
@@ -112,6 +112,33 @@ public class FriendlistServiceImpl implements FriendlistService {
 		}
 		else {
 			throw new IllegalArgumentException("The requester cannot accept the request sent by himself");
+		}
+	}
+	
+	private boolean autoAcceptFriendRequest(UserModel user1, UserModel user2, Long requesterId) {
+		UserPair pair = resolveRequesterAndReceiver(user1, user2, requesterId);
+		UserModel userRequester = pair.requester();
+		UserModel userReceiver = pair.receiver();
+
+		
+        for ( String pendingUsername : getPendingFriendRequestsReturnUsername(userRequester.getId())) {
+        	if(pendingUsername.equals(userReceiver.getUsername())) {
+        		FriendlistId friendlistId = findFriendRequest(user1.getId(), user2.getId()).getId();
+        		acceptFriendRequest(friendlistId, requesterId);
+        		return true;
+        	}
+        };
+        
+        return false;
+	}
+	
+	private UserPair resolveRequesterAndReceiver(UserModel user1, UserModel user2, Long requesterId) {
+		if (user1.getId().equals(requesterId)) {
+			return new UserPair(user1, user2);
+		} else if (user2.getId().equals(requesterId)) {
+			return new UserPair(user2, user1);
+		} else {
+			throw new IllegalArgumentException("The requesterId doesn't match with the id of user1 or user 2");
 		}
 	}
 
