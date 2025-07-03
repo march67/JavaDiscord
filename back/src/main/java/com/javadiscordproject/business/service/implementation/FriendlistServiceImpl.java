@@ -71,7 +71,7 @@ public class FriendlistServiceImpl implements FriendlistService {
     	if (user1.getId() == user2.getId()) {
     		throw new IllegalArgumentException("User cannot friend request himself as a friend");
     	}
-        friendlistModel.setUsers(user1, user2);
+        
         
         if (areFriends(user1, user2)) throw new IllegalArgumentException("Users " + user1.getUsername() + " " + user2.getUsername() + " are already friends");
         
@@ -84,7 +84,8 @@ public class FriendlistServiceImpl implements FriendlistService {
         	}
         };
         
-        // Set status + requester and save
+        // Set Users(id) + Status + RequesterId then save
+        friendlistModel.setUsers(user1, user2);
         friendlistModel.setFriendRequest_status("pending");
         friendlistModel.setRequesterId(idRequester);
         friendlistRepository.save(friendlistModel);
