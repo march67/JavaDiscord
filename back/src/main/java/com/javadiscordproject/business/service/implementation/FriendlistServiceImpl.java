@@ -241,7 +241,7 @@ public class FriendlistServiceImpl implements FriendlistService {
 		return usersName;
 	}
 	
-	public boolean areFriends(UserModel user1, UserModel user2) {
+	private boolean areFriends(UserModel user1, UserModel user2) {
 		// Search in this order first
 		if ( friendlistRepository.findByUserId1AndUserId2AndFriendRequestStatus(user1.getId(), user2.getId(), "accepted").isPresent()) {
 			return true;
