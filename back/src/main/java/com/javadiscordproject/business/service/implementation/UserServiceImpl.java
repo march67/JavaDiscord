@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
 		this.passwordEncoder = passwordEncoder;
 	}
 	
+	@Override
 	public void saveUser(UserModel userModel) {
 		userModel.setPassword(passwordEncoder.encode(userModel.getPassword())); // crypt the password before saving in the DB => allow jwt and security config to work properly 
 		userRepository.save(userModel);
