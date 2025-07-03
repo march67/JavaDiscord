@@ -12,7 +12,6 @@ public class MessageDTO {
     @JsonProperty("messageDateTime")
     private String messageDateTime;
 
-    // Constructors
     public MessageDTO() {
     }
 
@@ -22,7 +21,6 @@ public class MessageDTO {
         this.messageDateTime = messageDateTime;
     }
 
-    // Getters and Setters
     public String getUsername() {
         return username;
     }

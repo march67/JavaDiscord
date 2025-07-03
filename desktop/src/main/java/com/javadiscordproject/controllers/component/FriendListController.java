@@ -1,16 +1,19 @@
 package com.javadiscordproject.controllers.component;
+import com.javadiscordproject.listeners.FriendSelectionListener;
 import com.javadiscordproject.managers.SceneManager;
 import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.FriendDTO;
 import com.javadiscordproject.services.api.friend.IFriendService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Priority;
 import javafx.geometry.Pos;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
@@ -35,13 +38,13 @@ public class FriendListController {
     private List<FriendDTO> allFriends = new ArrayList<>();
     private FriendSelectionListener friendSelectionListener;
     private IFriendService friendService;
+    private VBox addFriendView;
+
     public void setFriendService(IFriendService friendService) {
         this.friendService = friendService;
+        loadAddFriendView();
     }
 
-    public interface FriendSelectionListener {
-        void onFriendSelected(String username);
-    }
 
     @FXML
     public void initialize() {
@@ -51,6 +54,22 @@ public class FriendListController {
         setupLogoutButton();
         displayCurrentUser();
         showLoadingMessage();
+        loadAddFriendView();
+    }
+
+    private void loadAddFriendView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/component/add-friend-component.fxml"));
+            addFriendView = loader.load();
+            AddFriendController controller = loader.getController();
+            controller.setFriendService(friendService);
+            controller.setOnSuccessCallback(() -> {
+                navigateToFriendsList();
+                refreshFriendsList();
+            });
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to load add friend view", e);
+        }
     }
 
     private void loadStyles() {
@@ -131,72 +150,13 @@ public class FriendListController {
         searchField.setVisible(false);
         searchField.setManaged(false);
         friendsList.getChildren().clear();
-
-        VBox addFriendView = new VBox(10);
-        addFriendView.getStyleClass().add("add-friend-view");
-
-        Label titleLabel = new Label("Ajouter un ami");
-        titleLabel.getStyleClass().add("add-friend-title");
-
-        TextField usernameField = new TextField();
-        usernameField.setPromptText("Nom d'utilisateur");
-        usernameField.getStyleClass().add("add-friend-field");
-
-        Label statusLabel = new Label();
-        statusLabel.getStyleClass().add("status-label");
-        statusLabel.setVisible(false);
-
-        Button addButton = new Button("Envoyer la demande");
-        addButton.getStyleClass().add("add-friend-button");
-        addButton.setOnAction(e -> {
-            String username = usernameField.getText().trim();
-            if (!username.isEmpty() && friendService != null) {
-                addButton.setDisable(true);
-                statusLabel.setText("Envoi en cours...");
-                statusLabel.setVisible(true);
-
-                friendService.addFriend(username).thenAccept(success -> {
-                    Platform.runLater(() -> {
-                        if (success) {
-                            statusLabel.setText("Demande d'ami envoyée avec succès!");
-                            statusLabel.getStyleClass().add("success");
-                            usernameField.clear();
-
-                            new Thread(() -> {
-                                try {
-                                    Thread.sleep(2000);
-                                    Platform.runLater(() -> {
-                                        friendsButton.setSelected(true);
-                                        if (friendService != null) {
-                                            friendService.getFriendsList().thenAccept(friends -> {
-                                                updateFriendsList(friends);
-                                            });
-                                        }
-                                    });
-                                } catch (InterruptedException ex) {
-                                    // Ignorer
-                                }
-                            }).start();
-                        } else {
-                            statusLabel.setText("Erreur lors de l'envoi de la demande");
-                            statusLabel.getStyleClass().add("error");
-                        }
-                        addButton.setDisable(false);
-                    });
-                }).exceptionally(throwable -> {
-                    Platform.runLater(() -> {
-                        statusLabel.setText("Erreur de connexion");
-                        statusLabel.getStyleClass().add("error");
-                        addButton.setDisable(false);
-                        LOGGER.log(Level.SEVERE, "Erreur lors de l'ajout d'ami", throwable);
-                    });
-                    return null;
-                });
-            }
-        });
-
-        addFriendView.getChildren().addAll(titleLabel, usernameField, statusLabel, addButton);
-        friendsList.getChildren().add(addFriendView);
+        if (addFriendView != null) {
+            friendsList.getChildren().add(addFriendView);
+        } else {
+            Label errorLabel = new Label("Erreur de chargement");
+            errorLabel.getStyleClass().add("error-label");
+            friendsList.getChildren().add(errorLabel);
+        }
     }
 
     public void updateFriendsList(List<FriendDTO> friends) {
@@ -280,7 +240,7 @@ public class FriendListController {
 
         friendItem.setOnMouseClicked(e -> {
             if (friendSelectionListener != null) {
-                friendSelectionListener.onFriendSelected(friend.getUsername());
+                friendSelectionListener.onFriendSelected(friend.getUsername(), friend.getConversationId());
             }
             friendsList.getChildren().forEach(node -> node.getStyleClass().remove("selected"));
             friendItem.getStyleClass().add("selected");
@@ -291,5 +251,10 @@ public class FriendListController {
 
     public void setFriendSelectionListener(FriendSelectionListener listener) {
         this.friendSelectionListener = listener;
+    }
+
+    public void navigateToFriendsList() {
+        friendsButton.setSelected(true);
+        showFriendsList();
     }
 }

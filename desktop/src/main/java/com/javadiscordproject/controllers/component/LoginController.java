@@ -7,10 +7,14 @@ import com.javadiscordproject.services.api.auth.AuthService;
 import com.javadiscordproject.services.api.auth.IAuthService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.logging.Level;
@@ -36,6 +40,7 @@ public class LoginController {
     public void initialize() {
         loadCSS();
         setupEventHandlers();
+        setupEnterKeyListeners();
     }
 
     private void loadCSS() {
@@ -58,6 +63,28 @@ public class LoginController {
     private void setupEventHandlers() {
         loginButton.setOnAction(event -> handleLogin());
         showRegister.setOnAction(event -> authController.showRegisterForm());
+    }
+
+    private void setupEnterKeyListeners() {
+        addEnterKeyListenerToAllInputs(formContainer);
+    }
+
+    private void addEnterKeyListenerToAllInputs(Node node) {
+        if (node instanceof TextInputControl) {
+            node.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                if (event.getCode() == KeyCode.ENTER) {
+                    handleLogin();
+                    event.consume();
+                }
+            });
+        }
+
+        if (node instanceof javafx.scene.Parent) {
+            javafx.scene.Parent parent = (javafx.scene.Parent) node;
+            for (Node child : parent.getChildrenUnmodifiable()) {
+                addEnterKeyListenerToAllInputs(child);
+            }
+        }
     }
 
     private void handleLogin() {

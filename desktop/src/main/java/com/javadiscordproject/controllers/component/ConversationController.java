@@ -1,9 +1,9 @@
 package com.javadiscordproject.controllers.component;
 
 import com.javadiscordproject.managers.SessionManager;
-import com.javadiscordproject.models.Message;
-import com.javadiscordproject.services.AutoResponseService;
+import com.javadiscordproject.models.MessageDTO;
 import com.javadiscordproject.services.MessageDisplayService;
+import com.javadiscordproject.services.api.message.MessageService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -12,9 +12,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyCode;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ConversationController {
     private static final Logger LOGGER = Logger.getLogger(ConversationController.class.getName());
@@ -28,16 +31,18 @@ public class ConversationController {
     @FXML private Label recipientName;
 
     private final MessageDisplayService messageDisplayService;
-    private final AutoResponseService autoResponseService;
+    private final MessageService messageService;
     private String currentUser;
     private String loggedInUsername;
+    private Long currentConversationId;
     private boolean hasActiveConversation = false;
 
     public ConversationController() {
         this.messageDisplayService = new MessageDisplayService();
-        this.autoResponseService = new AutoResponseService();
+        this.messageService = new MessageService();
         this.currentUser = null;
         this.loggedInUsername = SessionManager.getInstance().getUsername();
+        this.currentConversationId = null;
     }
 
     @FXML
@@ -99,15 +104,22 @@ public class ConversationController {
 
         String messageText = inputField.getText().trim();
         String displayName = loggedInUsername != null ? loggedInUsername : CURRENT_USER_DISPLAY;
-        Message userMessage = new Message(messageText, displayName, true);
-        messageDisplayService.displayMessage(userMessage, messageList, messageScrollPane);
+
+        String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        MessageDTO userMessage = new MessageDTO(displayName, messageText, currentTime);
+
+        messageDisplayService.displayMessage(userMessage, messageList, messageScrollPane, true);
         inputField.clear();
-        autoResponseService.simulateResponse(currentUser, this::displayMessage);
     }
 
-    public void changeConversation(String username) {
+    public void changeConversation(String username, Long conversationId) {
         Platform.runLater(() -> {
+            System.out.println("Conversation ID reçu : " + conversationId);
+            LOGGER.info("Conversation ID reçu : " + conversationId);
+
+            this.currentConversationId = conversationId;
             initializeConversation(username);
+            loadConversationMessages();
         });
     }
 
@@ -119,20 +131,26 @@ public class ConversationController {
 
         inputField.setDisable(false);
         inputField.requestFocus();
-
-        String loggedUser = loggedInUsername != null ? loggedInUsername : CURRENT_USER_DISPLAY;
-        Message systemMessage = new Message(
-                String.format("Début de la conversation entre %s et %s", loggedUser, username),
-                "Système",
-                false
-        );
-        messageDisplayService.displayMessage(systemMessage, messageList, messageScrollPane);
     }
 
-    private void displayMessage(Message message) {
-        Platform.runLater(() ->
-                messageDisplayService.displayMessage(message, messageList, messageScrollPane)
-        );
+    private void loadConversationMessages() {
+        if (currentConversationId == null) {
+            return;
+        }
+
+        new Thread(() -> {
+            try {
+                List<MessageDTO> messages = messageService.getConversationMessages(currentConversationId);
+                Platform.runLater(() -> {
+                    for (MessageDTO message : messages) {
+                        boolean isCurrentUser = message.getUsername().equals(loggedInUsername);
+                        messageDisplayService.displayMessage(message, messageList, messageScrollPane, isCurrentUser);
+                    }
+                });
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Failed to load conversation messages", e);
+            }
+        }).start();
     }
 
     public void updateLoggedInUsername() {

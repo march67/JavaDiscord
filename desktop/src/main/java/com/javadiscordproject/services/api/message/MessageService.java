@@ -56,7 +56,6 @@ public class MessageService implements IMessageService {
 
     @Override
     public boolean sendMessage(Long conversationId, String messageContent) {
-        // TODO: implement later when the endpoint is available
         return false;
     }
 }

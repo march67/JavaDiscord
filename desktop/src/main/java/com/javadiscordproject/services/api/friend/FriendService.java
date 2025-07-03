@@ -56,7 +56,7 @@ public class FriendService implements IFriendService {
     }
 
     @Override
-    public CompletableFuture<Boolean> addFriend(String friendUsername) {
+    public CompletableFuture<AddFriendResult> addFriend(String friendUsername) {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 String token = SessionManager.getInstance().getToken();
@@ -72,11 +72,19 @@ public class FriendService implements IFriendService {
 
                 HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-                return response.statusCode() >= 200 && response.statusCode() < 300;
+                if (response.statusCode() >= 200 && response.statusCode() < 300) {
+                    return new AddFriendResult(true, "Demande d'ami envoyée avec succès!", friendUsername);
+                } else if (response.statusCode() == 404) {
+                    return new AddFriendResult(false, "L'utilisateur '" + friendUsername + "' n'existe pas", friendUsername);
+                } else if (response.statusCode() == 409) {
+                    return new AddFriendResult(false, "'" + friendUsername + "' est déjà dans votre liste d'amis", friendUsername);
+                } else {
+                    return new AddFriendResult(false, "Erreur lors de l'envoi de la demande", friendUsername);
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
-                return false;
+                return new AddFriendResult(false, "Erreur de connexion", friendUsername);
             }
         });
     }
@@ -85,5 +93,30 @@ public class FriendService implements IFriendService {
     public CompletableFuture<Boolean> removeFriend(String friendId) {
         // TODO: implement later
         return CompletableFuture.completedFuture(false);
+    }
+
+    // Classe pour encapsuler le résultat de l'ajout d'ami
+    public static class AddFriendResult {
+        private final boolean success;
+        private final String message;
+        private final String username;
+
+        public AddFriendResult(boolean success, String message, String username) {
+            this.success = success;
+            this.message = message;
+            this.username = username;
+        }
+
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public String getUsername() {
+            return username;
+        }
     }
 }

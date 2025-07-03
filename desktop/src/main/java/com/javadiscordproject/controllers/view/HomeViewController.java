@@ -71,7 +71,6 @@ public class HomeViewController extends BaseViewController {
             FXMLLoader friendListLoader = new FXMLLoader(getClass().getResource("/fxml/component/friend-list-component.fxml"));
             friendListView = friendListLoader.load();
             friendListController = friendListLoader.getController();
-
             friendListController.setFriendService(friendService);
 
             FXMLLoader conversationLoader = new FXMLLoader(getClass().getResource("/fxml/component/conversation-component.fxml"));
@@ -89,9 +88,9 @@ public class HomeViewController extends BaseViewController {
 
     private void setupEventHandlers() {
         if (friendListController != null) {
-            friendListController.setFriendSelectionListener(username -> {
+            friendListController.setFriendSelectionListener((username, conversationId) -> {
                 if (conversationController != null) {
-                    conversationController.changeConversation(username);
+                    conversationController.changeConversation(username, conversationId);
                 }
             });
         }
