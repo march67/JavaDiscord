@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0d0e107-d0c4-427e-935e-296e583e5dd3" name="Changes" comment="ws ok no security">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/NotificationDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/api/MessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/api/MessageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/implementation/MessageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/business/service/implementation/MessageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/presentation/controller/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/websocket/WebSocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/websocket/WebSocketService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/WsConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/WsConstants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -288,7 +287,7 @@
       <workItem from="1751178356182" duration="1288000" />
       <workItem from="1751204751754" duration="33000" />
       <workItem from="1751227977982" duration="417000" />
-      <workItem from="1751556394613" duration="456000" />
+      <workItem from="1751556394613" duration="1113000" />
     </task>
     <task id="LOCAL-00001" summary="ws ok no security">
       <option name="closed" value="true" />

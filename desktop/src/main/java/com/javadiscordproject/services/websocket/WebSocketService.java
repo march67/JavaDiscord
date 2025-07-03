@@ -2,6 +2,7 @@ package com.javadiscordproject.services.websocket;
 
 import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.ChatMessageDTO;
+import com.javadiscordproject.models.NotificationDTO;
 import com.javadiscordproject.utils.CustomStompSessionHandler;
 import javafx.application.Platform;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
@@ -45,7 +46,7 @@ public class WebSocketService {
             // Connect and get session with timeout
             StompSessionHandler sessionHandler = new CustomStompSessionHandler();
 
-            // FIXED: Add JWT token to HTTP headers instead of STOMP headers
+            // Add JWT token to HTTP headers instead of STOMP headers
             WebSocketHttpHeaders httpHeaders = new WebSocketHttpHeaders();
             String jwtToken = SessionManager.getInstance().getToken();
             System.out.println("JWT token: " + jwtToken);
@@ -59,7 +60,7 @@ public class WebSocketService {
                     .get(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
 
             if (stompSession != null && stompSession.isConnected()) {
-                stompSession.subscribe(TOPIC_ENDPOINT, new StompFrameHandler() {
+                stompSession.subscribe(TOPIC_MESSAGES, new StompFrameHandler() {
                     @Override
                     public Type getPayloadType(StompHeaders headers) {
                         return ChatMessageDTO.class;
@@ -129,6 +130,63 @@ public class WebSocketService {
     // Check if connected
     public boolean isConnected() {
         return isConnected && stompSession != null && stompSession.isConnected();
+    }
+
+
+    /**
+     * Send a notification to the WebSocket server
+     * @param from The sender of the notification
+     * @param to The recipient of the notification
+     * @return true if notification was sent successfully, false otherwise
+     */
+    public boolean sendNotification(String from, String to) {
+        if (stompSession != null && stompSession.isConnected()) {
+            try {
+                // Create notification object
+                NotificationDTO notification = new NotificationDTO(from, to);
+
+                // Send notification to the notifications endpoint
+                stompSession.send("/app/notifications", notification);
+                System.out.println("Sent notification from " + from + " to " + to);
+                return true;
+
+            } catch (Exception e) {
+                System.out.println("Error sending notification: " + e.getMessage());
+                e.printStackTrace();
+                return false;
+            }
+        } else {
+            System.out.println("Not connected to WebSocket server!");
+            return false;
+        }
+    }
+
+    /**
+     * Subscribe to notifications topic to receive incoming notifications
+     * Call this method after successful connection to start receiving notifications
+     */
+    public void subscribeToNotifications() {
+        if (stompSession != null && stompSession.isConnected()) {
+            stompSession.subscribe(TOPIC_NOTIFICATIONS, new StompFrameHandler() {
+                @Override
+                public Type getPayloadType(StompHeaders headers) {
+                    return NotificationDTO.class;
+                }
+
+                @Override
+                public void handleFrame(StompHeaders headers, Object payload) {
+                    NotificationDTO receivedNotification = (NotificationDTO) payload;
+                    Platform.runLater(() -> {
+                        System.out.println("Received notification from " + receivedNotification.getFrom() +
+                                " to " + receivedNotification.getTo());
+                        // TODO: ajouter logique pour intégration dans l'ui
+                    });
+                }
+            });
+            System.out.println("Subscribed to notifications");
+        } else {
+            System.out.println("Cannot subscribe to notifications: not connected to WebSocket server");
+        }
     }
 
     // Disconnect from the WebSocket server
