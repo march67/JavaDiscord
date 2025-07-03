@@ -48,7 +48,7 @@ public class ChatController {
             SimpMessageHeaderAccessor headerAccessor
     ) {
         String username = customUserDetails.getUsername();
-        messageService.saveMessage(new MessageModel(username,message.getContent(),));
+        //messageService.saveMessage(new MessageModel(username,message.getContent(),));
         return ResponseEntity.noContent().build();
     }
 
