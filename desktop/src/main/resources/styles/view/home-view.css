@@ -1,4 +1,36 @@
 .navbar {
-    -fx-background-color: -primary-color;
-    -fx-pref-width: 70px;
+    -fx-background-color: #7289DA;
+    -fx-pref-width: 80px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0, 3, 0);
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: derive(#7289DA, -20%);
+}
+
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.main-container {
+    -fx-background-color: #f8f9fa;
+}
+
+.tooltip {
+    -fx-background-color: derive(#2c3e50, -80%);
+    -fx-text-fill: white;
+    -fx-background-radius: 6px;
+    -fx-font-size: 12px;
+    -fx-padding: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0, 0, 2);
+}
+
+.text-field:focused,
+.button:focused,
+.toggle-button:focused {
+    -fx-effect: dropshadow(gaussian, #a5b4e6, 10, 0, 0, 0);
+}
+
+.separator {
+    -fx-background-color: #e9ecef;
+    -fx-pref-height: 1;
 }
