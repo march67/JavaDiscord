@@ -54,6 +54,7 @@ public class WebSocketService {
 
             // Use empty STOMP headers since authentication is now in HTTP headers
             StompHeaders connectHeaders = new StompHeaders();
+            connectHeaders.add("Authorization", "Bearer " + jwtToken);
 
             stompSession = stompClient
                     .connectAsync(WEBSOCKET_URL, httpHeaders, connectHeaders, sessionHandler)
