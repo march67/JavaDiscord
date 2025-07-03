@@ -1,5 +1,6 @@
 package com.javadiscordproject.presentation.controller;
 
+import com.javadiscordproject.business.service.implementation.MessageServiceImpl;
 import com.javadiscordproject.domain.model.ConversationModel;
 import com.javadiscordproject.domain.model.MessageModel;
 import com.javadiscordproject.domain.model.UserModel;
@@ -22,49 +23,16 @@ import java.time.LocalDateTime;
 @CrossOrigin(origins = "*")
 public class ChatController {
 
-    private MessageRepository messageRepository;
+    private MessageServiceImpl messageService;
 
-    private UserRepository userRepository;
-
-    private ConversationRepository conversationRepository;
-
-    public ChatController(MessageRepository messageRepository, UserRepository userRepository, ConversationRepository conversationRepository) {
-        this.messageRepository = messageRepository;
-        this.userRepository = userRepository;
-        this.conversationRepository = conversationRepository;
+    public ChatController(MessageServiceImpl messageService) {
+        this.messageService = messageService;
     }
 
     @MessageMapping("/chat")
     @SendTo("/topic/messages")
     public MessageDTO handleMessage(MessageDTO message, SimpMessageHeaderAccessor headerAccessor) {
-        Principal user = headerAccessor.getUser();
-        if (user != null) {
-            message.setSender(user.getName());
-        }
-
-        message.setTimestamp(LocalDateTime.now().toString());
-
-        saveMessageToDatabase(message);
-        return message;
-    }
-
-    private void saveMessageToDatabase(MessageDTO messageDTO) {
-        MessageModel message = new MessageModel();
-
-        UserModel user = userRepository.findByUsername(messageDTO.getSender());
-
-        ConversationModel conversation = conversationRepository.findById(Long.parseLong(messageDTO.getConversationId()))
-                .orElseThrow(() -> new RuntimeException("Conversation non trouvée"));
-
-        message.setUser(user);
-        message.setConversation(conversation);
-        message.setMessageContent(messageDTO.getContent());
-
-        if (messageDTO.getTimestamp() != null) {
-            message.setCreatedAt(LocalDateTime.parse(messageDTO.getTimestamp()));
-        }
-
-        messageRepository.save(message);
+        return messageService.handleMessage(message, headerAccessor);
     }
 
     @MessageMapping("/chat/{id}")
@@ -74,25 +42,13 @@ public class ChatController {
             MessageDTO message,
             SimpMessageHeaderAccessor headerAccessor
     ) {
-        Principal user = headerAccessor.getUser();
-        if (user != null) {
-            message.setSender(user.getName());
-        }
-
-        message.setTimestamp(LocalDateTime.now().toString());
-        message.setConversationId(id);
-        saveMessageToDatabase(message);
-        return message;
+        return messageService.handleMessageByConversation(id, message, headerAccessor);
     }
 
     @MessageMapping("/notification")
     @SendTo("/topic/notifications")
     public NotificationDTO handleNotification(NotificationDTO notification) {
-        notification.setTimestamp(LocalDateTime.now().toString());
-
-        System.out.println("Notification: " + notification.getTitle() + " - " + notification.getContent());
-
-        return notification;
+        return messageService.handleNotification(notification);
     }
 
 }
