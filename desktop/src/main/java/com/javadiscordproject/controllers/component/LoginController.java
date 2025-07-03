@@ -2,6 +2,7 @@ package com.javadiscordproject.controllers.component;
 
 import com.javadiscordproject.controllers.view.AuthViewController;
 import com.javadiscordproject.managers.SessionManager;
+import com.javadiscordproject.managers.WebSocketManager;
 import com.javadiscordproject.models.LoginDTO;
 import com.javadiscordproject.services.api.auth.AuthService;
 import com.javadiscordproject.services.api.auth.IAuthService;
@@ -55,7 +56,11 @@ public class LoginController {
             logger.log(Level.SEVERE, "Failed to load CSS", e);
         }
     }
+    private void bootWebSocket(String username){
 
+        WebSocketManager instance = WebSocketManager.getInstance();
+        instance.initWebSocketConnectionAsync();
+    }
     public void setAuthController(AuthViewController controller) {
         this.authController = controller;
     }
@@ -140,6 +145,7 @@ public class LoginController {
 
     private void handleSuccessfulLogin(String username, String token) {
         SessionManager.getInstance().createSession(username, token);
+        bootWebSocket(username);
         clearForm();
         authController.onSuccessfulAuth();
     }

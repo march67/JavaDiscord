@@ -5,15 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0d0e107-d0c4-427e-935e-296e583e5dd3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/managers/WebSocketManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/websocket/WebSocketInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/websocket/WebSocketService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/WsConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/UIConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/UIConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/add-friend-component.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/add-friend-component.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/auth-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/auth-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/conversation-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/conversation-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/friend-list-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/friend-list-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/notification-button-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/notification-button-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/view/home-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/view/home-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/LoginController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +65,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.Main.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.back.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/SCRUM-106-link-back-with-friend-feature&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/SCRUM-117-sync-web-socket&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-21&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -260,7 +258,8 @@
       <workItem from="1751381883346" duration="19591000" />
       <workItem from="1751458654835" duration="9086000" />
       <workItem from="1751475887021" duration="8711000" />
-      <workItem from="1751524455769" duration="24542000" />
+      <workItem from="1751524455769" duration="29283000" />
+      <workItem from="1751564226776" duration="707000" />
     </task>
     <servers />
   </component>
