@@ -19,12 +19,32 @@ public class MessageModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @ManyToOne
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setUser(UserModel user) {
+		this.user = user;
+	}
+
+	public void setMessageContent(String messageContent) {
+		this.messageContent = messageContent;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	@ManyToOne
     @JoinColumn(name = "userId")
 	private UserModel user;
-    
-    @ManyToOne
+
+	public void setConversation(ConversationModel conversation) {
+		this.conversation = conversation;
+	}
+
+	@ManyToOne
     @JoinColumn(name = "conversationId")
     private ConversationModel conversation;
     

@@ -74,7 +74,7 @@ public class MessageServiceImpl implements MessageService {
 	private void saveMessageToDatabase(MessageDTO messageDTO) {
 		MessageModel message = new MessageModel();
 
-		UserModel user = userRepository.findByUsername(messageDTO.getSender());
+		UserModel user = userRepository.findByUsername(messageDTO.getSender()).get();
 
 		ConversationModel conversation = conversationRepository.findById(Long.parseLong(messageDTO.getConversationId()))
 				.orElseThrow(() -> new RuntimeException("Conversation non trouvée"));
