@@ -23,26 +23,26 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 	private UserService userService;
 	private UserMapper userMapper;
-	
+
 	public UserController(UserService userService, UserMapper userMapper) {
 		this.userService = userService;
 		this.userMapper = userMapper;
 	}
-	
+
 	@PostMapping("/register")
-    public void registerUser(@Valid @RequestBody UserDTO userDTO) {
-        userService.saveUser(userMapper.toModel(userDTO));
-    }
-	
+	public void registerUser(@Valid @RequestBody UserDTO userDTO) {
+		userService.saveUser(userMapper.toModel(userDTO));
+	}
+
 	@GetMapping("/findUserByUsername")
 	public ResponseEntity<UserModel> findUserByUsername(@RequestParam String username) {
 		UserModel user = userService.findUserByUsername(username);
-	    if (user != null) {
-	        return ResponseEntity.ok(user);
-	    }
-	    return ResponseEntity.notFound().build();
+		if (user != null) {
+			return ResponseEntity.ok(user);
+		}
+		return ResponseEntity.notFound().build();
 	}
-		
+
 	@GetMapping("/test")
 	public void test() {
 	}

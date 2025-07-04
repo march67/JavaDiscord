@@ -1,6 +1,6 @@
 package com.javadiscordproject.models;
 
-public class UserSession {
+public final class UserSession {
     private String username;
     private String token;
 

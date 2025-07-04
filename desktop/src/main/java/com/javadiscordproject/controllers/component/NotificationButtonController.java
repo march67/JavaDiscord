@@ -1,8 +1,11 @@
 package com.javadiscordproject.controllers.component;
 
+import com.javadiscordproject.managers.SessionManager;
+import com.javadiscordproject.models.FriendNotificationDTO;
 import com.javadiscordproject.services.IFriendRequestAcceptedListener;
 import com.javadiscordproject.services.api.friend.FriendRequestService;
 import com.javadiscordproject.services.api.friend.IFriendRequestService;
+import com.javadiscordproject.services.websocket.WebSocketService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -38,6 +41,7 @@ public class NotificationButtonController {
     private IFriendRequestService friendRequestService;
     private Stage notificationPopup;
     private VBox requestsContainer;
+    private WebSocketService webSocketService;
 
     private IFriendRequestAcceptedListener friendRequestAcceptedListener;
 
@@ -45,12 +49,49 @@ public class NotificationButtonController {
     public void initialize() {
         loadStyles();
         friendRequestService = new FriendRequestService();
+        webSocketService = new WebSocketService();
 
         notificationDot.setRadius(6);
         notificationDot.setMouseTransparent(true);
         StackPane.setAlignment(notificationDot, javafx.geometry.Pos.TOP_RIGHT);
 
+        initializeWebSocketConnection();
+
         checkForPendingRequests();
+    }
+
+    private void initializeWebSocketConnection() {
+        try {
+            boolean connected = webSocketService.connectToWebSocket();
+            if (connected) {
+                LOGGER.info("WebSocket connecté avec succès");
+
+                webSocketService.subscribeToNotifications();
+
+                webSocketService.setNotificationReceivedCallback(this::onNotificationReceived);
+
+                LOGGER.info("Abonnement aux notifications WebSocket réussi");
+            } else {
+                LOGGER.warning("Échec de la connexion WebSocket");
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Erreur lors de l'initialisation WebSocket", e);
+        }
+    }
+
+    private void onNotificationReceived(FriendNotificationDTO notification) {
+        String currentUsername = SessionManager.getInstance().getUsername();
+        boolean isForCurrentUser = currentUsername != null &&
+                currentUsername.equals(notification.getUsername_receiver());
+
+        if (isForCurrentUser) {
+            Platform.runLater(() -> {
+                setHasNotifications(true);
+                if (notificationPopup != null && notificationPopup.isShowing()) {
+                    refreshRequestsList();
+                }
+            });
+        }
     }
 
     public void setFriendRequestAcceptedListener(IFriendRequestAcceptedListener listener) {
@@ -239,5 +280,11 @@ public class NotificationButtonController {
     public void setHasNotifications(boolean hasNotifications) {
         this.hasNotifications = hasNotifications;
         notificationDot.setVisible(hasNotifications);
+    }
+
+    public void cleanup() {
+        if (webSocketService != null) {
+            webSocketService.disconnect();
+        }
     }
 }

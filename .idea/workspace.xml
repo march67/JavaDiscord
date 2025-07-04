@@ -5,15 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0d0e107-d0c4-427e-935e-296e583e5dd3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/FriendNotificationDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/UIConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/UIConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/add-friend-component.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/fxml/component/add-friend-component.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/auth-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/auth-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/conversation-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/conversation-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/friend-list-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/friend-list-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/notification-button-component.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/component/notification-button-component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop/src/main/resources/styles/view/home-view.css" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/resources/styles/view/home-view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/AddFriendController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/AddFriendController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/ConversationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/ConversationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/FriendListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/FriendListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/NotificationButtonController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/NotificationButtonController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/UserSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/models/UserSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/api/friend/FriendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/api/friend/FriendService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/websocket/WebSocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/websocket/WebSocketService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/WsConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/utils/WsConstants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +68,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.Main.executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.back.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/SCRUM-106-link-back-with-friend-feature&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/SCRUM-117-sync-web-socket&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-21&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -104,20 +105,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Maven.Desktop_Front">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="desktop" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="desktop" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Desktop_Front" type="MavenRunConfiguration" factoryName="Maven">
+    <configuration name="Desktop_Front" type="MavenRunConfiguration" factoryName="Maven" singleton="false">
       <MavenSettings>
         <option name="myGeneralSettings" />
         <option name="myRunnerSettings" />
@@ -260,7 +248,12 @@
       <workItem from="1751381883346" duration="19591000" />
       <workItem from="1751458654835" duration="9086000" />
       <workItem from="1751475887021" duration="8711000" />
-      <workItem from="1751524455769" duration="24542000" />
+      <workItem from="1751524455769" duration="29283000" />
+      <workItem from="1751564226776" duration="2439000" />
+      <workItem from="1751566711815" duration="280000" />
+      <workItem from="1751567018771" duration="16508000" />
+      <workItem from="1751629538723" duration="10930000" />
+      <workItem from="1751651406818" duration="8742000" />
     </task>
     <servers />
   </component>

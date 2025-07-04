@@ -35,6 +35,13 @@ public class AddFriendController {
         statusLabel.setVisible(false);
     }
 
+    public void resetForm() {
+        usernameField.clear();
+        statusLabel.setVisible(false);
+        statusLabel.getStyleClass().removeAll("success", "error");
+        addButton.setDisable(false);
+    }
+
     @FXML
     private void handleAddFriend() {
         String username = usernameField.getText().trim();
@@ -43,7 +50,6 @@ public class AddFriendController {
             statusLabel.setText("Envoi en cours...");
             statusLabel.setVisible(true);
 
-            // Retirer les classes de style précédentes
             statusLabel.getStyleClass().removeAll("success", "error");
 
             friendService.addFriend(username).thenAccept(result -> {
@@ -55,11 +61,19 @@ public class AddFriendController {
 
                         new Thread(() -> {
                             try {
-                                Thread.sleep(1500);
+                                Thread.sleep(1000);
+                                javafx.application.Platform.runLater(() -> {
+                                    addButton.setDisable(false);
+                                });
+
+                                Thread.sleep(500);
                             } catch (InterruptedException e) {
                                 Thread.currentThread().interrupt();
                             }
+
                             javafx.application.Platform.runLater(() -> {
+                                resetForm();
+
                                 if (onSuccessCallback != null) {
                                     onSuccessCallback.run();
                                 }
