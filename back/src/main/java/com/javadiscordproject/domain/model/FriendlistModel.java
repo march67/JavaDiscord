@@ -117,4 +117,12 @@ public class FriendlistModel {
 	public void setRequesterId(Long requesterId) {
 		this.requesterId = requesterId;
 	}
+	
+	public UserModel getUser1() {
+		return this.user_1;
+	}
+	
+	public UserModel getUser2() {
+		return this.user_2;
+	}
 }
