@@ -39,12 +39,12 @@ public class FriendListController {
     private FriendSelectionListener friendSelectionListener;
     private IFriendService friendService;
     private VBox addFriendView;
+    private AddFriendController addFriendController;  // Nouvelle variable pour garder la référence
 
     public void setFriendService(IFriendService friendService) {
         this.friendService = friendService;
         loadAddFriendView();
     }
-
 
     @FXML
     public void initialize() {
@@ -61,9 +61,9 @@ public class FriendListController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/component/add-friend-component.fxml"));
             addFriendView = loader.load();
-            AddFriendController controller = loader.getController();
-            controller.setFriendService(friendService);
-            controller.setOnSuccessCallback(() -> {
+            addFriendController = loader.getController();  // Gardez une référence au contrôleur
+            addFriendController.setFriendService(friendService);
+            addFriendController.setOnSuccessCallback(() -> {
                 navigateToFriendsList();
                 refreshFriendsList();
             });
@@ -150,7 +150,12 @@ public class FriendListController {
         searchField.setVisible(false);
         searchField.setManaged(false);
         friendsList.getChildren().clear();
+
         if (addFriendView != null) {
+            // Réinitialiser le formulaire avant de l'afficher
+            if (addFriendController != null) {
+                addFriendController.resetForm();
+            }
             friendsList.getChildren().add(addFriendView);
         } else {
             Label errorLabel = new Label("Erreur de chargement");

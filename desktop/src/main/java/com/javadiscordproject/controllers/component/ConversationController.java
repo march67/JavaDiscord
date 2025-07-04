@@ -60,10 +60,19 @@ public class ConversationController {
         loadStyles();
         setupMessageInput();
         showWelcomeMessage();
+        setupAutoScroll();
 
         if (!webSocketService.isConnected()) {
             webSocketService.connectToWebSocket();
         }
+    }
+
+    private void setupAutoScroll() {
+        messageList.heightProperty().addListener((observable, oldValue, newValue) -> {
+            Platform.runLater(() -> {
+                messageScrollPane.setVvalue(1.0);
+            });
+        });
     }
 
     private void setupMessageReceivedCallback() {
@@ -80,6 +89,9 @@ public class ConversationController {
                             messageScrollPane,
                             isCurrentUser
                     );
+
+                    // Autoscroll vers le bas après l'ajout du message
+                    scrollToBottom();
                 } else {
                     LOGGER.warning("Received message with null username");
                 }
@@ -147,12 +159,28 @@ public class ConversationController {
 
         if (sent) {
             inputField.clear();
-            String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-            MessageDTO message = new MessageDTO(displayName, messageText, currentTime);
-            messageDisplayService.displayMessage(message, messageList, messageScrollPane, true);
         } else {
             LOGGER.severe("Échec de l'envoi du message");
         }
+    }
+
+    private void scrollToBottom() {
+        Platform.runLater(() -> {
+            messageList.applyCss();
+            messageList.layout();
+            messageScrollPane.applyCss();
+            messageScrollPane.layout();
+
+            Platform.runLater(() -> {
+                messageScrollPane.setVvalue(1.0);
+
+                Platform.runLater(() -> {
+                    if (messageScrollPane.getVvalue() < 1.0) {
+                        messageScrollPane.setVvalue(1.0);
+                    }
+                });
+            });
+        });
     }
 
     public void changeConversation(String username, Long conversationId) {
@@ -194,6 +222,7 @@ public class ConversationController {
                         boolean isCurrentUser = message.getUsername().equals(loggedInUsername);
                         messageDisplayService.displayMessage(message, messageList, messageScrollPane, isCurrentUser);
                     }
+                    scrollToBottom();
                 });
             } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "Failed to load conversation messages", e);

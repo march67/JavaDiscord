@@ -1,9 +1,8 @@
 package com.javadiscordproject.services.websocket;
 
 import com.javadiscordproject.managers.SessionManager;
-import com.javadiscordproject.models.ChatMessageDTO;
 import com.javadiscordproject.models.MessageWSDTO;
-import com.javadiscordproject.models.NotificationDTO;
+import com.javadiscordproject.models.FriendNotificationDTO; // Changé de NotificationDTO
 import com.javadiscordproject.utils.CustomStompSessionHandler;
 import javafx.application.Platform;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
@@ -35,6 +34,7 @@ public class WebSocketService {
 
     private Map<Long, StompSession.Subscription> conversationSubscriptions = new HashMap<>();
     private Consumer<MessageWSDTO> messageReceivedCallback;
+    private Consumer<FriendNotificationDTO> notificationReceivedCallback; // Ajouté callback pour notifications
 
     public WebSocketService() {}
 
@@ -136,18 +136,34 @@ public class WebSocketService {
         this.messageReceivedCallback = callback;
     }
 
+    // Nouveau callback pour les notifications
+    public void setNotificationReceivedCallback(Consumer<FriendNotificationDTO> callback) {
+        this.notificationReceivedCallback = callback;
+    }
+
     public boolean isConnected() {
         return isConnected && stompSession != null && stompSession.isConnected();
     }
 
-    public boolean sendNotification(String from, String to) {
+    public boolean sendFriendNotification(String usernameRequester, String usernameReceiver) {
         if (stompSession != null && stompSession.isConnected()) {
             try {
-                NotificationDTO notification = new NotificationDTO(from, to);
-                stompSession.send(APP_NOTIFICATIONS_ENDPOINT, notification);
+                FriendNotificationDTO notification = new FriendNotificationDTO(usernameRequester, usernameReceiver);
+
+                String destination = "/app/notification";
+
+                stompSession.send(destination, notification);
+
+                System.out.println("=== SENDING NOTIFICATION ===");
+                System.out.println("Destination: " + destination);
+                System.out.println("Requester: " + usernameRequester);
+                System.out.println("Receiver: " + usernameReceiver);
+                System.out.println("=============================");
+
                 return true;
 
             } catch (Exception e) {
+                System.err.println("Error sending notification: " + e.getMessage());
                 return false;
             }
         } else {
@@ -157,20 +173,31 @@ public class WebSocketService {
 
     public void subscribeToNotifications() {
         if (stompSession != null && stompSession.isConnected()) {
-            stompSession.subscribe(TOPIC_NOTIFICATIONS, new StompFrameHandler() {
+            String destination = "/topic/notification";
+
+            stompSession.subscribe(destination, new StompFrameHandler() {
                 @Override
                 public Type getPayloadType(StompHeaders headers) {
-                    return NotificationDTO.class;
+                    return FriendNotificationDTO.class;
                 }
 
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
-                    NotificationDTO receivedNotification = (NotificationDTO) payload;
+                    FriendNotificationDTO receivedNotification = (FriendNotificationDTO) payload;
                     Platform.runLater(() -> {
-                        // Handle notification silently
+                        System.out.println("=== NOTIFICATION RECEIVED ===");
+                        System.out.println("From: " + receivedNotification.getUsername_requester());
+                        System.out.println("To: " + receivedNotification.getUsername_receiver());
+                        System.out.println("==============================");
+
+                        if (notificationReceivedCallback != null) {
+                            notificationReceivedCallback.accept(receivedNotification);
+                        }
                     });
                 }
             });
+
+            System.out.println("Subscribed to notifications at: " + destination);
         }
     }
 
