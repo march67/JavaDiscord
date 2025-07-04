@@ -115,7 +115,7 @@ public class FriendlistServiceImpl implements FriendlistService {
 		}
 	}
 	
-	private boolean autoAcceptFriendRequest(UserModel user1, UserModel user2, Long requesterId) {
+	protected boolean autoAcceptFriendRequest(UserModel user1, UserModel user2, Long requesterId) {
 		UserPair pair = resolveRequesterAndReceiver(user1, user2, requesterId);
 		UserModel userRequester = pair.requester();
 		UserModel userReceiver = pair.receiver();
@@ -132,7 +132,7 @@ public class FriendlistServiceImpl implements FriendlistService {
         return false;
 	}
 	
-	private UserPair resolveRequesterAndReceiver(UserModel user1, UserModel user2, Long requesterId) {
+	protected UserPair resolveRequesterAndReceiver(UserModel user1, UserModel user2, Long requesterId) {
 		if (user1.getId().equals(requesterId)) {
 			return new UserPair(user1, user2);
 		} else if (user2.getId().equals(requesterId)) {
@@ -241,7 +241,7 @@ public class FriendlistServiceImpl implements FriendlistService {
 		return usersName;
 	}
 	
-	private boolean areFriends(UserModel user1, UserModel user2) {
+	protected boolean areFriends(UserModel user1, UserModel user2) {
 		// Search in this order first
 		if ( friendlistRepository.findByUserId1AndUserId2AndFriendRequestStatus(user1.getId(), user2.getId(), "accepted").isPresent()) {
 			return true;
