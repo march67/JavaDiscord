@@ -4,6 +4,7 @@ import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.managers.WebSocketManager;
 import com.javadiscordproject.models.MessageDTO;
 import com.javadiscordproject.services.MessageDisplayService;
+import com.javadiscordproject.services.MessageConversionService;
 import com.javadiscordproject.services.api.message.MessageService;
 import com.javadiscordproject.services.websocket.WebSocketService;
 import javafx.application.Platform;
@@ -34,19 +35,24 @@ public class ConversationController {
 
     private final MessageDisplayService messageDisplayService;
     private final MessageService messageService;
+    private final MessageConversionService messageConversionService;
     private String currentUser;
     private String loggedInUsername;
     private Long currentConversationId;
     private boolean hasActiveConversation = false;
 
     private final WebSocketService webSocketService;
+
     public ConversationController() {
         this.webSocketService = new WebSocketService();
         this.messageDisplayService = new MessageDisplayService();
         this.messageService = new MessageService();
+        this.messageConversionService = new MessageConversionService();
         this.currentUser = null;
         this.loggedInUsername = SessionManager.getInstance().getUsername();
         this.currentConversationId = null;
+
+        setupMessageReceivedCallback();
     }
 
     @FXML
@@ -54,6 +60,31 @@ public class ConversationController {
         loadStyles();
         setupMessageInput();
         showWelcomeMessage();
+
+        if (!webSocketService.isConnected()) {
+            webSocketService.connectToWebSocket();
+        }
+    }
+
+    private void setupMessageReceivedCallback() {
+        webSocketService.setMessageReceivedCallback(receivedWsMessage -> {
+            Platform.runLater(() -> {
+                MessageDTO convertedMessage = messageConversionService.convertWebSocketToDTO(receivedWsMessage);
+
+                if (convertedMessage != null && convertedMessage.getUsername() != null) {
+                    boolean isCurrentUser = convertedMessage.getUsername().equals(loggedInUsername);
+
+                    messageDisplayService.displayMessage(
+                            convertedMessage,
+                            messageList,
+                            messageScrollPane,
+                            isCurrentUser
+                    );
+                } else {
+                    LOGGER.warning("Received message with null username");
+                }
+            });
+        });
     }
 
     private void loadStyles() {
@@ -102,7 +133,8 @@ public class ConversationController {
     }
 
     private void sendMessage() {
-        if (!hasActiveConversation || currentUser == null) {
+        if (!hasActiveConversation || currentUser == null || currentConversationId == null) {
+            LOGGER.warning("Cannot send message: no active conversation or conversation ID is null");
             return;
         }
 
@@ -110,26 +142,30 @@ public class ConversationController {
         if (messageText.isEmpty()) return;
 
         String displayName = loggedInUsername != null ? loggedInUsername : CURRENT_USER_DISPLAY;
-        String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
-        // Envoyer via WebSocket
-        boolean sent = webSocketService.sendMessage(displayName, messageText);
+        boolean sent = webSocketService.sendMessageToConversation(currentConversationId, displayName, messageText);
 
         if (sent) {
-            MessageDTO userMessage = new MessageDTO(displayName, messageText, currentTime);
-            messageDisplayService.displayMessage(userMessage, messageList, messageScrollPane, true);
             inputField.clear();
+            String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+            MessageDTO message = new MessageDTO(displayName, messageText, currentTime);
+            messageDisplayService.displayMessage(message, messageList, messageScrollPane, true);
         } else {
-            System.err.println("Échec de l'envoi du message");
+            LOGGER.severe("Échec de l'envoi du message");
         }
     }
 
     public void changeConversation(String username, Long conversationId) {
         Platform.runLater(() -> {
-            System.out.println("Conversation ID reçu : " + conversationId);
-            LOGGER.info("Conversation ID reçu : " + conversationId);
+            System.out.println("Changement de conversation - ID: " + conversationId);
+            LOGGER.info("Changement de conversation - ID: " + conversationId);
 
             this.currentConversationId = conversationId;
+
+            if (conversationId != null && webSocketService.isConnected()) {
+                webSocketService.subscribeToConversation(conversationId);
+            }
+
             initializeConversation(username);
             loadConversationMessages();
         });
@@ -167,5 +203,11 @@ public class ConversationController {
 
     public void updateLoggedInUsername() {
         this.loggedInUsername = SessionManager.getInstance().getUsername();
+    }
+
+    public void cleanup() {
+        if (webSocketService != null) {
+            webSocketService.unsubscribeFromAllConversations();
+        }
     }
 }
