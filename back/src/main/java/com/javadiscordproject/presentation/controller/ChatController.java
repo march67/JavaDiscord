@@ -1,8 +1,13 @@
 package com.javadiscordproject.presentation.controller;
 
+import com.javadiscordproject.business.service.api.ConversationService;
 import com.javadiscordproject.business.service.api.MessageService;
+import com.javadiscordproject.business.service.api.UserService;
 import com.javadiscordproject.business.service.implementation.MessageServiceImpl;
+import com.javadiscordproject.domain.model.ConversationModel;
+import com.javadiscordproject.domain.model.MessageModel;
 import com.javadiscordproject.infrastructure.security.jwt.CustomUserDetails;
+import com.javadiscordproject.presentation.dto.Chat.FriendNotificationDto;
 import com.javadiscordproject.presentation.dto.Chat.MessageDTO;
 import com.javadiscordproject.presentation.dto.Chat.NotificationDTO;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -21,9 +26,13 @@ import java.time.format.DateTimeFormatter;
 public class ChatController {
 
     private final MessageService messageService;
+    private final ConversationService conversationService;
+    private final UserService userService;
 
-    public ChatController(MessageServiceImpl messageService) {
+    public ChatController(MessageServiceImpl messageService, ConversationService conversationService, UserService userService) {
         this.messageService = messageService;
+        this.conversationService = conversationService;
+        this.userService = userService;
     }
 
     @MessageMapping("/chat")
@@ -34,38 +43,30 @@ public class ChatController {
 
     @MessageMapping("/chat/{id}")
     @SendTo("/topic/messages/{id}")
-    public MessageDTO handleMessageByConversation(
-            @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @DestinationVariable String id,
-            MessageDTO message,
-            SimpMessageHeaderAccessor headerAccessor
-    ) {
-        String username = customUserDetails != null ? customUserDetails.getUsername() : message.getSender();
-
-
-
-        MessageDTO authenticatedMessage = new MessageDTO(
-                username,
+    public MessageDTO handleMessageByConversation(@DestinationVariable String id, MessageDTO message) {
+        MessageDTO messageDto = new MessageDTO(
+                message.getSender(),
                 message.getContent(),
                 message.getTimestamp() != null ? message.getTimestamp() :
-                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+                message.getConversationId()        
         );
-        //solution PUANTE mais aux moins ça marche
-        authenticatedMessage.setSender(message.getSender());
-        authenticatedMessage.setConversationId(message.getConversationId());
 
+        Long conversationId = Long.valueOf(message.getConversationId());
+              
+        MessageModel messageEntity = new MessageModel(
+        		userService.findUserByUsername(message.getSender()),
+        		conversationService.findConversation(conversationId),
+        		message.getContent());
+        
+        messageService.saveMessage(messageEntity);
 
-        System.out.println("Message sender from client: " + message.getSender());
-        System.out.println("id: " + message.getConversationId());
-        System.out.println("Message content: " + message.getContent());
-        System.out.println("Message timestamp: " + authenticatedMessage.getTimestamp());
-
-        return authenticatedMessage;
+        return messageDto;
     }
 
     @MessageMapping("/notification")
-    @SendTo("/topic/notifications")
-    public NotificationDTO handleNotification(NotificationDTO notification) {
-        return messageService.handleNotification(notification);
+    @SendTo("/topic/notification")
+    public FriendNotificationDto handleNotification(FriendNotificationDto friendNotificationDto) {
+        return friendNotificationDto;
     }
 }

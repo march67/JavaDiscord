@@ -3,6 +3,16 @@ package com.javadiscordproject.presentation.dto.message;
 import java.time.LocalDateTime;
 
 public class MessagesDto {
+	private String username;
+	private String messageContent;
+	private LocalDateTime messageDateTime;
+	
+	public MessagesDto(String username, String messageContent, LocalDateTime messageDateTime) {
+		this.username = username;
+		this.messageContent = messageContent;
+		this.messageDateTime = messageDateTime;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -24,16 +34,6 @@ public class MessagesDto {
 	}
 
 	public void setMessageDateTime(LocalDateTime messageDateTime) {
-		this.messageDateTime = messageDateTime;
-	}
-
-	private String username;
-	private String messageContent;
-	private LocalDateTime messageDateTime;
-	
-	public MessagesDto(String username, String messageContent, LocalDateTime messageDateTime) {
-		this.username = username;
-		this.messageContent = messageContent;
 		this.messageDateTime = messageDateTime;
 	}
 }

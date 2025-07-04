@@ -1,7 +1,10 @@
 package com.javadiscordproject.infrastructure.configuration;
 
+import com.javadiscordproject.business.service.implementation.CustomUserDetailsService;
 import com.javadiscordproject.business.service.ws.JwtAuthenticationService;
 import com.javadiscordproject.infrastructure.interceptor.JwtHandshakeInterceptor;
+import com.javadiscordproject.infrastructure.security.jwt.JwtTokenUtil;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -15,6 +18,7 @@ import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -25,11 +29,17 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
     private final JwtAuthenticationService jwtAuthenticationService;
+    private CustomUserDetailsService customUserDetailsService;
+    private JwtTokenUtil jwtTokenUtil;
 
-    public WebsocketConfiguration(JwtAuthenticationService jwtAuthenticationService) {
+
+
+    public WebsocketConfiguration(JwtAuthenticationService jwtAuthenticationService, CustomUserDetailsService customUserDetailsService, JwtTokenUtil jwtTokenUtil) {
         this.jwtAuthenticationService = jwtAuthenticationService;
+        this.customUserDetailsService = customUserDetailsService;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
-
+    
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
@@ -58,20 +68,24 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
                         String token = authToken.substring(7);
 
                         try {
-                            UsernamePasswordAuthenticationToken authentication = jwtAuthenticationService.validateTokenAndGetAuthentication(token);
-
-                            if (authentication != null) {
-                                accessor.setUser(authentication);
-                                SecurityContextHolder.getContext().setAuthentication(authentication);
-                            } else {
-                                throw new SecurityException("Invalid JWT token");
-                            }
-                        } catch (Exception e) {
-                            throw new SecurityException("Authentication failed: " + e.getMessage());
-                        }
-                    } else {
-                        throw new SecurityException("Missing or invalid Authorization header");
-                    }
+                        	String username = jwtAuthenticationService.getUsernameFromToken(token);
+                        	UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+                        	 if (jwtTokenUtil.validateToken(token, userDetails)) {
+                                 UsernamePasswordAuthenticationToken authentication =
+                                     new UsernamePasswordAuthenticationToken(
+                                         userDetails, null, userDetails.getAuthorities()
+                                     );
+                                 accessor.setUser(authentication);
+                                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                             } else {
+                                 throw new SecurityException("Invalid JWT token");
+                             }
+                         } catch (Exception e) {
+                             throw new SecurityException("Authentication failed: " + e.getMessage());
+                         }
+                     } else {
+                         throw new SecurityException("Missing or invalid Authorization header");
+                     }
                 }
 
                 return message;

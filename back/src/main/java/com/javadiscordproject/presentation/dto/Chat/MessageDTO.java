@@ -13,11 +13,12 @@ public class MessageDTO {
     public MessageDTO() {
     }
 
-    public MessageDTO(String sender, String content, String timestamp) {
+    public MessageDTO(String sender, String content, String timestamp, String conversationId) {
         super();
         this.sender = sender;
         this.content = content;
         this.timestamp = timestamp;
+        setConversationId(conversationId);
     }
 
     public String getTimestamp() {
