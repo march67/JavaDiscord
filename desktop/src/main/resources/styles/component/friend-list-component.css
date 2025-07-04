@@ -1,0 +1,276 @@
+.root-container {
+    -fx-background-color: -background-color-white;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: -border-color;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 4, 0, 2, 0);
+}
+
+.header-container {
+    -fx-background-color: derive(-background-color-white, -5%);
+    -fx-min-height: 60px;
+    -fx-max-height: 60px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 20px;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: -border-color;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 2, 0, 0, 1);
+}
+
+.header-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color-dark;
+}
+
+.buttons-container {
+    -fx-background-color: -transparent;
+    -fx-padding: 16px;
+    -fx-spacing: 8px;
+}
+
+.nav-button {
+    -fx-background-color: derive(-background-color-white, -3%);
+    -fx-text-fill: -text-color-dark;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 16px;
+    -fx-cursor: hand;
+    -fx-background-radius: 8px;
+    -fx-border-width: 1;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 3, 0, 0, 1);
+}
+
+.nav-button:hover {
+    -fx-background-color: -primary-color-light;
+    -fx-text-fill: -text-color-white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 6, 0, 0, 2);
+}
+
+.nav-button:selected {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: -text-color-white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0, 0, 2);
+    -fx-border-color: -primary-color-dark;
+}
+
+.search-container {
+    -fx-background-color: -transparent;
+    -fx-padding: 0 16px 16px 16px;
+}
+
+.search-field {
+    -fx-background-color: -background-color;
+    -fx-text-fill: -text-color-dark;
+    -fx-prompt-text-fill: -text-color-muted;
+    -fx-padding: 12px 16px;
+    -fx-background-radius: 16px;
+    -fx-border-width: 1;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 16px;
+    -fx-font-size: 14px;
+}
+
+.search-field:focused {
+    -fx-background-color: -background-color-white;
+    -fx-border-color: -primary-color;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, -primary-color-focus, 6, 0, 0, 0);
+}
+
+.friends-scroll-pane {
+    -fx-background-color: -transparent;
+    -fx-hbar-policy: NEVER;
+    -fx-vbar-policy: AS_NEEDED;
+    -fx-padding: 8px;
+}
+
+.friends-scroll-pane > .viewport {
+    -fx-background-color: -transparent;
+}
+
+.friends-scroll-pane .scroll-bar:vertical {
+    -fx-pref-width: 8;
+    -fx-background-color: -transparent;
+}
+
+.friends-scroll-pane .scroll-bar:vertical .track {
+    -fx-background-color: -background-color;
+    -fx-background-radius: 6px;
+}
+
+.friends-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: -primary-color;
+    -fx-background-radius: 6px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 3, 0, 0, 0);
+}
+
+.friends-list-container {
+    -fx-background-color: -transparent;
+    -fx-spacing: 4px;
+}
+
+.friend-item {
+    -fx-padding: 8px;
+    -fx-background-color: -transparent;
+    -fx-cursor: hand;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+}
+
+.friend-item:hover {
+    -fx-background-color: derive(-primary-color, 85%);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0, 0, 2);
+}
+
+.friend-item.selected {
+    -fx-background-color: derive(-primary-color, 75%);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 7, 0, 0, 2);
+    -fx-border-color: -primary-color;
+    -fx-border-width: 1;
+}
+
+.friend-avatar {
+    -fx-min-width: 40;
+    -fx-min-height: 40;
+    -fx-max-width: 40;
+    -fx-max-height: 40;
+    -fx-background-color: -primary-color;
+    -fx-text-fill: -text-color-white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-alignment: center;
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0, 0, 2);
+}
+
+.friend-name {
+    -fx-font-size: 15px;
+    -fx-text-fill: -text-color-dark;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 4px 0;
+}
+
+.friend-online {
+    -fx-font-size: 12px;
+    -fx-text-fill: -success-color;
+    -fx-font-weight: bold;
+}
+
+.friend-offline {
+    -fx-font-size: 12px;
+    -fx-text-fill: -text-color-muted;
+    -fx-font-weight: normal;
+}
+
+.loading-label, .empty-label {
+    -fx-text-fill: -text-color-muted;
+    -fx-font-size: 14px;
+    -fx-padding: 24px;
+    -fx-alignment: center;
+    -fx-font-style: italic;
+}
+
+.add-friend-view {
+    -fx-padding: 24px;
+    -fx-spacing: 4px;
+    -fx-alignment: CENTER;
+}
+
+.add-friend-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color-dark;
+    -fx-padding: 0 0 8px 0;
+}
+
+.add-friend-field {
+    -fx-background-color: -background-color-white;
+    -fx-text-fill: -text-color-dark;
+    -fx-prompt-text-fill: -text-color-muted;
+    -fx-padding: 12px 16px;
+    -fx-background-radius: 8px;
+    -fx-border-color: -border-color;
+    -fx-border-width: 2;
+    -fx-border-radius: 8px;
+    -fx-font-size: 14px;
+    -fx-max-width: infinity;
+    -fx-pref-width: 200px;
+}
+
+.add-friend-field:focused {
+    -fx-border-color: -primary-color;
+    -fx-effect: dropshadow(gaussian, -primary-color-focus, 6, 0, 0, 0);
+}
+
+.add-friend-button {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: -text-color-white;
+    -fx-padding: 12px 20px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0, 0, 2);
+    -fx-max-width: infinity;
+    -fx-pref-width: 200px;
+}
+
+.add-friend-button:hover {
+    -fx-background-color: -primary-color-light;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0, 0, 3);
+}
+
+.user-info-section {
+    -fx-background-color: derive(-background-color-white, -5%);
+    -fx-border-color: -border-color;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 16px;
+}
+
+.current-user-label {
+    -fx-text-fill: -text-color-dark;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-max-width: infinity;
+    -fx-padding: 12px 8px;
+    -fx-background-color: derive(-primary-color, 90%);
+    -fx-background-radius: 8px;
+    -fx-border-color: -primary-color;
+    -fx-border-width: 1;
+    -fx-border-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 0, 1);
+}
+
+.logout-section {
+    -fx-background-color: -background-color-white;
+    -fx-padding: 16px;
+}
+
+.logout-button {
+    -fx-background-color: -delete-color;
+    -fx-text-fill: -text-color-white;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0, 0, 2);
+}
+
+.logout-button:hover {
+    -fx-background-color: -delete-color-hover;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0, 0, 3);
+}
+
+.status-label {
+    -fx-text-fill: -text-color-muted;
+    -fx-font-size: 13px;
+    -fx-font-style: italic;
+    -fx-padding: 8px 0;
+}

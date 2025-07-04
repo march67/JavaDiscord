@@ -8,9 +8,11 @@ target/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+.idea
 *.iws
 *.iml
 *.ipr
+*.idea/workspace.xml
 
 ### Eclipse ###
 /bin/
@@ -33,3 +35,4 @@ docker/mysql/data/
 
 ### env ###
 back/.env
+/.metadata/

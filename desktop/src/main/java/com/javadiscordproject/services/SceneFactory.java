@@ -1,0 +1,71 @@
+package com.javadiscordproject.services;
+
+import com.javadiscordproject.controllers.view.AuthViewController;
+import com.javadiscordproject.controllers.base.BaseViewController;
+import com.javadiscordproject.controllers.view.HomeViewController;
+import com.javadiscordproject.managers.SceneManager;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Map;
+
+import static com.javadiscordproject.utils.UIConstants.DEFAULT_HEIGHT;
+import static com.javadiscordproject.utils.UIConstants.DEFAULT_WIDTH;
+
+public class SceneFactory {
+    private static final String CSS_PATH = "/styles/styles.css";
+
+    private static final Map<SceneType, String> SCENE_RESOURCES = Map.of(
+            SceneType.AUTH, "/fxml/view/auth-view.fxml",
+            SceneType.HOME, "/fxml/view/home-view.fxml"
+    );
+
+    private static final Map<SceneType, Class<?>> SCENE_CONTROLLERS = Map.of(
+            SceneType.AUTH, AuthViewController.class,
+            SceneType.HOME, HomeViewController.class
+    );
+
+    public static Scene createScene(SceneType type, SceneManager sceneManager) {
+        try {
+            String fxmlPath = SCENE_RESOURCES.get(type);
+            Class<?> controllerClass = SCENE_CONTROLLERS.get(type);
+
+            if (fxmlPath == null || controllerClass == null) {
+                throw new IllegalArgumentException("Unsupported scene type: " + type);
+            }
+
+            URL fxmlUrl = SceneFactory.class.getResource(fxmlPath);
+            if (fxmlUrl == null) {
+                throw new RuntimeException("FXML resource not found: " + fxmlPath);
+            }
+
+            FXMLLoader loader = new FXMLLoader(fxmlUrl);
+            Parent root = loader.load();
+
+            Object controller = loader.getController();
+            if (controller instanceof BaseViewController) {
+                ((BaseViewController) controller).setSceneManager(sceneManager);
+            }
+
+            Scene scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+
+            URL cssUrl = SceneFactory.class.getResource(CSS_PATH);
+            if (cssUrl != null) {
+                scene.getStylesheets().add(cssUrl.toExternalForm());
+            } else {
+                System.err.println("Warning: CSS resource not found: " + CSS_PATH);
+            }
+
+            return scene;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load scene: " + type, e);
+        }
+    }
+
+    public enum SceneType {
+        AUTH,
+        HOME
+    }
+}

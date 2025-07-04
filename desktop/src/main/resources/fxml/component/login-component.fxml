@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="formContainer" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.javadiscordproject.controllers.component.LoginController"
+      styleClass="form-container">
+
+    <Label text="Login" styleClass="title-label"/>
+    <TextField fx:id="loginUsername" styleClass="input-field" promptText="Username"/>
+    <PasswordField fx:id="loginPassword" styleClass="input-field" promptText="Password"/>
+    <Label fx:id="loginError" styleClass="error-label"/>
+    <Button fx:id="loginButton" text="Login" styleClass="primary-button"/>
+    <Button fx:id="showRegister" text="Need an account? Register" styleClass="link-button"/>
+</VBox>

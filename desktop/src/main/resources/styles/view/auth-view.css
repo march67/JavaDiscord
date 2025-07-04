@@ -1,0 +1,10 @@
+.auth-container {
+    -fx-background-image: url("/images/bg_login.png");
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.stack-container {
+    -fx-alignment: center;
+}
