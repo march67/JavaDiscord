@@ -5,6 +5,8 @@ import com.javadiscordproject.business.service.ws.JwtAuthenticationService;
 import com.javadiscordproject.infrastructure.interceptor.JwtHandshakeInterceptor;
 import com.javadiscordproject.infrastructure.security.jwt.JwtTokenUtil;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -16,6 +18,8 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,22 +33,31 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
     private final JwtAuthenticationService jwtAuthenticationService;
-    private CustomUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
+
+
+    @Autowired(required = false)
     private JwtTokenUtil jwtTokenUtil;
 
-
-
-    public WebsocketConfiguration(JwtAuthenticationService jwtAuthenticationService, CustomUserDetailsService customUserDetailsService, JwtTokenUtil jwtTokenUtil) {
+    public WebsocketConfiguration(JwtAuthenticationService jwtAuthenticationService, CustomUserDetailsService customUserDetailsService) {
         this.jwtAuthenticationService = jwtAuthenticationService;
         this.customUserDetailsService = customUserDetailsService;
-        this.jwtTokenUtil = jwtTokenUtil;
     }
 
+    @Bean
+    public TaskScheduler webSocketTaskScheduler() {
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(1);
+        scheduler.setThreadNamePrefix("ws-heartbeat-");
+        scheduler.initialize();
+        return scheduler;
+    }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.enableSimpleBroker("/topic")
-                .setHeartbeatValue(new long[]{10000, 10000});
+                .setHeartbeatValue(new long[]{10000, 10000})
+                .setTaskScheduler(webSocketTaskScheduler());
         registry.setApplicationDestinationPrefixes("/app");
     }
 
@@ -72,24 +85,25 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
                         String token = authToken.substring(7);
 
                         try {
-                        	String username = jwtAuthenticationService.getUsernameFromToken(token);
-                        	UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-                        	 if (jwtTokenUtil.validateToken(token, userDetails)) {
-                                 UsernamePasswordAuthenticationToken authentication =
-                                     new UsernamePasswordAuthenticationToken(
-                                         userDetails, null, userDetails.getAuthorities()
-                                     );
-                                 accessor.setUser(authentication);
-                                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                             } else {
-                                 throw new SecurityException("Invalid JWT token");
-                             }
-                         } catch (Exception e) {
-                             throw new SecurityException("Authentication failed: " + e.getMessage());
-                         }
-                     } else {
-                         throw new SecurityException("Missing or invalid Authorization header");
-                     }
+                            String username = jwtAuthenticationService.getUsernameFromToken(token);
+                            UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+
+                            if (jwtTokenUtil != null && jwtTokenUtil.validateToken(token, userDetails)) {
+                                UsernamePasswordAuthenticationToken authentication =
+                                        new UsernamePasswordAuthenticationToken(
+                                                userDetails, null, userDetails.getAuthorities()
+                                        );
+                                accessor.setUser(authentication);
+                                SecurityContextHolder.getContext().setAuthentication(authentication);
+                            } else {
+                                throw new SecurityException("Invalid JWT token");
+                            }
+                        } catch (Exception e) {
+                            throw new SecurityException("Authentication failed: " + e.getMessage());
+                        }
+                    } else {
+                        throw new SecurityException("Missing or invalid Authorization header");
+                    }
                 }
 
                 return message;
