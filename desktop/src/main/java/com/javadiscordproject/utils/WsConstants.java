@@ -1,7 +1,8 @@
 package com.javadiscordproject.utils;
 
 public class WsConstants {
-    public static final String WEBSOCKET_URL = "ws://localhost:8080/api/ws";
+    public static final String WEBSOCKET_URL = "wss://discord2-back-17feecd5a4fc.herokuapp.com/api/ws";
+
     public static final String TOPIC_MESSAGES = "/topic/messages";
     public static final String TOPIC_NOTIFICATIONS = "/topic/notifications";
     public static final String TOPIC_FRIEND_NOTIFICATION = "/topic/notification";
