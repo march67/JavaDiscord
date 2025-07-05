@@ -154,7 +154,7 @@ public class WebSocketService {
             try {
                 FriendNotificationDTO notification = new FriendNotificationDTO(usernameRequester, usernameReceiver);
 
-                String destination = "/app/notification";
+                String destination = APP_FRIEND_NOTIFICATION_ENDPOINT;
 
                 stompSession.send(destination, notification);
 
@@ -179,26 +179,21 @@ public class WebSocketService {
         if (stompSession != null && stompSession.isConnected()) {
             try {
                 stompSession.send(APP_FRIEND_NOTIFICATION_FRIEND_ENDPOINT, username);
-
-                System.out.println("=== SENDING FRIEND NOTIFICATION ===");
-                System.out.println("Destination: " + APP_FRIEND_NOTIFICATION_FRIEND_ENDPOINT);
-                System.out.println("Username: " + username);
-                System.out.println("====================================");
-
+                System.out.println("=== FRIEND ACCEPTED NOTIFICATION SENT ===");
+                System.out.println("Accepted friend: " + username);
+                System.out.println("========================================");
                 return true;
-
             } catch (Exception e) {
-                System.err.println("Error sending friend notification: " + e.getMessage());
+                System.err.println("Error sending friend acceptance: " + e.getMessage());
                 return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     public void subscribeToNotifications() {
         if (stompSession != null && stompSession.isConnected()) {
-            String destination = "/topic/notification";
+            String destination = TOPIC_FRIEND_NOTIFICATION;
 
             stompSession.subscribe(destination, new StompFrameHandler() {
                 @Override

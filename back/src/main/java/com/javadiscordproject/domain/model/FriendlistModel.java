@@ -25,7 +25,7 @@ public class FriendlistModel {
 	@Column(name = "user_id_2", insertable = false, updatable = false)
 	private Long userId2;
 	
-	@ManyToOne(fetch = FetchType.LAZY) // avoid all loading
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id_1")
 	@MapsId("userId_1")
 	private UserModel user_1;

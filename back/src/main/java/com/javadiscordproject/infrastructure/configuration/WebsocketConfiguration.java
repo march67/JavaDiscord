@@ -5,8 +5,6 @@ import com.javadiscordproject.business.service.ws.JwtAuthenticationService;
 import com.javadiscordproject.infrastructure.interceptor.JwtHandshakeInterceptor;
 import com.javadiscordproject.infrastructure.security.jwt.JwtTokenUtil;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -18,8 +16,6 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,31 +29,21 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
     private final JwtAuthenticationService jwtAuthenticationService;
-    private final CustomUserDetailsService customUserDetailsService;
-
-
-    @Autowired(required = false)
+    private CustomUserDetailsService customUserDetailsService;
     private JwtTokenUtil jwtTokenUtil;
 
-    public WebsocketConfiguration(JwtAuthenticationService jwtAuthenticationService, CustomUserDetailsService customUserDetailsService) {
+
+
+    public WebsocketConfiguration(JwtAuthenticationService jwtAuthenticationService, CustomUserDetailsService customUserDetailsService, JwtTokenUtil jwtTokenUtil) {
         this.jwtAuthenticationService = jwtAuthenticationService;
         this.customUserDetailsService = customUserDetailsService;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    @Bean
-    public TaskScheduler webSocketTaskScheduler() {
-        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-        scheduler.setPoolSize(1);
-        scheduler.setThreadNamePrefix("ws-heartbeat-");
-        scheduler.initialize();
-        return scheduler;
-    }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/topic")
-                .setHeartbeatValue(new long[]{10000, 10000})
-                .setTaskScheduler(webSocketTaskScheduler());
+        registry.enableSimpleBroker("/topic");
         registry.setApplicationDestinationPrefixes("/app");
     }
 
@@ -65,10 +51,7 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
                 .setAllowedOriginPatterns("*")
-                .addInterceptors(new JwtHandshakeInterceptor())
-                .withSockJS()
-                .setSessionCookieNeeded(false)
-                .setHeartbeatTime(25000);
+                .addInterceptors(new JwtHandshakeInterceptor());
     }
 
     @Override
@@ -87,8 +70,7 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
                         try {
                             String username = jwtAuthenticationService.getUsernameFromToken(token);
                             UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-
-                            if (jwtTokenUtil != null && jwtTokenUtil.validateToken(token, userDetails)) {
+                            if (jwtTokenUtil.validateToken(token, userDetails)) {
                                 UsernamePasswordAuthenticationToken authentication =
                                         new UsernamePasswordAuthenticationToken(
                                                 userDetails, null, userDetails.getAuthorities()

@@ -63,10 +63,13 @@ public class FriendListController {
                 System.out.println("=== FRIEND NOTIFICATION RECEIVED ===");
                 System.out.println("Received username: " + username);
                 System.out.println("Current user: " + currentUser);
-                System.out.println("Refreshing friends list...");
-                System.out.println("====================================");
 
-                refreshFriendsList();
+                if (username.equals(currentUser)) {
+                    System.out.println("Refreshing friends list...");
+                    refreshFriendsList();
+                }
+
+                System.out.println("====================================");
             });
 
             webSocketService.subscribeToFriendNotifications();
