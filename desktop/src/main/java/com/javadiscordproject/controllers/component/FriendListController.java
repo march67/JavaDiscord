@@ -4,6 +4,7 @@ import com.javadiscordproject.managers.SceneManager;
 import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.FriendDTO;
 import com.javadiscordproject.services.api.friend.IFriendService;
+import com.javadiscordproject.services.websocket.WebSocketService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,12 +39,38 @@ public class FriendListController {
     private List<FriendDTO> allFriends = new ArrayList<>();
     private FriendSelectionListener friendSelectionListener;
     private IFriendService friendService;
+    private WebSocketService webSocketService;
     private VBox addFriendView;
-    private AddFriendController addFriendController;  // Nouvelle variable pour garder la référence
+    private AddFriendController addFriendController;
 
     public void setFriendService(IFriendService friendService) {
         this.friendService = friendService;
         loadAddFriendView();
+    }
+
+    public void setWebSocketService(WebSocketService webSocketService) {
+        this.webSocketService = webSocketService;
+        if (addFriendController != null) {
+            addFriendController.setWebSocketService(webSocketService);
+        }
+        setupWebSocketSubscription();
+    }
+
+    private void setupWebSocketSubscription() {
+        if (webSocketService != null && webSocketService.isConnected()) {
+            webSocketService.setFriendNotificationReceivedCallback(username -> {
+                String currentUser = SessionManager.getInstance().getUsername();
+                System.out.println("=== FRIEND NOTIFICATION RECEIVED ===");
+                System.out.println("Received username: " + username);
+                System.out.println("Current user: " + currentUser);
+                System.out.println("Refreshing friends list...");
+                System.out.println("====================================");
+
+                refreshFriendsList();
+            });
+
+            webSocketService.subscribeToFriendNotifications();
+        }
     }
 
     @FXML
@@ -61,8 +88,11 @@ public class FriendListController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/component/add-friend-component.fxml"));
             addFriendView = loader.load();
-            addFriendController = loader.getController();  // Gardez une référence au contrôleur
+            addFriendController = loader.getController();
             addFriendController.setFriendService(friendService);
+            if (webSocketService != null) {
+                addFriendController.setWebSocketService(webSocketService);
+            }
             addFriendController.setOnSuccessCallback(() -> {
                 navigateToFriendsList();
                 refreshFriendsList();
@@ -152,7 +182,6 @@ public class FriendListController {
         friendsList.getChildren().clear();
 
         if (addFriendView != null) {
-            // Réinitialiser le formulaire avant de l'afficher
             if (addFriendController != null) {
                 addFriendController.resetForm();
             }

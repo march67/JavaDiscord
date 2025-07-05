@@ -2,7 +2,7 @@ package com.javadiscordproject.services.websocket;
 
 import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.MessageWSDTO;
-import com.javadiscordproject.models.FriendNotificationDTO; // Changé de NotificationDTO
+import com.javadiscordproject.models.FriendNotificationDTO;
 import com.javadiscordproject.utils.CustomStompSessionHandler;
 import javafx.application.Platform;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
@@ -34,7 +34,8 @@ public class WebSocketService {
 
     private Map<Long, StompSession.Subscription> conversationSubscriptions = new HashMap<>();
     private Consumer<MessageWSDTO> messageReceivedCallback;
-    private Consumer<FriendNotificationDTO> notificationReceivedCallback; // Ajouté callback pour notifications
+    private Consumer<FriendNotificationDTO> notificationReceivedCallback;
+    private Consumer<String> friendNotificationReceivedCallback;
 
     public WebSocketService() {}
 
@@ -136,9 +137,12 @@ public class WebSocketService {
         this.messageReceivedCallback = callback;
     }
 
-    // Nouveau callback pour les notifications
     public void setNotificationReceivedCallback(Consumer<FriendNotificationDTO> callback) {
         this.notificationReceivedCallback = callback;
+    }
+
+    public void setFriendNotificationReceivedCallback(Consumer<String> callback) {
+        this.friendNotificationReceivedCallback = callback;
     }
 
     public boolean isConnected() {
@@ -164,6 +168,27 @@ public class WebSocketService {
 
             } catch (Exception e) {
                 System.err.println("Error sending notification: " + e.getMessage());
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public boolean sendFriendNotificationString(String username) {
+        if (stompSession != null && stompSession.isConnected()) {
+            try {
+                stompSession.send(APP_FRIEND_NOTIFICATION_FRIEND_ENDPOINT, username);
+
+                System.out.println("=== SENDING FRIEND NOTIFICATION ===");
+                System.out.println("Destination: " + APP_FRIEND_NOTIFICATION_FRIEND_ENDPOINT);
+                System.out.println("Username: " + username);
+                System.out.println("====================================");
+
+                return true;
+
+            } catch (Exception e) {
+                System.err.println("Error sending friend notification: " + e.getMessage());
                 return false;
             }
         } else {
@@ -198,6 +223,33 @@ public class WebSocketService {
             });
 
             System.out.println("Subscribed to notifications at: " + destination);
+        }
+    }
+
+    public void subscribeToFriendNotifications() {
+        if (stompSession != null && stompSession.isConnected()) {
+            stompSession.subscribe(TOPIC_FRIEND_NOTIFICATION_FRIEND, new StompFrameHandler() {
+                @Override
+                public Type getPayloadType(StompHeaders headers) {
+                    return String.class;
+                }
+
+                @Override
+                public void handleFrame(StompHeaders headers, Object payload) {
+                    String receivedUsername = (String) payload;
+                    Platform.runLater(() -> {
+                        System.out.println("=== FRIEND NOTIFICATION RECEIVED ===");
+                        System.out.println("Username: " + receivedUsername);
+                        System.out.println("=====================================");
+
+                        if (friendNotificationReceivedCallback != null) {
+                            friendNotificationReceivedCallback.accept(receivedUsername);
+                        }
+                    });
+                }
+            });
+
+            System.out.println("Subscribed to friend notifications at: " + TOPIC_FRIEND_NOTIFICATION_FRIEND);
         }
     }
 

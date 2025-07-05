@@ -2,6 +2,7 @@ package com.javadiscordproject.controllers.component;
 
 import com.javadiscordproject.services.api.friend.IFriendService;
 import com.javadiscordproject.services.api.friend.FriendService.AddFriendResult;
+import com.javadiscordproject.services.websocket.WebSocketService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,10 +21,15 @@ public class AddFriendController {
     private Button addButton;
 
     private IFriendService friendService;
+    private WebSocketService webSocketService;
     private Runnable onSuccessCallback;
 
     public void setFriendService(IFriendService friendService) {
         this.friendService = friendService;
+    }
+
+    public void setWebSocketService(WebSocketService webSocketService) {
+        this.webSocketService = webSocketService;
     }
 
     public void setOnSuccessCallback(Runnable callback) {
@@ -57,6 +63,15 @@ public class AddFriendController {
                     if (result.isSuccess()) {
                         statusLabel.setText(result.getMessage());
                         statusLabel.getStyleClass().add("success");
+
+                        if (webSocketService != null && webSocketService.isConnected()) {
+                            boolean sent = webSocketService.sendFriendNotificationString(username);
+                            System.out.println("=== FRIEND ACCEPTED NOTIFICATION ===");
+                            System.out.println("Username: " + username);
+                            System.out.println("Sent: " + sent);
+                            System.out.println("====================================");
+                        }
+
                         usernameField.clear();
 
                         new Thread(() -> {

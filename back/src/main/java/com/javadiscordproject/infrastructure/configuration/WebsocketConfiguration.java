@@ -39,11 +39,12 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
         this.customUserDetailsService = customUserDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
     }
-    
+
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/topic");
+        registry.enableSimpleBroker("/topic")
+                .setHeartbeatValue(new long[]{10000, 10000});
         registry.setApplicationDestinationPrefixes("/app");
     }
 
@@ -51,7 +52,10 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
                 .setAllowedOriginPatterns("*")
-                .addInterceptors(new JwtHandshakeInterceptor());
+                .addInterceptors(new JwtHandshakeInterceptor())
+                .withSockJS()
+                .setSessionCookieNeeded(false)
+                .setHeartbeatTime(25000);
     }
 
     @Override

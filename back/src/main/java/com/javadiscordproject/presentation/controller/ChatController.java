@@ -69,4 +69,10 @@ public class ChatController {
     public FriendNotificationDto handleNotification(FriendNotificationDto friendNotificationDto) {
         return friendNotificationDto;
     }
+
+    @MessageMapping("/notification/friend")
+    @SendTo("/topic/notification/friend")
+    public String handleNotification(String username) {
+        return username;
+    }
 }
