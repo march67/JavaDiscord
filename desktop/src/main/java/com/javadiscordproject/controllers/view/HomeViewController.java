@@ -6,7 +6,6 @@ import com.javadiscordproject.controllers.component.FriendListController;
 import com.javadiscordproject.controllers.component.ConversationController;
 import com.javadiscordproject.controllers.component.NotificationButtonController;
 import com.javadiscordproject.services.IFriendRequestAcceptedListener;
-import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.FriendDTO;
 import com.javadiscordproject.services.api.friend.FriendService;
 import com.javadiscordproject.services.api.friend.IFriendService;
@@ -136,10 +135,5 @@ public class HomeViewController extends BaseViewController {
     }
 
     private void setupLogoutHandler() {
-    }
-
-    public void logout() {
-        SessionManager.getInstance().clearSession();
-        sceneManager.showLoginScene();
     }
 }

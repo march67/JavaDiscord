@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d0d0e107-d0c4-427e-935e-296e583e5dd3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/javadiscordproject/infrastructure/configuration/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/ConversationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/component/ConversationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/view/HomeViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/controllers/view/HomeViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/api/message/IMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/api/message/IMessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/api/message/MessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/src/main/java/com/javadiscordproject/services/api/message/MessageService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,7 +257,7 @@
       <workItem from="1751699904049" duration="1176000" />
       <workItem from="1751719599321" duration="13884000" />
       <workItem from="1751742690679" duration="11129000" />
-      <workItem from="1751788089647" duration="29716000" />
+      <workItem from="1751788089647" duration="37912000" />
     </task>
     <servers />
   </component>

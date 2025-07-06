@@ -1,7 +1,6 @@
 package com.javadiscordproject.controllers.component;
 
 import com.javadiscordproject.managers.SessionManager;
-import com.javadiscordproject.managers.WebSocketManager;
 import com.javadiscordproject.models.MessageDTO;
 import com.javadiscordproject.services.MessageDisplayService;
 import com.javadiscordproject.services.MessageConversionService;
@@ -19,8 +18,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class ConversationController {
     private static final Logger LOGGER = Logger.getLogger(ConversationController.class.getName());

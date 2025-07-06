@@ -5,5 +5,4 @@ import java.util.List;
 
 public interface IMessageService {
     List<MessageDTO> getConversationMessages(Long conversationId);
-    boolean sendMessage(Long conversationId, String messageContent);
 }

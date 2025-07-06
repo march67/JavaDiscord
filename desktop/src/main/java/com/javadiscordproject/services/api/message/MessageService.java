@@ -53,9 +53,4 @@ public class MessageService implements IMessageService {
             return new ArrayList<>();
         }
     }
-
-    @Override
-    public boolean sendMessage(Long conversationId, String messageContent) {
-        return false;
-    }
 }
