@@ -47,6 +47,11 @@
                    promptText="Rechercher..."
                    styleClass="search-field"
                    HBox.hgrow="ALWAYS"/>
+        <Button fx:id="refreshButton"
+                text="⟳"
+                styleClass="refresh-button"
+                minWidth="40"
+                maxWidth="40"/>
     </HBox>
 
     <ScrollPane fx:id="friendsScrollPane"

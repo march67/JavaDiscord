@@ -35,6 +35,7 @@ public class FriendListController {
     @FXML private ToggleGroup navigationGroup;
     @FXML private Button logoutButton;
     @FXML private Label currentUserLabel;
+    @FXML private Button refreshButton;
 
     private List<FriendDTO> allFriends = new ArrayList<>();
     private FriendSelectionListener friendSelectionListener;
@@ -85,7 +86,9 @@ public class FriendListController {
         displayCurrentUser();
         showLoadingMessage();
         loadAddFriendView();
+        refreshButton.setOnAction(e -> refreshFriendsList());
     }
+
 
     private void loadAddFriendView() {
         try {
@@ -176,12 +179,16 @@ public class FriendListController {
     private void showFriendsList() {
         searchField.setVisible(true);
         searchField.setManaged(true);
+        refreshButton.setVisible(true);
+        refreshButton.setManaged(true);
         displayFriends(allFriends);
     }
 
     private void showAddFriendView() {
         searchField.setVisible(false);
         searchField.setManaged(false);
+        refreshButton.setVisible(false);
+        refreshButton.setManaged(false);
         friendsList.getChildren().clear();
 
         if (addFriendView != null) {

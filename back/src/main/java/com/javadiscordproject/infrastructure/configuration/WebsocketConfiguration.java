@@ -22,6 +22,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -32,18 +34,24 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
     private CustomUserDetailsService customUserDetailsService;
     private JwtTokenUtil jwtTokenUtil;
 
-
-
     public WebsocketConfiguration(JwtAuthenticationService jwtAuthenticationService, CustomUserDetailsService customUserDetailsService, JwtTokenUtil jwtTokenUtil) {
         this.jwtAuthenticationService = jwtAuthenticationService;
         this.customUserDetailsService = customUserDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/topic");
+        // Créer le TaskScheduler pour les heartbeats
+        ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
+        taskScheduler.setPoolSize(1);
+        taskScheduler.setThreadNamePrefix("wss-heartbeat-");
+        taskScheduler.initialize();
+
+        registry.enableSimpleBroker("/topic")
+                .setHeartbeatValue(new long[] {25000, 0})
+                .setTaskScheduler(taskScheduler);
+
         registry.setApplicationDestinationPrefixes("/app");
     }
 
@@ -52,6 +60,13 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
         registry.addEndpoint("/ws")
                 .setAllowedOriginPatterns("*")
                 .addInterceptors(new JwtHandshakeInterceptor());
+    }
+
+    @Override
+    public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
+        registry.setSendTimeLimit(120 * 60 * 1000);
+        registry.setMessageSizeLimit(512 * 1024);
+        registry.setSendBufferSizeLimit(1024 * 1024);
     }
 
     @Override

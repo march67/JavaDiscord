@@ -178,7 +178,7 @@ public class WebSocketService {
     public boolean sendFriendNotificationString(String username) {
         if (stompSession != null && stompSession.isConnected()) {
             try {
-                stompSession.send(APP_FRIEND_NOTIFICATION_FRIEND_ENDPOINT, username);
+                stompSession.send(APP_NOTIFICATION_FRIEND_ENDPOINT, username);
                 System.out.println("=== FRIEND ACCEPTED NOTIFICATION SENT ===");
                 System.out.println("Accepted friend: " + username);
                 System.out.println("========================================");
@@ -223,7 +223,7 @@ public class WebSocketService {
 
     public void subscribeToFriendNotifications() {
         if (stompSession != null && stompSession.isConnected()) {
-            stompSession.subscribe(TOPIC_FRIEND_NOTIFICATION_FRIEND, new StompFrameHandler() {
+            stompSession.subscribe(TOPIC_NOTIFICATION_FRIEND, new StompFrameHandler() {
                 @Override
                 public Type getPayloadType(StompHeaders headers) {
                     return String.class;
@@ -244,7 +244,7 @@ public class WebSocketService {
                 }
             });
 
-            System.out.println("Subscribed to friend notifications at: " + TOPIC_FRIEND_NOTIFICATION_FRIEND);
+            System.out.println("Subscribed to friend notifications at: " + APP_NOTIFICATION_FRIEND_ENDPOINT);
         }
     }
 

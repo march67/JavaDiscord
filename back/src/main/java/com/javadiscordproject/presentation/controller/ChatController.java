@@ -72,7 +72,7 @@ public class ChatController {
 
     @MessageMapping("/notification/friend")
     @SendTo("/topic/notification/friend")
-    public String handleNotification(String username) {
+    public String handleFriendNotification(String username) {
         return username;
     }
 }
