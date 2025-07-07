@@ -9,8 +9,8 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.javadiscordproject.controllers.component.FriendListController"
       styleClass="root-container"
-      prefWidth="240"
-      minWidth="240">
+      prefWidth="280"
+      minWidth="280">
 
     <HBox styleClass="header-container">
         <Label text="Direct Messages"

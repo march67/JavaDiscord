@@ -227,10 +227,6 @@ public class ConversationController {
         }).start();
     }
 
-    public void updateLoggedInUsername() {
-        this.loggedInUsername = SessionManager.getInstance().getUsername();
-    }
-
     public void cleanup() {
         if (webSocketService != null) {
             webSocketService.unsubscribeFromAllConversations();
