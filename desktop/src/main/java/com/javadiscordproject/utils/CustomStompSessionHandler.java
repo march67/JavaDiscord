@@ -33,6 +33,5 @@ public class CustomStompSessionHandler implements StompSessionHandler {
 
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
-        // Not used as we subscribe manually
     }
 }

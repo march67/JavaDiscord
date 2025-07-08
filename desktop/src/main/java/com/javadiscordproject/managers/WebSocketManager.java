@@ -44,7 +44,6 @@ public class WebSocketManager {
             }
         });
 
-        // Set as daemon thread so it doesn't prevent application exit
         wsThread.setDaemon(true);
         wsThread.setName("WebSocket-Init-Thread");
         wsThread.start();

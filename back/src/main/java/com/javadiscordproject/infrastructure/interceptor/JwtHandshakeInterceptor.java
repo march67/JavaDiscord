@@ -22,14 +22,12 @@ public class JwtHandshakeInterceptor implements HandshakeInterceptor {
         if (request instanceof ServletServerHttpRequest servletRequest) {
             HttpServletRequest httpRequest = servletRequest.getServletRequest();
 
-            // 1) Authorization Header (Desktop)
             String authHeader = httpRequest.getHeader("Authorization");
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 jwt = authHeader.substring(7);
                 System.out.println("JWT found in Authorization header");
             }
 
-            // 2) URL Parameter (Web)
             if ((jwt == null || jwt.isEmpty()) && httpRequest.getParameter("token") != null) {
                 jwt = httpRequest.getParameter("token");
                 System.out.println("JWT found in URL parameter");

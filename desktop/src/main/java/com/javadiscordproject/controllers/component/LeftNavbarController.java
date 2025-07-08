@@ -50,10 +50,6 @@ public class LeftNavbarController {
         }
     }
 
-    /**
-     * Retourne le contrôleur du bouton de notification
-     * @return Le contrôleur de notification ou null s'il n'est pas chargé
-     */
     public NotificationButtonController getNotificationController() {
         return notificationController;
     }

@@ -87,7 +87,6 @@ public class ConversationController {
                             isCurrentUser
                     );
 
-                    // Autoscroll vers le bas après l'ajout du message
                     scrollToBottom();
                 } else {
                     LOGGER.warning("Received message with null username");

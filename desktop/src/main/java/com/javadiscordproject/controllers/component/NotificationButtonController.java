@@ -67,6 +67,7 @@ public class NotificationButtonController {
                 webSocketService.setNotificationReceivedCallback(this::onNotificationReceived);
 
                 webSocketService.subscribeToFriendNotifications();
+                webSocketService.setFriendNotificationReceivedCallback(this::onFriendNotificationReceived);
 
             }
         } catch (Exception e) {
@@ -74,6 +75,17 @@ public class NotificationButtonController {
         }
     }
 
+    private void onFriendNotificationReceived(String username) {
+        Platform.runLater(() -> {
+            System.out.println("=== FRIEND NOTIFICATION RECEIVED IN UI ===");
+            System.out.println("Friend accepted: " + username);
+            System.out.println("=========================================");
+
+            if (friendRequestAcceptedListener != null) {
+                friendRequestAcceptedListener.onFriendRequestAccepted(username);
+            }
+        });
+    }
     private void onNotificationReceived(FriendNotificationDTO notification) {
         String currentUsername = SessionManager.getInstance().getUsername();
         boolean isForCurrentUser = currentUsername != null &&

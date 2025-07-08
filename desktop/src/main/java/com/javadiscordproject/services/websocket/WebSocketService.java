@@ -29,6 +29,7 @@ import static com.javadiscordproject.utils.WsConstants.*;
 
 public class WebSocketService {
 
+    // SINGLETON INSTANCE
     private static WebSocketService instance;
 
     private StompSession stompSession;
@@ -39,8 +40,11 @@ public class WebSocketService {
     private Consumer<MessageWSDTO> messageReceivedCallback;
     private Consumer<FriendNotificationDTO> notificationReceivedCallback;
     private Consumer<String> friendNotificationReceivedCallback;
+
+    // Private constructor for singleton
     private WebSocketService() {}
 
+    // Get singleton instance
     public static synchronized WebSocketService getInstance() {
         if (instance == null) {
             instance = new WebSocketService();
@@ -252,7 +256,6 @@ public class WebSocketService {
     }
 
     public void subscribeToFriendNotifications() {
-        System.out.println("ALO ALO");
         if (stompSession != null && stompSession.isConnected() && !friendNotificationsSubscribed) {
             String destination = TOPIC_NOTIFICATION_FRIEND;
 
