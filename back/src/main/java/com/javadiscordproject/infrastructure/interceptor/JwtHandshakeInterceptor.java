@@ -1,7 +1,6 @@
 package com.javadiscordproject.infrastructure.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -18,19 +17,33 @@ public class JwtHandshakeInterceptor implements HandshakeInterceptor {
                                    WebSocketHandler wsHandler,
                                    Map<String, Object> attributes) throws Exception {
 
+        String jwt = null;
+
         if (request instanceof ServletServerHttpRequest servletRequest) {
             HttpServletRequest httpRequest = servletRequest.getServletRequest();
-            String authHeader = httpRequest.getHeader("Authorization");
 
+            // 1) Authorization Header (Desktop)
+            String authHeader = httpRequest.getHeader("Authorization");
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                String jwt = authHeader.substring(7);
-                attributes.put("jwt", jwt);
-                return true;
+                jwt = authHeader.substring(7);
+                System.out.println("JWT found in Authorization header");
+            }
+
+            // 2) URL Parameter (Web)
+            if ((jwt == null || jwt.isEmpty()) && httpRequest.getParameter("token") != null) {
+                jwt = httpRequest.getParameter("token");
+                System.out.println("JWT found in URL parameter");
             }
         }
 
-        System.out.println("Missing or invalid Authorization header in handshake.");
-        return false;
+        if (jwt != null && !jwt.isEmpty()) {
+            attributes.put("jwt", jwt);
+            System.out.println("WebSocket handshake successful with JWT");
+            return true;
+        } else {
+            System.out.println("Missing JWT token in both Authorization header and URL parameters - handshake rejected");
+            return false;
+        }
     }
 
     @Override
@@ -38,5 +51,8 @@ public class JwtHandshakeInterceptor implements HandshakeInterceptor {
                                ServerHttpResponse response,
                                WebSocketHandler wsHandler,
                                Exception exception) {
+        if (exception != null) {
+            System.err.println("WebSocket handshake failed: " + exception.getMessage());
+        }
     }
 }

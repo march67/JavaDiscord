@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @CrossOrigin(origins = "*")
@@ -72,7 +74,10 @@ public class ChatController {
 
     @MessageMapping("/notification/friend")
     @SendTo("/topic/notification/friend")
-    public String handleFriendNotification(String username) {
-        return username;
+    public Map<String, String> handleFriendNotification(String username) {
+        Map<String, String> response = new HashMap<>();
+        response.put("username", username);
+        System.out.println("Notification de l'ami reçu pour l'utilisateur : " + username);
+        return response;
     }
 }
