@@ -1,37 +1,23 @@
 package com.javadiscordproject.services.websocket;
 
-/**
- * Class responsible for initializing the WebSocket connection
- * and sending the initial test message.
- */
 public class WebSocketInitializer {
 
     private WebSocketService webSocketService;
     private boolean connectionAttempted = false;
 
-    /**
-     * Default constructor
-     */
     public WebSocketInitializer() {
-        webSocketService = new WebSocketService();
+        this.webSocketService = WebSocketService.getInstance();
     }
 
-    /**
-     * Initialize the WebSocket connection and send the static test message
-     * This method won't throw exceptions to prevent application failure if WebSocket is unavailable
-     * @return true if connection was successful and message was sent
-     */
     public boolean initializeAndSendMessage() {
         connectionAttempted = true;
 
         try {
             System.out.println("Initializing WebSocket connection...");
 
-            // Connect to WebSocket server with timeout
             boolean connected = webSocketService.connectToWebSocket();
 
             if (connected) {
-                // Send the static test message
                 System.out.println("Static message sent successfully: ");
                 return true;
             } else {
@@ -46,10 +32,6 @@ public class WebSocketInitializer {
         }
     }
 
-    /**
-     * Retry connection if the first attempt failed
-     * @return true if connection was successful
-     */
     public boolean retryConnection() {
         if (webSocketService.isConnected()) {
             return true; // Already connected
@@ -63,26 +45,6 @@ public class WebSocketInitializer {
             return false;
         }
     }
-
-    /**
-     * Get the WebSocketService instance
-     * @return the WebSocketService instance
-     */
-    public WebSocketService getWebSocketService() {
-        return webSocketService;
-    }
-
-    /**
-     * Check if a connection attempt was made
-     * @return true if connection was attempted
-     */
-    public boolean wasConnectionAttempted() {
-        return connectionAttempted;
-    }
-
-    /**
-     * Close the WebSocket connection
-     */
     public void shutdown() {
         if (webSocketService != null) {
             try {

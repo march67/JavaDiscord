@@ -3,6 +3,7 @@ package com.javadiscordproject.services.websocket;
 import com.javadiscordproject.managers.SessionManager;
 import com.javadiscordproject.models.MessageWSDTO;
 import com.javadiscordproject.models.FriendNotificationDTO;
+import com.javadiscordproject.models.FriendAcceptedNotificationDTO;
 import com.javadiscordproject.utils.CustomStompSessionHandler;
 import javafx.application.Platform;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
@@ -28,6 +29,8 @@ import static com.javadiscordproject.utils.WsConstants.*;
 
 public class WebSocketService {
 
+    private static WebSocketService instance;
+
     private StompSession stompSession;
     private boolean isConnected = false;
     private static final int CONNECTION_TIMEOUT_SECONDS = 3;
@@ -36,15 +39,32 @@ public class WebSocketService {
     private Consumer<MessageWSDTO> messageReceivedCallback;
     private Consumer<FriendNotificationDTO> notificationReceivedCallback;
     private Consumer<String> friendNotificationReceivedCallback;
+    private WebSocketService() {}
 
-    public WebSocketService() {}
+    public static synchronized WebSocketService getInstance() {
+        if (instance == null) {
+            instance = new WebSocketService();
+        }
+        return instance;
+    }
 
     public boolean connectToWebSocket() {
+        if (isConnected && stompSession != null && stompSession.isConnected()) {
+            System.out.println("WebSocket already connected");
+            return true;
+        }
+
         try {
             StandardWebSocketClient webSocketClient = new StandardWebSocketClient();
             WebSocketStompClient stompClient = new WebSocketStompClient(webSocketClient);
 
             stompClient.setMessageConverter(new MappingJackson2MessageConverter());
+
+            stompClient.setDefaultHeartbeat(new long[]{4000, 4000});
+
+            org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler taskScheduler = new org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler();
+            taskScheduler.initialize();
+            stompClient.setTaskScheduler(taskScheduler);
 
             StompSessionHandler sessionHandler = new CustomStompSessionHandler();
 
@@ -61,6 +81,7 @@ public class WebSocketService {
 
             if (stompSession != null && stompSession.isConnected()) {
                 isConnected = true;
+                System.out.println("WebSocket connected successfully");
                 return true;
             } else {
                 isConnected = false;
@@ -69,6 +90,7 @@ public class WebSocketService {
 
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             isConnected = false;
+            System.err.println("Failed to connect WebSocket: " + e.getMessage());
             return false;
         }
     }
@@ -97,6 +119,7 @@ public class WebSocketService {
             });
 
             conversationSubscriptions.put(conversationId, subscription);
+            System.out.println("Subscribed to conversation: " + conversationId);
         }
     }
 
@@ -126,9 +149,11 @@ public class WebSocketService {
                 return true;
 
             } catch (Exception e) {
+                System.err.println("Error sending message: " + e.getMessage());
                 return false;
             }
         } else {
+            System.err.println("Cannot send message: WebSocket not connected");
             return false;
         }
     }
@@ -175,24 +200,12 @@ public class WebSocketService {
         }
     }
 
-    public boolean sendFriendNotificationString(String username) {
-        if (stompSession != null && stompSession.isConnected()) {
-            try {
-                stompSession.send(APP_NOTIFICATION_FRIEND_ENDPOINT, username);
-                System.out.println("=== FRIEND ACCEPTED NOTIFICATION SENT ===");
-                System.out.println("Accepted friend: " + username);
-                System.out.println("========================================");
-                return true;
-            } catch (Exception e) {
-                System.err.println("Error sending friend acceptance: " + e.getMessage());
-                return false;
-            }
-        }
-        return false;
-    }
+
+    private boolean notificationsSubscribed = false;
+    private boolean friendNotificationsSubscribed = false;
 
     public void subscribeToNotifications() {
-        if (stompSession != null && stompSession.isConnected()) {
+        if (stompSession != null && stompSession.isConnected() && !notificationsSubscribed) {
             String destination = TOPIC_FRIEND_NOTIFICATION;
 
             stompSession.subscribe(destination, new StompFrameHandler() {
@@ -217,34 +230,56 @@ public class WebSocketService {
                 }
             });
 
+            notificationsSubscribed = true;
             System.out.println("Subscribed to notifications at: " + destination);
         }
     }
 
-    public void subscribeToFriendNotifications() {
+    public boolean sendFriendNotificationString(String username) {
         if (stompSession != null && stompSession.isConnected()) {
-            stompSession.subscribe(TOPIC_NOTIFICATION_FRIEND, new StompFrameHandler() {
+            try {
+                stompSession.send(APP_NOTIFICATION_FRIEND_ENDPOINT, username);
+                System.out.println("=== FRIEND ACCEPTED NOTIFICATION SENT ===");
+                System.out.println("Accepted friend: " + username);
+                System.out.println("========================================");
+                return true;
+            } catch (Exception e) {
+                System.err.println("Error sending friend acceptance: " + e.getMessage());
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public void subscribeToFriendNotifications() {
+        System.out.println("ALO ALO");
+        if (stompSession != null && stompSession.isConnected() && !friendNotificationsSubscribed) {
+            String destination = TOPIC_NOTIFICATION_FRIEND;
+
+            stompSession.subscribe(destination, new StompFrameHandler() {
                 @Override
                 public Type getPayloadType(StompHeaders headers) {
-                    return String.class;
+                    return FriendAcceptedNotificationDTO.class;
                 }
 
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
-                    String receivedUsername = (String) payload;
+                    FriendAcceptedNotificationDTO notification = (FriendAcceptedNotificationDTO) payload;
                     Platform.runLater(() -> {
                         System.out.println("=== FRIEND NOTIFICATION RECEIVED ===");
-                        System.out.println("Username: " + receivedUsername);
+                        System.out.println("Username: " + notification.getUsername());
+                        System.out.println("Raw payload type: " + payload.getClass().getName());
                         System.out.println("=====================================");
 
                         if (friendNotificationReceivedCallback != null) {
-                            friendNotificationReceivedCallback.accept(receivedUsername);
+                            friendNotificationReceivedCallback.accept(notification.getUsername());
                         }
                     });
                 }
             });
 
-            System.out.println("Subscribed to friend notifications at: " + APP_NOTIFICATION_FRIEND_ENDPOINT);
+            friendNotificationsSubscribed = true;
+            System.out.println("Subscribed to friend notifications at: " + destination);
         }
     }
 
@@ -253,6 +288,9 @@ public class WebSocketService {
             unsubscribeFromAllConversations();
             stompSession.disconnect();
             isConnected = false;
+            notificationsSubscribed = false;
+            friendNotificationsSubscribed = false;
+            System.out.println("WebSocket disconnected");
         }
     }
 }

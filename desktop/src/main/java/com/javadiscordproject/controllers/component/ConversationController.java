@@ -41,7 +41,7 @@ public class ConversationController {
     private final WebSocketService webSocketService;
 
     public ConversationController() {
-        this.webSocketService = new WebSocketService();
+        this.webSocketService = WebSocketService.getInstance();
         this.messageDisplayService = new MessageDisplayService();
         this.messageService = new MessageService();
         this.messageConversionService = new MessageConversionService();

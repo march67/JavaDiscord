@@ -49,8 +49,7 @@ public class NotificationButtonController {
     public void initialize() {
         loadStyles();
         friendRequestService = new FriendRequestService();
-        webSocketService = new WebSocketService();
-        webSocketService.setFriendNotificationReceivedCallback(this::handleFriendNotification);
+        this.webSocketService = WebSocketService.getInstance();
         notificationDot.setRadius(6);
         notificationDot.setMouseTransparent(true);
         StackPane.setAlignment(notificationDot, javafx.geometry.Pos.TOP_RIGHT);
@@ -59,21 +58,19 @@ public class NotificationButtonController {
 
         checkForPendingRequests();
     }
-    private void handleFriendNotification(String acceptedUsername) {
-        System.out.println("DEBUG [Friend Accepted] " + acceptedUsername);
-        Platform.runLater(() -> {
-        });
-    }
 
     private void initializeWebSocketConnection() {
         try {
             boolean connected = webSocketService.connectToWebSocket();
             if (connected) {
                 webSocketService.subscribeToNotifications();
-                webSocketService.subscribeToFriendNotifications();
                 webSocketService.setNotificationReceivedCallback(this::onNotificationReceived);
+
+                webSocketService.subscribeToFriendNotifications();
+
             }
         } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error initializing WebSocket connection", e);
         }
     }
 
@@ -225,6 +222,10 @@ public class NotificationButtonController {
 
         friendRequestService.acceptFriendRequest(username).thenAccept(success -> {
             if (success) {
+                System.out.println("=== ACCEPTING FRIEND REQUEST ===");
+                System.out.println("Accepted user: " + username);
+                System.out.println("Sending notification to: " + username);
+
                 webSocketService.sendFriendNotificationString(username);
 
                 Platform.runLater(() -> {

@@ -23,7 +23,7 @@ public class FriendService implements IFriendService {
     public FriendService() {
         this.httpClient = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
-        this.webSocketService = new WebSocketService();
+        this.webSocketService = WebSocketService.getInstance();
     }
 
     public FriendService(WebSocketService webSocketService) {

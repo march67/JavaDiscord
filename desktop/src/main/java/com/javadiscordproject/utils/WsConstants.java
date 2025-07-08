@@ -6,8 +6,8 @@ public class WsConstants {
 
     public static final String TOPIC_MESSAGES = "/topic/messages";
     public static final String TOPIC_FRIEND_NOTIFICATION = "/topic/notification";
-    public static final String TOPIC_NOTIFICATION_FRIEND = "/topic/notification/friend";
     public static final String APP_FRIEND_NOTIFICATION_ENDPOINT = "/app/notification";
+    public static final String TOPIC_NOTIFICATION_FRIEND = "/topic/notification/friend";
     public static final String APP_NOTIFICATION_FRIEND_ENDPOINT = "/app/notification/friend";
     public static final String APP_CHAT_ENDPOINT = "/app/chat/";
     public static final String AUTHORIZATION_HEADER = "Authorization";

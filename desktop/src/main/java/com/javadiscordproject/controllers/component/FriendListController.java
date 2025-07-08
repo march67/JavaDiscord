@@ -30,7 +30,6 @@ public class FriendListController {
     @FXML private ToggleButton friendsButton;
     @FXML private ToggleButton addFriendButton;
     @FXML private TextField searchField;
-    @FXML private ScrollPane friendsScrollPane;
     @FXML private VBox friendsList;
     @FXML private ToggleGroup navigationGroup;
     @FXML private Button logoutButton;
@@ -40,6 +39,7 @@ public class FriendListController {
     private List<FriendDTO> allFriends = new ArrayList<>();
     private FriendSelectionListener friendSelectionListener;
     private IFriendService friendService;
+    private SessionManager sessionManager = SessionManager.getInstance();
     private WebSocketService webSocketService;
     private VBox addFriendView;
     private AddFriendController addFriendController;
@@ -47,14 +47,6 @@ public class FriendListController {
     public void setFriendService(IFriendService friendService) {
         this.friendService = friendService;
         loadAddFriendView();
-    }
-
-    public void setWebSocketService(WebSocketService webSocketService) {
-        this.webSocketService = webSocketService;
-        if (addFriendController != null) {
-            addFriendController.setWebSocketService(webSocketService);
-        }
-        setupWebSocketSubscription();
     }
 
     private void setupWebSocketSubscription() {
